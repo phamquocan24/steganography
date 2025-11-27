@@ -1,0 +1,17 @@
+model:
+  path: "models/mobilenetv2_steganalysis.keras"
+  input_size: [224, 224]
+  threshold: 0.5
+
+preprocessing:
+  use_srm: true
+  normalization: "0-1"
+
+app:
+  max_file_size_mb: 10
+  allowed_formats: ['JPEG', 'PNG', 'JPG']
+  history_max_records: 50
+
+ui:
+  theme: "light"
+  language: "vi"
