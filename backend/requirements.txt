@@ -1,11 +1,23 @@
+# Core Framework
 fastapi>=0.110.0
 uvicorn>=0.27.1
 python-multipart>=0.0.9
+
+# AI/ML Dependencies
 tensorflow==2.16.1
 tf-keras>=2.16.0
 numpy==1.26.3
 pillow>=10.2.0
+
+# Configuration
 pydantic>=2.6.1
 pydantic-core>=2.16.2
 python-dotenv>=1.0.1
 aiofiles>=23.2.1
+
+# Forensics Analysis Dependencies
+chardet>=5.2.0           # Encoding detection for string extraction
+python-magic>=0.4.27     # File type detection (optional, requires libmagic)
+python-magic-bin>=0.4.14 # Binary version for Windows (alternative to python-magic)
+opencv-python>=4.8.1     # Advanced image processing for visual analysis
+scipy>=1.11.4            # Scientific computing for entropy calculations
