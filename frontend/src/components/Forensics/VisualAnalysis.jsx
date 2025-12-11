@@ -41,10 +41,10 @@ export default function VisualAnalysis({ data }) {
             {/* Image Info */}
             <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <div className="grid grid-cols-4 gap-4 text-center">
-                    <InfoStat label="Mode" value={data.image_info.mode} />
-                    <InfoStat label="Size" value={`${data.image_info.size.width}×${data.image_info.size.height}`} />
-                    <InfoStat label="Channels" value={data.image_info.channels} />
-                    <InfoStat label="Data Type" value={data.image_info.dtype} />
+                    <InfoStat label="Mode" value={data.image_info?.mode || 'N/A'} />
+                    <InfoStat label="Size" value={data.image_info?.size ? `${data.image_info.size.width}×${data.image_info.size.height}` : 'N/A'} />
+                    <InfoStat label="Channels" value={data.image_info?.channels || 'N/A'} />
+                    <InfoStat label="Data Type" value={data.image_info?.dtype || 'N/A'} />
                 </div>
             </div>
 
@@ -110,6 +110,8 @@ export default function VisualAnalysis({ data }) {
 }
 
 function ChannelsView({ channels, onImageClick }) {
+    if (!channels) return <EmptyState />;
+
     const channelList = Object.entries(channels).map(([name, src]) => ({
         src,
         label: name.charAt(0).toUpperCase() + name.slice(1) + ' Channel'
@@ -220,6 +222,8 @@ function BitPlanesView({ bitPlanes, selectedBit, setSelectedBit, selectedChannel
 }
 
 function OperationsView({ operations, onImageClick }) {
+    if (!operations) return <EmptyState />;
+
     const operationsList = [
         { key: 'xor_rg', label: 'R ⊕ G (XOR)', description: 'Highlights differences between red and green' },
         { key: 'xor_rb', label: 'R ⊕ B (XOR)', description: 'Highlights differences between red and blue' },
@@ -255,6 +259,8 @@ function OperationsView({ operations, onImageClick }) {
 }
 
 function HistogramsView({ histograms }) {
+    if (!histograms) return <EmptyState />;
+
     const channels = Object.entries(histograms).filter(([key]) => key !== 'combined');
 
     return (

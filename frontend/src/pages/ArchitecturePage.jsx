@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Server, Database, Cpu, Layers, Zap, Shield, CheckCircle, ArrowRight } from 'lucide-react';
+import { Server, Database, Cpu, Layers, Zap, Shield, CheckCircle, ArrowRight, Code, Image, Activity, Box, Globe, FileText, FileUp, Lock, Aperture } from 'lucide-react';
 
 export default function ArchitecturePage() {
     return (
@@ -261,31 +261,31 @@ export default function ArchitecturePage() {
                         <TechSection
                             title="Deep Learning Stack"
                             items={[
-                                { name: "TensorFlow 2.16.1", desc: "Core ML framework với Keras API" },
-                                { name: "NumPy 1.26.3", desc: "Numerical operations và array manipulation" },
-                                { name: "Model Architectures", desc: "CNN, MobileNetV2, ResNet50, VGG16 với transfer learning" },
-                                { name: "Custom Layers", desc: "HPF preprocessing layer sử dụng Conv2D với fixed kernels" },
-                                { name: "Training", desc: "Adam optimizer, categorical crossentropy, batch size 32" }
+                                { name: "TensorFlow 2.16.1", desc: "Core ML framework với Keras API", icon: Cpu },
+                                { name: "NumPy 1.26.3", desc: "Numerical operations và array manipulation", icon: Code },
+                                { name: "Model Architectures", desc: "CNN, MobileNetV2, ResNet50, VGG16 với transfer learning", icon: Layers },
+                                { name: "Custom Layers", desc: "HPF preprocessing layer sử dụng Conv2D với fixed kernels", icon: Box },
+                                { name: "Training", desc: "Adam optimizer, categorical crossentropy, batch size 32", icon: Activity }
                             ]}
                         />
                         <TechSection
                             title="Image Processing"
                             items={[
-                                { name: "Pillow 10.2.0", desc: "Image loading, format conversion, EXIF extraction" },
-                                { name: "OpenCV 4.11", desc: "Advanced image operations, color space conversion" },
-                                { name: "piexif", desc: "Detailed EXIF metadata parsing" },
-                                { name: "NumPy", desc: "Fast array operations cho bit manipulation" },
-                                { name: "scipy", desc: "Statistical analysis, entropy calculation" }
+                                { name: "Pillow 10.2.0", desc: "Image loading, format conversion, EXIF extraction", icon: Image },
+                                { name: "OpenCV 4.11", desc: "Advanced image operations, color space conversion", icon: Aperture },
+                                { name: "piexif", desc: "Detailed EXIF metadata parsing", icon: FileText },
+                                { name: "NumPy", desc: "Fast array operations cho bit manipulation", icon: Code },
+                                { name: "scipy", desc: "Statistical analysis, entropy calculation", icon: Activity }
                             ]}
                         />
                         <TechSection
                             title="Web Framework"
                             items={[
-                                { name: "FastAPI", desc: "Async REST API với automatic OpenAPI documentation" },
-                                { name: "Uvicorn", desc: "ASGI server với hot-reload support" },
-                                { name: "Pydantic", desc: "Data validation và serialization" },
-                                { name: "python-multipart", desc: "File upload handling" },
-                                { name: "CORS Middleware", desc: "Cross-origin requests từ React frontend" }
+                                { name: "FastAPI", desc: "Async REST API với automatic OpenAPI documentation", icon: Zap },
+                                { name: "Uvicorn", desc: "ASGI server với hot-reload support", icon: Server },
+                                { name: "Pydantic", desc: "Data validation và serialization", icon: CheckCircle },
+                                { name: "python-multipart", desc: "File upload handling", icon: FileUp },
+                                { name: "CORS Middleware", desc: "Cross-origin requests từ React frontend", icon: Globe }
                             ]}
                         />
                     </div>
@@ -414,15 +414,18 @@ function TechSection({ title, items }) {
         <div>
             <h3 className="text-xl font-semibold text-gray-800 mb-4">{title}</h3>
             <div className="space-y-3">
-                {items.map((item, idx) => (
-                    <div key={idx} className="flex items-start bg-gray-50 rounded p-3 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <Shield className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
-                        <div>
-                            <span className="font-semibold text-gray-900">{item.name}:</span>
-                            <span className="text-gray-700 ml-2">{item.desc}</span>
+                {items.map((item, idx) => {
+                    const Icon = item.icon || Shield;
+                    return (
+                        <div key={idx} className="flex items-start bg-gray-50 rounded p-3 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                            <Icon className="w-5 h-5 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                            <div>
+                                <span className="font-semibold text-gray-900">{item.name}:</span>
+                                <span className="text-gray-700 ml-2">{item.desc}</span>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

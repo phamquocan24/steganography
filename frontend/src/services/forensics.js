@@ -13,7 +13,7 @@ export const forensicsAPI = {
         const formData = new FormData();
         formData.append('file', file);
         const { data } = await axios.post(`${API_BASE}/metadata`, formData);
-        return data;
+        return data.data;
     },
 
     // String extraction
@@ -25,7 +25,7 @@ export const forensicsAPI = {
             max_strings: options.maxStrings || 1000
         });
         const { data } = await axios.post(`${API_BASE}/strings?${params}`, formData);
-        return data;
+        return data.data;
     },
 
     // Visual analysis
@@ -38,7 +38,7 @@ export const forensicsAPI = {
             include_histograms: options.includeHistograms ?? true
         });
         const { data } = await axios.post(`${API_BASE}/visual?${params}`, formData);
-        return data;
+        return data.data;
     },
 
     // LSB extraction
@@ -52,7 +52,7 @@ export const forensicsAPI = {
             max_bytes: config.maxBytes || 1024 * 1024
         });
         const { data } = await axios.post(`${API_BASE}/lsb/extract?${params}`, formData);
-        return data;
+        return data.data;
     },
 
     // Superimposed analysis
@@ -66,7 +66,7 @@ export const forensicsAPI = {
             blend_mode: config.blendMode || 'average'
         });
         const { data } = await axios.post(`${API_BASE}/superimposed?${params}`, formData);
-        return data;
+        return data.data;
     },
 
     // Complete analysis

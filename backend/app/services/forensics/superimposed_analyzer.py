@@ -82,16 +82,16 @@ class SuperimposedAnalyzer:
             else:
                 superimposed = np.mean(selected_channels, axis=0).astype(np.uint8)
             
-            # Convert to image
-            img = Image.fromarray(superimposed, mode='L')
-            results[f'channels_{"_".join(channels)}'] = self._image_to_base64(img)
+            # Create grayscale version
+            img_gray = Image.fromarray(superimposed, mode='L')
+            results[f'channels_{"_".join(channels)}_gray'] = self._image_to_base64(img_gray)
             
-            # Also create colored version
-            colored = np.stack([superimposed] * 3, axis=-1)
-            colored_img = Image.fromarray(colored, mode='RGB')
-            results[f'channels_{"_".join(channels)}_colored'] = self._image_to_base64(colored_img)
+            # Create COLORFUL version 
+            colored = self._apply_colormap(superimposed)
+            results[f'channels_{"_".join(channels)}'] = self._image_to_base64(colored)
         
         return results
+
     
     def _superimpose_bitplanes(self, config: Dict) -> Dict[str, str]:
         """Superimpose selected bit planes"""
@@ -121,8 +121,9 @@ class SuperimposedAnalyzer:
                 else:
                     superimposed = np.mean(planes, axis=0).astype(np.uint8)
                 
-                img = Image.fromarray(superimposed, mode='L')
-                results[f'bitplanes_{channel_name}_{"_".join(map(str, bit_planes))}'] = self._image_to_base64(img)
+                # Create COLORFUL version 
+                colored = self._apply_colormap(superimposed)
+                results[f'bitplanes_{channel_name}_{"_".join(map(str, bit_planes))}'] = self._image_to_base64(colored)
         
         return results
     
@@ -136,8 +137,8 @@ class SuperimposedAnalyzer:
             all_lsbs.append(lsb)
         
         combined = np.mean(all_lsbs, axis=0).astype(np.uint8)
-        img = Image.fromarray(combined, mode='L')
-        return self._image_to_base64(img)
+        colored = self._apply_colormap(combined)
+        return self._image_to_base64(colored)
     
     def _analyze_channel_superposition(self, channel_results: Dict) -> Dict:
         """Analyze channel superposition for anomalies"""
@@ -162,6 +163,25 @@ class SuperimposedAnalyzer:
             'purpose': 'Reveals hidden data across all channels',
             'recommendation': 'Look for visible patterns, text, or QR codes'
         }
+    
+    def _apply_colormap(self, grayscale: np.ndarray) -> Image.Image:
+        """
+        Apply colormap to grayscale image to create vibrant colors
+        Uses a rainbow/jet colormap for better visualization
+        """
+        # Normalize to 0-255 range
+        normalized = grayscale.astype(np.float32)
+        
+        # Create RGB channels using different color mappings
+        # This creates a rainbow effect 
+        r = np.clip(255 * np.sin(normalized * np.pi / 255), 0, 255).astype(np.uint8)
+        g = np.clip(255 * np.sin(normalized * np.pi / 255 + 2*np.pi/3), 0, 255).astype(np.uint8)
+        b = np.clip(255 * np.sin(normalized * np.pi / 255 + 4*np.pi/3), 0, 255).astype(np.uint8)
+        
+        # Stack into RGB image
+        colored = np.stack([r, g, b], axis=-1)
+        
+        return Image.fromarray(colored, mode='RGB')
     
     def _image_to_base64(self, img: Image.Image) -> str:
         """Convert PIL Image to base64 string"""

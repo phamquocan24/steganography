@@ -35,6 +35,85 @@ export default function StringsViewer({ data }) {
         return strings;
     }, [data, filter, searchTerm]);
 
+    // Export strings data as downloadable file
+    const exportStrings = (format = 'json') => {
+        if (!data) return;
+
+        let content = '';
+        let filename = '';
+        let mimeType = '';
+
+        if (format === 'json') {
+            // Export full data as JSON
+            const exportData = {
+                statistics: data.statistics,
+                patterns: data.patterns,
+                ascii_strings: data.ascii_strings,
+                utf8_strings: data.utf8_strings,
+                suspicious_findings: data.suspicious_findings,
+                exported_at: new Date().toISOString()
+            };
+            content = JSON.stringify(exportData, null, 2);
+            filename = `strings_export_${Date.now()}.json`;
+            mimeType = 'application/json';
+        } else if (format === 'txt') {
+            // Export as plain text
+            const lines = [
+                '=== STRINGS EXTRACTION REPORT ===',
+                `Exported: ${new Date().toLocaleString()}`,
+                '',
+                '--- STATISTICS ---',
+                `Total Strings: ${data.statistics?.total_strings || 0}`,
+                `ASCII Strings: ${data.ascii_strings?.length || 0}`,
+                `UTF-8 Strings: ${data.utf8_strings?.length || 0}`,
+                '',
+            ];
+
+            // Add patterns
+            if (data.patterns) {
+                lines.push('--- PATTERNS FOUND ---');
+                Object.entries(data.patterns).forEach(([key, values]) => {
+                    if (values && values.length > 0) {
+                        lines.push(`\n[${key.toUpperCase()}] (${values.length} found)`);
+                        values.forEach(v => lines.push(`  - ${v.value || v}`));
+                    }
+                });
+            }
+
+            // Add suspicious findings
+            if (data.suspicious_findings?.length > 0) {
+                lines.push('\n--- SUSPICIOUS FINDINGS ---');
+                data.suspicious_findings.forEach((f, i) => {
+                    lines.push(`${i + 1}. ${f.type}: ${f.message || f.finding}`);
+                });
+            }
+
+            // Add raw strings
+            if (data.ascii_strings?.length > 0) {
+                lines.push('\n--- ASCII STRINGS ---');
+                data.ascii_strings.slice(0, 500).forEach(s => lines.push(s));
+                if (data.ascii_strings.length > 500) {
+                    lines.push(`... and ${data.ascii_strings.length - 500} more`);
+                }
+            }
+
+            content = lines.join('\n');
+            filename = `strings_export_${Date.now()}.txt`;
+            mimeType = 'text/plain';
+        }
+
+        // Create and trigger download
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
     // Conditional return AFTER all hooks
     if (!data) {
         return <EmptyState />;
@@ -58,22 +137,22 @@ export default function StringsViewer({ data }) {
                 <StatBox
                     icon={FileText}
                     label="Total Strings"
-                    value={data.statistics.total_strings}
+                    value={data.statistics?.total_strings || 0}
                 />
                 <StatBox
-                    icon={Search}
-                    label="Unique"
-                    value={data.statistics.unique_strings}
+                    icon={Link}
+                    label="URLs Found"
+                    value={data.patterns?.url?.length || 0}
+                    color={data.patterns?.url?.length > 0 ? 'orange' : 'gray'}
                 />
                 <StatBox
-                    icon={AlertTriangle}
-                    label="Suspicious"
-                    value={data.suspicious_findings?.length || 0}
-                    color="red"
-                />
-                <StatBox
+                    icon={Key}
+                    label="Secrets"
+                    value={(data.patterns?.ctf_flag?.length || 0) + (data.patterns?.base64?.length || 0)}
+                    color={(data.patterns?.ctf_flag?.length || 0) > 0 ? 'red' : 'green'}
+                /><StatBox
                     label="Avg Length"
-                    value={data.statistics.average_length}
+                    value={data.statistics?.average_length || 0}
                 />
             </div>
 
@@ -104,15 +183,29 @@ export default function StringsViewer({ data }) {
                     </button>
                 </div>
 
-                <button className="flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                    <Download className="w-4 h-4 mr-2" />
-                    Export
-                </button>
+                <div className="flex items-center space-x-2">
+                    <button
+                        onClick={() => exportStrings('json')}
+                        className="flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium"
+                        title="Export as JSON"
+                    >
+                        <Download className="w-4 h-4 mr-1" />
+                        JSON
+                    </button>
+                    <button
+                        onClick={() => exportStrings('txt')}
+                        className="flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
+                        title="Export as Text"
+                    >
+                        <Download className="w-4 h-4 mr-1" />
+                        TXT
+                    </button>
+                </div>
             </div>
 
             {/* Content */}
             {viewMode === 'patterns' ? (
-                <PatternsView patterns={data.patterns} />
+                <PatternsView patterns={data.patterns || {}} />
             ) : (
                 <RawStringsView
                     strings={filteredStrings}

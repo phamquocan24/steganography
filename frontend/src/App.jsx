@@ -78,8 +78,8 @@ function App() {
 
     return (
         <Router>
-            <div className="min-h-screen flex flex-col bg-gray-50">
-                {/* Header */}
+            <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
+                {/* Fixed Header */}
                 <Header
                     stats={stats}
                     showHistory={showHistory}
@@ -87,13 +87,18 @@ function App() {
                     historyCount={history.length}
                 />
 
-                {/* Routes */}
-                <Routes>
-                    <Route path="/" element={<HomePage addToast={addToast} onUpdateHistory={handleUpdateHistory} />} />
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/architecture" element={<ArchitecturePage />} />
-                    <Route path="/guide" element={<GuidePage />} />
-                </Routes>
+                {/* Scrollable Main Content */}
+                <main className="flex-1 overflow-y-auto scrollbar-custom">
+                    <Routes>
+                        <Route path="/" element={<HomePage addToast={addToast} onUpdateHistory={handleUpdateHistory} />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/architecture" element={<ArchitecturePage />} />
+                        <Route path="/guide" element={<GuidePage />} />
+                    </Routes>
+
+                    {/* Footer inside scrollable area */}
+                    <Footer />
+                </main>
 
                 {/* History Sidebar */}
                 {showHistory && (
@@ -116,9 +121,6 @@ function App() {
 
                 {/* Toast Notifications */}
                 <ToastContainer toasts={toasts} removeToast={removeToast} />
-
-                {/* Footer */}
-                <Footer />
             </div>
         </Router>
     );

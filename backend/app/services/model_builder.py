@@ -43,15 +43,27 @@ class SRMFilterInitializer(tf.keras.initializers.Initializer):
     def get_config(self):
         return {}
 
+@tf.keras.utils.register_keras_serializable()
 def rgb_to_grayscale(x):
-    """Convert RGB to grayscale"""
+    """
+    Convert RGB to grayscale using TF formula (Weighted sum).
+    Matches notebook usage: Lambda(tf.image.rgb_to_grayscale).
+    """
+    # Explicitly use tf.image.rgb_to_grayscale as used in notebook
     return tf.image.rgb_to_grayscale(x)
 
+@tf.keras.utils.register_keras_serializable()
 def TLU(x, T=3.0):
-    """Thresholded Linear Unit activation"""
+    """
+    Thresholded Linear Unit activation.
+    Implementation matches Training Notebook exactly (High-pass).
+    - Logic: Keep values >= T, set others to 0.
+    - Captures strong edges/residuals, filters out small noise.
+    """
     return tf.where(tf.abs(x) >= T, x, tf.zeros_like(x))
 
 def build_srm_branch(input_layer, num_srm_filters=30):
+    # Strictly match Notebook's Lambda(tf.image.rgb_to_grayscale)
     gray_input = tf.keras.layers.Lambda(
         rgb_to_grayscale, 
         output_shape=(224, 224, 1), 
@@ -188,59 +200,38 @@ def build_baseline_cnn_model():
 
 def load_model_with_reconstruction(model_path: str):
     """
-    Load a model by patching Lambda layer to provide output_shape
-    This bypasses Keras 3 Lambda layer deserialization issues
-    
-    Args:
-        model_path: Path to the .keras model file
-        
-    Returns:
-        Loaded Keras model with weights
+    Robust model loading with exact Notebook matching.
+    Attempts to load directly first, then reconstructs if needed.
     """
-    # Enable unsafe deserialization
+    # Enable unsafe deserialization for Lambda layers
     try:
         tf.keras.config.enable_unsafe_deserialization()
     except AttributeError:
         pass
     
-    # Create a custom Lambda class that provides output_shape and forces correct function
-    class PatchedLambda(tf.keras.layers.Lambda):
-        def __init__(self, function, output_shape=None, **kwargs):
-            layer_name = kwargs.get('name', '')
-            
-            # Force correct function and output_shape based on layer name
-            if layer_name == 'To_Grayscale':
-                function = rgb_to_grayscale
-                output_shape = (224, 224, 1)
-            elif layer_name == 'TLU_Activation':
-                function = TLU
-                output_shape = (224, 224, 30)
-            elif layer_name == 'Content_Preprocess':
-                function = tf.keras.applications.mobilenet_v2.preprocess_input
-                output_shape = (224, 224, 3)
-            
-            super().__init__(function, output_shape=output_shape, **kwargs)
-
-    # Custom objects for loading
+    # Define custom objects with string names to match saved model config
     custom_objects = {
         'SRMFilterInitializer': SRMFilterInitializer,
         'rgb_to_grayscale': rgb_to_grayscale,
-        'TLU': TLU,
-        'Lambda': PatchedLambda
+        'TLU': TLU
     }
     
-    print(f"Loading model from {model_path} with PatchedLambda...")
+    print(f"Loading model from {model_path}...")
     
-    # Load the model with the patched Lambda layer
+    # 1. Try Direct Load (Best for weights & config)
     try:
+        # First try without PatchedLambda - if functions are registered, it might work
         model = tf.keras.models.load_model(model_path, custom_objects=custom_objects)
-        print("Successfully loaded original model with PatchedLambda!")
+        print("✅ Successfully loaded model directly!")
         return model
     except Exception as e:
-        print(f"Failed to load model directly: {e}")
-        print("Attempting reconstruction and weight transfer...")
+        print(f"Direct load failed: {str(e)[:200]}...") # Truncate error
         
-        # Fallback: Build new model and try to load weights
+    # 2. Reconstruct & Load Weights (Fallback)
+    print("Attempting reconstruction matching Notebook architecture...")
+    
+    # Helper to build model based on name patterns
+    try:
         if 'MobileNetV2_HPF_Enabled' in model_path:
             new_model = build_mobilenetv2_hpf_model()
         elif 'MobileNetV2_HPF_Disabled' in model_path:
@@ -254,11 +245,19 @@ def load_model_with_reconstruction(model_path: str):
         else:
             raise ValueError(f"Unknown model type for {model_path}")
             
-        # Try loading weights
+        # Load weights - prioritize by_name=True to avoid mismatches
+        # But for Functional models, topology loading is usually safer if structure matches
         try:
             new_model.load_weights(model_path)
-            print("Successfully loaded weights into reconstructed model!")
+            print("✅ Successfully loaded weights into reconstructed model!")
             return new_model
         except Exception as w_e:
-            print(f"Failed to load weights: {w_e}")
-            raise e
+            print(f"⚠️ Standard load_weights failed: {w_e}")
+            print("Retrying with by_name=True...")
+            new_model.load_weights(model_path, by_name=True)
+            print("✅ Loaded weights (by name)!")
+            return new_model
+            
+    except Exception as build_e:
+        print(f"❌ CRITICAL: Failed to reconstruct/load model: {build_e}")
+        raise build_e

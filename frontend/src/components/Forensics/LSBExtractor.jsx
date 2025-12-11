@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { Download, Settings, FileText, AlertCircle, CheckCircle, Zap } from 'lucide-react';
+import { Download, Settings, FileText, AlertCircle, CheckCircle, Zap, Activity } from 'lucide-react';
 import { Alert, StatCard } from './shared/UIComponents';
 import { forensicsAPI } from '../../services/forensics';
 import clsx from 'clsx';
@@ -31,12 +31,12 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
         setError(null);
 
         try {
-            const response = await forensicsAPI.extractLSB(file, config);
-            setResult(response.data);
-            onExtract?.(response.data);
+            const result = await forensicsAPI.extractLSB(file, config);
+            setResult(result);
+            onExtract?.(result);
 
             // Success toast
-            const assessment = response.data.assessment;
+            const assessment = result.assessment;
             if (assessment.contains_hidden_data) {
                 addToast?.(`LSB extraction succeeded! Confidence: ${assessment.confidence_score}`, 'success');
             } else {
@@ -173,10 +173,13 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
 }
 
 function ExtractionResults({ result }) {
-    const assessment = result.assessment;
-    const fileDetection = result.file_detection;
-    const textAnalysis = result.text_analysis;
-    const entropyAnalysis = result.entropy_analysis;
+    if (!result) return null;
+
+    const assessment = result.assessment || {};
+    const fileDetection = result.file_detection || {};
+    const textAnalysis = result.text_analysis || {};
+    const entropyAnalysis = result.entropy_analysis || {};
+    const dataInfo = result.data_info || {};
 
     return (
         <div className="space-y-6">
@@ -238,29 +241,88 @@ function ExtractionResults({ result }) {
                 )}
             </div>
 
-            {/* Data Statistics */}
+            {/* Data Statistics - Row 1 */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard
                     icon={FileText}
                     label="Extracted Size"
-                    value={result.data_info.size_kb + ' KB'}
+                    value={(dataInfo.size_kb || 0) + ' KB'}
                 />
                 <StatCard
                     label="Entropy"
-                    value={entropyAnalysis.normalized_entropy.toFixed(3)}
+                    value={entropyAnalysis.normalized_entropy?.toFixed(3) || 'N/A'}
                     color={entropyAnalysis.is_high_entropy ? 'red' : 'green'}
                 />
                 <StatCard
                     label="Randomness"
-                    value={entropyAnalysis.assessment.split(' ')[0]}
+                    value={entropyAnalysis.assessment?.split(' ')[0] || 'Unknown'}
                 />
-                {fileDetection.detected && (
-                    <StatCard
-                        label="File Type"
-                        value={fileDetection.type}
-                        color="indigo"
-                    />
+                <StatCard
+                    label="Chi-Square"
+                    value={entropyAnalysis.chi_square?.toFixed(1) || 'N/A'}
+                    color={entropyAnalysis.is_random ? 'blue' : 'orange'}
+                    subtitle={entropyAnalysis.is_random ? 'Random' : 'Patterned'}
+                />
+            </div>
+
+            {/* Quick Actions Row */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Download Card */}
+                {result.file_download?.available && (
+                    <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl border border-blue-200 p-5">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h4 className="font-semibold text-gray-800 flex items-center">
+                                    <Download className="w-5 h-5 mr-2 text-blue-600" />
+                                    Extracted Data
+                                </h4>
+                                <p className="text-sm text-gray-600 mt-1">
+                                    {(result.file_download?.size_bytes / 1024).toFixed(2)} KB • {dataInfo.md5_hash?.slice(0, 8) || 'N/A'}...
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => forensicsAPI.downloadFile(
+                                    result.file_download?.file_id,
+                                    result.file_download?.filename
+                                )}
+                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center"
+                            >
+                                <Download className="w-4 h-4 mr-2" />
+                                Download
+                            </button>
+                        </div>
+                    </div>
                 )}
+
+                {/* Serial Correlation Card */}
+                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl border border-purple-200 p-5">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h4 className="font-semibold text-gray-800 flex items-center">
+                                <Activity className="w-5 h-5 mr-2 text-purple-600" />
+                                Serial Correlation
+                            </h4>
+                            <p className="text-sm text-gray-600 mt-1">
+                                Pattern detection score
+                            </p>
+                        </div>
+                        <div className="text-right">
+                            <span className="text-2xl font-bold text-purple-700">
+                                {entropyAnalysis.serial_correlation?.toFixed(4) || 'N/A'}
+                            </span>
+                            <p className={clsx(
+                                "text-xs font-medium",
+                                Math.abs(entropyAnalysis.serial_correlation || 0) < 0.1
+                                    ? "text-green-600"
+                                    : "text-orange-600"
+                            )}>
+                                {Math.abs(entropyAnalysis.serial_correlation || 0) < 0.1
+                                    ? '✓ No pattern detected'
+                                    : '⚠ Pattern detected'}
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* File Detection */}
@@ -294,20 +356,6 @@ function ExtractionResults({ result }) {
                 </div>
             )}
 
-            {/* Download Button */}
-            {result.file_download?.available && (
-                <button
-                    onClick={() => forensicsAPI.downloadFile(
-                        result.file_download.file_id,
-                        result.file_download.filename
-                    )}
-                    className="w-full flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                >
-                    <Download className="w-5 h-5 mr-2" />
-                    Download Extracted File ({(result.file_download.size_bytes / 1024).toFixed(1)} KB)
-                </button>
-            )}
-
             {/* Recommendations */}
             {assessment.recommendations && assessment.recommendations.length > 0 && (
                 <Alert severity="info" title="Recommendations">
@@ -325,11 +373,11 @@ function ExtractionResults({ result }) {
                     View Raw Data Preview
                 </summary>
                 <div className="mt-4 bg-gray-50 rounded p-4 font-mono text-xs overflow-x-auto">
-                    {result.data_info.first_32_bytes_hex}
+                    {dataInfo.first_32_bytes_hex || 'N/A'}
                 </div>
                 <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
-                    <InfoRow label="MD5" value={result.data_info.md5_hash} />
-                    <InfoRow label="SHA256" value={result.data_info.sha256_hash} />
+                    <InfoRow label="MD5" value={dataInfo.md5_hash || 'N/A'} />
+                    <InfoRow label="SHA256" value={dataInfo.sha256_hash || 'N/A'} />
                 </div>
             </details>
         </div>

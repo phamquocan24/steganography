@@ -81,11 +81,13 @@ export default function MetadataViewer({ data }) {
 }
 
 function BasicInfo({ data }) {
+    if (!data) return <div className="p-4 text-gray-500">Loading basic info...</div>;
+
     const stats = [
-        { label: 'Format', value: data.format, icon: Info },
-        { label: 'Dimensions', value: data.size.dimensions, icon: Settings },
-        { label: 'File Size', value: `${data.file_size.mb} MB`, icon: Info },
-        { label: 'Color Mode', value: data.color_info.mode, icon: Settings }
+        { label: 'Format', value: data.format || 'Unknown', icon: Info },
+        { label: 'Dimensions', value: data.size?.dimensions || 'N/A', icon: Settings },
+        { label: 'File Size', value: data.file_size?.mb ? `${data.file_size.mb} MB` : 'N/A', icon: Info },
+        { label: 'Color Mode', value: data.color_info?.mode || 'N/A', icon: Settings }
     ];
 
     return (
@@ -99,16 +101,16 @@ function BasicInfo({ data }) {
             {/* Detailed Info */}
             <div className="grid grid-cols-2 gap-4 mt-6">
                 <InfoCard title="Image Properties">
-                    <InfoRow label="Width" value={`${data.size.width}px`} />
-                    <InfoRow label="Height" value={`${data.size.height}px`} />
-                    <InfoRow label="Megapixels" value={data.size.megapixels} />
-                    <InfoRow label="DPI" value={`${data.dpi[0]} x ${data.dpi[1]}`} />
+                    <InfoRow label="Width" value={`${data.size?.width || 0}px`} />
+                    <InfoRow label="Height" value={`${data.size?.height || 0}px`} />
+                    <InfoRow label="Megapixels" value={data.size?.megapixels || 0} />
+                    <InfoRow label="DPI" value={data.dpi ? `${data.dpi[0]} x ${data.dpi[1]}` : 'N/A'} />
                 </InfoCard>
 
                 <InfoCard title="Color Information">
-                    <InfoRow label="Mode" value={data.color_info.mode} />
-                    <InfoRow label="Bands" value={data.color_info.bands} />
-                    <InfoRow label="Has Alpha" value={data.color_info.has_alpha ? 'Yes' : 'No'} />
+                    <InfoRow label="Mode" value={data.color_info?.mode || 'N/A'} />
+                    <InfoRow label="Bands" value={data.color_info?.bands || 0} />
+                    <InfoRow label="Has Alpha" value={data.color_info?.has_alpha ? 'Yes' : 'No'} />
                 </InfoCard>
             </div>
         </div>
@@ -116,7 +118,7 @@ function BasicInfo({ data }) {
 }
 
 function ExifData({ data }) {
-    if (!data.available) {
+    if (!data || !data.available) {
         return (
             <div className="text-center py-8 text-gray-500">
                 <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-gray-400" />
@@ -164,14 +166,14 @@ function ExifData({ data }) {
             )}
 
             <div className="text-sm text-gray-500 text-center pt-4">
-                Total {data.tag_count} EXIF tags found
+                Total {data.tag_count || 0} EXIF tags found
             </div>
         </div>
     );
 }
 
 function GPSInfo({ data }) {
-    if (!data.available) {
+    if (!data || !data.available) {
         return (
             <div className="text-center py-8 text-gray-500">
                 <MapPin className="w-12 h-12 mx-auto mb-3 text-gray-400" />
@@ -187,10 +189,10 @@ function GPSInfo({ data }) {
             </Alert>
 
             <InfoCard title="Location Details" icon={MapPin}>
-                <InfoRow label="Latitude" value={data.latitude} />
-                <InfoRow label="Longitude" value={data.longitude} />
-                <InfoRow label="Altitude" value={data.altitude} />
-                <InfoRow label="Timestamp" value={data.timestamp} />
+                <InfoRow label="Latitude" value={data.latitude || 'N/A'} />
+                <InfoRow label="Longitude" value={data.longitude || 'N/A'} />
+                <InfoRow label="Altitude" value={data.altitude || 'N/A'} />
+                <InfoRow label="Timestamp" value={data.timestamp || 'N/A'} />
             </InfoCard>
 
             {/* Google Maps Link */}
@@ -210,7 +212,7 @@ function GPSInfo({ data }) {
 }
 
 function Comments({ data }) {
-    if (!data.available || Object.keys(data.data).length === 0) {
+    if (!data || !data.available || !data.data || Object.keys(data.data).length === 0) {
         return (
             <div className="text-center py-8 text-gray-500">
                 <Info className="w-12 h-12 mx-auto mb-3 text-gray-400" />
@@ -222,10 +224,10 @@ function Comments({ data }) {
     return (
         <div className="space-y-4">
             <Alert severity="info">
-                Found {Object.keys(data.data).length} comment field(s) with total length of {data.total_length} characters
+                Found {Object.keys(data.data || {}).length} comment field(s) with total length of {data.total_length || 0} characters
             </Alert>
 
-            {Object.entries(data.data).map(([key, value]) => (
+            {Object.entries(data.data || {}).map(([key, value]) => (
                 <div key={key} className="bg-gray-50 rounded-lg p-4">
                     <h4 className="font-semibold text-gray-700 mb-2">{formatKey(key)}</h4>
                     <p className="text-sm text-gray-600 whitespace-pre-wrap font-mono">

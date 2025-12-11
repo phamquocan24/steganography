@@ -32,8 +32,8 @@ export default function SuperimposedAnalysis({ file, addToast }) {
         setError(null);
 
         try {
-            const response = await forensicsAPI.analyzeSuperimposed(file, config);
-            setResult(response.data);
+            const result = await forensicsAPI.analyzeSuperimposed(file, config);
+            setResult(result);
             addToast?.('Superimposed analysis completed successfully!', 'success');
         } catch (err) {
             setError(err.message);

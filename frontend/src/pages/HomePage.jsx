@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Upload, Shield, Search, Play, Loader2, CheckCircle, AlertTriangle, Layers } from 'lucide-react';
+import { Upload, Shield, Search, Play, Loader2, CheckCircle, AlertTriangle, Layers, Calendar, FileType, HardDrive, Maximize, Hash, Clock, Smartphone, Globe, Box, Lock, Code, ArrowLeft } from 'lucide-react';
 import { getModels, predictImage } from '../api';
 import { forensicsAPI } from '../services/forensics';
 import MetadataViewer from '../components/Forensics/MetadataViewer';
@@ -13,6 +13,7 @@ import VisualAnalysis from '../components/Forensics/VisualAnalysis';
 import LSBExtractor from '../components/Forensics/LSBExtractor';
 import SuperimposedAnalysis from '../components/Forensics/SuperimposedAnalysis';
 import { Alert } from '../components/Forensics/shared/UIComponents';
+import AIResultPanel from '../components/AIResultPanel';
 import clsx from 'clsx';
 
 export default function HomePage({ addToast, onUpdateHistory }) {
@@ -70,7 +71,8 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                     height: img.height,
                     size: selectedFile.size,
                     type: selectedFile.type,
-                    name: selectedFile.name
+                    name: selectedFile.name,
+                    lastModified: selectedFile.lastModified
                 });
             };
             img.src = url;
@@ -266,37 +268,42 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                         <Shield className="w-5 h-5 mr-2 text-blue-600" />
                                         Image Details
                                     </h3>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <DetailRow
+                                                icon={<FileType className="w-5 h-5 text-purple-600" />}
+                                                label="Format"
+                                                value={imageInfo.type.split('/')[1].toUpperCase()}
+                                            />
+                                            <DetailRow
+                                                icon={<HardDrive className="w-5 h-5 text-blue-600" />}
+                                                label="File Size"
+                                                value={`${(imageInfo.size / 1024).toFixed(2)} KB`}
+                                            />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <DetailRow
+                                                icon={<Maximize className="w-5 h-5 text-green-600" />}
+                                                label="Dimensions"
+                                                value={`${imageInfo.width} × ${imageInfo.height}`}
+                                            />
+                                            <DetailRow
+                                                icon={<Hash className="w-5 h-5 text-orange-600" />}
+                                                label="Aspect Ratio"
+                                                value={`${(imageInfo.width / imageInfo.height).toFixed(2)}:1`}
+                                            />
+                                        </div>
                                         <DetailRow
-                                            icon="📄"
-                                            label="Filename"
-                                            value={imageInfo.name}
-                                            highlight={true}
+                                            icon={<Clock className="w-5 h-5 text-pink-600" />}
+                                            label="Last Modified"
+                                            value={new Date(imageInfo.lastModified || Date.now()).toLocaleString()}
+                                            fullWidth
                                         />
                                         <DetailRow
-                                            icon="🎨"
-                                            label="Format"
-                                            value={imageInfo.type.split('/')[1].toUpperCase()}
-                                        />
-                                        <DetailRow
-                                            icon="📐"
-                                            label="Dimensions"
-                                            value={`${imageInfo.width} × ${imageInfo.height} pixels`}
-                                        />
-                                        <DetailRow
-                                            icon="💾"
-                                            label="File Size"
-                                            value={`${(imageInfo.size / 1024).toFixed(2)} KB (${imageInfo.size.toLocaleString()} bytes)`}
-                                        />
-                                        <DetailRow
-                                            icon="📊"
-                                            label="Aspect Ratio"
-                                            value={`${(imageInfo.width / imageInfo.height).toFixed(2)}:1`}
-                                        />
-                                        <DetailRow
-                                            icon="🕒"
-                                            label="Upload Time"
-                                            value={new Date().toLocaleString('vi-VN')}
+                                            icon={<Shield className="w-5 h-5 text-cyan-600" />}
+                                            label="Security Check"
+                                            value="Ready for Scan"
+                                            fullWidth
                                         />
                                         <div className="pt-3 mt-3 border-t border-blue-200">
                                             <div className="flex items-center justify-between text-sm">
@@ -310,11 +317,17 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                     </div>
                                 </div>
                             ) : (
-                                <div className="bg-gray-50 rounded-lg p-6 border-2 border-dashed border-gray-300 h-full flex items-center justify-center">
-                                    <div className="text-center text-gray-500">
-                                        <Upload className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                                        <p className="font-medium">No image uploaded</p>
-                                        <p className="text-sm mt-1">Upload an image to see details</p>
+                                <div className="bg-gradient-to-br from-slate-50 to-gray-100 rounded-lg p-6 border border-gray-200 h-full flex flex-col items-center justify-center">
+                                    <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mb-4">
+                                        <Box className="w-10 h-10 text-gray-400" />
+                                    </div>
+                                    <h4 className="font-semibold text-gray-600 mb-1">Image Preview</h4>
+                                    <p className="text-sm text-gray-400 text-center max-w-[200px]">
+                                        Selected image details will appear here
+                                    </p>
+                                    <div className="mt-4 px-3 py-2 bg-blue-50 rounded-lg flex items-center text-xs text-blue-600">
+                                        <ArrowLeft className="w-4 h-4 mr-2 animate-bounce-x" />
+                                        <span className="font-medium">Use the upload area on the left</span>
                                     </div>
                                 </div>
                             )}
@@ -379,48 +392,15 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                             </div>
                         </div>
 
-                        {/* AI Results */}
+                        {/* AI Results - Professional Panel */}
                         {aiResult && (
-                            <div className={clsx(
-                                "rounded-lg p-6 border-2",
-                                aiResult.prediction === 'stego'
-                                    ? "bg-red-50 border-red-200"
-                                    : "bg-green-50 border-green-200"
-                            )}>
-                                <div className="flex items-center justify-between mb-4">
-                                    {aiResult.prediction === 'stego' ? (
-                                        <AlertTriangle className="w-8 h-8 text-red-600" />
-                                    ) : (
-                                        <CheckCircle className="w-8 h-8 text-green-600" />
-                                    )}
-                                    <span className={clsx(
-                                        "px-4 py-2 rounded-full font-bold text-lg",
-                                        aiResult.prediction === 'stego'
-                                            ? "bg-red-600 text-white"
-                                            : "bg-green-600 text-white"
-                                    )}>
-                                        {aiResult.prediction === 'stego' ? 'STEGO DETECTED' : 'CLEAN IMAGE'}
-                                    </span>
-                                </div>
-                                <div className="grid grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <span className="text-gray-600">Confidence:</span>
-                                        <span className="font-bold ml-2">{(aiResult.confidence * 100).toFixed(2)}%</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-gray-600">Model:</span>
-                                        <span className="font-bold ml-2">{formatModelName(selectedModel)}</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-gray-600">Analysis Time:</span>
-                                        <span className="font-bold ml-2">{aiResult.duration}ms</span>
-                                    </div>
-                                    <div>
-                                        <span className="text-gray-600">Timestamp:</span>
-                                        <span className="font-bold ml-2">{aiResult.timestamp}</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <AIResultPanel
+                                result={aiResult}
+                                modelName={formatModelName(selectedModel)}
+                                onScrollToForensics={() => {
+                                    document.getElementById('forensics')?.scrollIntoView({ behavior: 'smooth' });
+                                }}
+                            />
                         )}
                     </div>
                 )}
@@ -478,18 +458,20 @@ export default function HomePage({ addToast, onUpdateHistory }) {
 
                         {/* Forensics Content */}
                         <div className="p-6">
-                            {!forensicsResults[activeForensicsTab] && activeForensicsTab !== 'lsb' && (
-                                <div className="text-center py-12">
-                                    <button
-                                        onClick={() => handleForensicsAnalysis(activeForensicsTab)}
-                                        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-flex items-center"
-                                        disabled={forensicsLoading}
-                                    >
-                                        <Play className="w-5 h-5 mr-2" />
-                                        Analyze {forensicsTabs.find(t => t.id === activeForensicsTab)?.label}
-                                    </button>
-                                </div>
-                            )}
+                            {!forensicsResults[activeForensicsTab] &&
+                                activeForensicsTab !== 'lsb' &&
+                                activeForensicsTab !== 'superimposed' && (
+                                    <div className="text-center py-12">
+                                        <button
+                                            onClick={() => handleForensicsAnalysis(activeForensicsTab)}
+                                            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-flex items-center"
+                                            disabled={forensicsLoading}
+                                        >
+                                            <Play className="w-5 h-5 mr-2" />
+                                            Analyze {forensicsTabs.find(t => t.id === activeForensicsTab)?.label}
+                                        </button>
+                                    </div>
+                                )}
 
                             {activeForensicsTab === 'metadata' && <MetadataViewer data={forensicsResults.metadata} />}
                             {activeForensicsTab === 'strings' && <StringsViewer data={forensicsResults.strings} />}
@@ -532,19 +514,18 @@ export default function HomePage({ addToast, onUpdateHistory }) {
 }
 
 // Helper Component for Image Info
-function DetailRow({ icon, label, value, highlight }) {
+function DetailRow({ icon, label, value, fullWidth }) {
     return (
         <div className={clsx(
-            "flex items-start p-3 rounded-lg transition-all",
-            highlight ? "bg-white shadow-sm" : "hover:bg-white/50"
+            "flex items-center p-3 rounded-lg bg-white/60 hover:bg-white transition-all shadow-sm border border-blue-100",
+            fullWidth ? "w-full" : ""
         )}>
-            <span className="text-xl mr-3 flex-shrink-0">{icon}</span>
+            <div className="mr-3 p-2 bg-gray-50 rounded-full">
+                {icon}
+            </div>
             <div className="flex-1 min-w-0">
-                <span className="text-xs text-gray-600 font-medium block mb-1">{label}</span>
-                <p className={clsx(
-                    "text-sm font-semibold truncate",
-                    highlight ? "text-blue-900" : "text-gray-900"
-                )} title={value}>{value}</p>
+                <span className="text-xs text-gray-500 font-medium uppercase tracking-wider block">{label}</span>
+                <p className="text-sm font-bold text-gray-900 truncate" title={value}>{value}</p>
             </div>
         </div>
     );
