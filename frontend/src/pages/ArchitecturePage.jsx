@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Server, Database, Cpu, Layers, Zap, Shield, CheckCircle, ArrowRight, Code, Image, Activity, Box, Globe, FileText, FileUp, Lock, Aperture } from 'lucide-react';
+import { Server, Database, Cpu, Layers, Zap, Shield, CheckCircle, ArrowRight, Code, Image, Activity, Box, Globe, FileText, FileUp, Lock, Aperture, Workflow, Code2 } from 'lucide-react';
 
 export default function ArchitecturePage() {
     return (
@@ -12,67 +12,145 @@ export default function ArchitecturePage() {
             <div className="max-w-6xl mx-auto">
                 {/* Hero */}
                 <div className="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-2xl p-12 text-white mb-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h1 className="text-5xl font-bold mb-4">System Architecture</h1>
-                    <p className="text-xl text-blue-100">
-                        Kiến trúc hệ thống, workflow phân tích, và technical components
+                    <div className="flex items-center mb-6">
+                        <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-6">
+                            <Box className="w-10 h-10" />
+                        </div>
+                        <div>
+                            <h1 className="text-5xl font-bold mb-2">Kiến trúc Hệ thống</h1>
+                            <p className="text-xl text-blue-100">Kiến trúc kỹ thuật & Luồng dữ liệu</p>
+                        </div>
+                    </div>
+                    <p className="text-lg text-blue-50 leading-relaxed">
+                        Khám phá thiết kế kỹ thuật của Steganalysis Pro. Hệ thống của chúng tôi kết hợp mạng học sâu tiên tiến với các công cụ phân tích forensics truyền thống.
                     </p>
                 </div>
 
                 {/* High-Level Architecture Diagram */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">High-Level Architecture</h2>
+                    <SectionTitle icon={Layers} title="Tổng quan" />
+
+                    <p className="text-lg text-gray-700 leading-relaxed mb-8">
+                        Hệ thống tuân theo <strong>Kiến trúc Microservices Hiện đại</strong>, tách biệt mối quan tâm
+                        giữa giao diện người dùng, xử lý API và các công cụ phân tích chuyên sâu.
+                        Thiết kế này đảm bảo khả năng mở rộng, khả năng bảo trì và khả năng triển khai các mô hình AI mới
+                        mà không làm gián đoạn các dịch vụ cốt lõi.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-8 items-stretch mb-16">
+                        <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 h-full flex flex-col justify-center">
+                            <h4 className="font-bold text-blue-900 mb-4 text-lg">Các thành phần chính:</h4>
+                            <ul className="space-y-3 text-gray-700">
+                                <li className="flex items-start">
+                                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                                    <div><strong>Frontend (React/Vite):</strong> Giao diện người dùng tương tác & Hiển thị</div>
+                                </li>
+                                <li className="flex items-start">
+                                    <div className="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                                    <div><strong>Backend (FastAPI):</strong> Điều phối & Quản lý API</div>
+                                </li>
+                                <li className="flex items-start">
+                                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                                    <div><strong>AI Engine (TensorFlow):</strong> Suy luận Học sâu</div>
+                                </li>
+                                <li className="flex items-start">
+                                    <div className="w-2 h-2 bg-orange-500 rounded-full mr-3 mt-2 flex-shrink-0"></div>
+                                    <div><strong>Forensics Core:</strong> Xử lý Tín hiệu & Thống kê</div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="relative flex items-center justify-center">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full opacity-50 blur-xl"></div>
+                            <div className="relative w-full h-full min-h-[200px] bg-gray-900 rounded-xl shadow-2xl flex items-center justify-center text-white text-center p-6">
+                                <span className="font-mono text-lg flex items-center flex-wrap justify-center gap-2">
+                                    <span className="text-blue-300 font-bold">Frontend</span>
+                                    <ArrowRight className="mx-1 text-gray-400" />
+                                    <span className="text-green-300 font-bold">Backend API</span>
+                                    <ArrowRight className="mx-1 text-gray-400" />
+                                    <span className="text-purple-300 font-bold">AI/Forensics</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <SectionTitle icon={Cpu} title="Chi tiết Công nghệ (Tech Stack)" />
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+                        <TechCard
+                            title="Frontend Core"
+                            items={["React 18", "Tailwind CSS", "Lucide Icons", "Recharts"]}
+                            color="bg-blue-50"
+                        />
+                        <TechCard
+                            title="Backend Services"
+                            items={["Python 3.9", "FastAPI", "Uvicorn", "Pydantic"]}
+                            color="bg-green-50"
+                        />
+                        <TechCard
+                            title="AI & ML"
+                            items={["TensorFlow 2.15", "Keras", "NumPy / SciPy", "OpenCV"]}
+                            color="bg-purple-50"
+                        />
+                        <TechCard
+                            title="Forensics Tools"
+                            items={["Pillow (PIL)", "PieEXIF", "Python-Magic", "Custom LSB Algos"]}
+                            color="bg-orange-50"
+                        />
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Kiến trúc Cấp cao</h2>
                     <div className="space-y-6">
                         <ArchitectureLayer
-                            title="Presentation Layer (Frontend)"
+                            title="Lớp Trình bày (Frontend)"
                             icon={Layers}
                             color="blue"
                             components={[
-                                "React 18.2.0 SPA with Vite bundler",
-                                "Responsive UI với Tailwind CSS",
-                                "State management với React Hooks",
-                                "Axios HTTP client cho API calls",
-                                "Real-time toast notifications",
-                                "Local storage for history"
+                                "React 18.2.0 SPA với Vite bundler",
+                                "UI phản hồi với Tailwind CSS",
+                                "Quản lý trạng thái với React Hooks",
+                                "Axios HTTP client cho các cuộc gọi API",
+                                "Thông báo toast thời gian thực",
+                                "Bộ nhớ cục bộ cho lịch sử"
                             ]}
                         />
                         <ArrowDown />
                         <ArchitectureLayer
-                            title="API Layer (Backend)"
+                            title="Lớp API (Backend)"
                             icon={Server}
                             color="cyan"
                             components={[
                                 "FastAPI REST endpoints",
-                                "Request validation với Pydantic",
-                                "CORS middleware configuration",
-                                "File upload handling (multipart/form-data)",
-                                "Error handling và logging",
-                                "Response formatting (JSON)"
+                                "Xác thực yêu cầu với Pydantic",
+                                "Cấu hình middleware CORS",
+                                "Xử lý tải lên tệp (multipart/form-data)",
+                                "Xử lý lỗi và ghi nhật ký",
+                                "Định dạng phản hồi (JSON)"
                             ]}
                         />
                         <ArrowDown />
                         <ArchitectureLayer
-                            title="Service Layer (Business Logic)"
+                            title="Lớp Dịch vụ (Logic nghiệp vụ)"
                             icon={Cpu}
                             color="blue"
                             components={[
-                                "Model Service - AI detection với 5 models",
-                                "Metadata Extractor - EXIF/GPS extraction",
-                                "String Extractor - Pattern matching",
-                                "Visual Analyzer - Image processing",
-                                "LSB Analyzer - Bit extraction"
+                                "Dịch vụ Mô hình - Phát hiện AI với 5 mô hình",
+                                "Trình trích xuất siêu dữ liệu - Trích xuất EXIF/GPS",
+                                "Trình trích xuất chuỗi - Khớp mẫu",
+                                "Trình phân tích hình ảnh - Xử lý hình ảnh",
+                                "Trình phân tích LSB - Trích xuất bit"
                             ]}
                         />
                         <ArrowDown />
                         <ArchitectureLayer
-                            title="Data Layer (Storage)"
+                            title="Lớp Dữ liệu (Lưu trữ)"
                             icon={Database}
                             color="cyan"
                             components={[
-                                "Model weights (.keras files) - 150-200 MB",
-                                "Temporary uploaded images",
-                                "Extracted files cache",
-                                "Frontend LocalStorage - User history",
-                                "Logging files - Error tracking"
+                                "Trọng số mô hình (.keras files) - 150-200 MB",
+                                "Ảnh tạm thời đã tải lên",
+                                "Bộ nhớ cache của các tệp đã trích xuất",
+                                "LocalStorage Frontend - Lịch sử người dùng",
+                                "Tệp nhật ký - Theo dõi lỗi"
                             ]}
                         />
                     </div>
@@ -80,111 +158,150 @@ export default function ArchitecturePage() {
 
                 {/* Analysis Workflow */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Analysis Workflow</h2>
+                    <SectionTitle icon={Workflow} title="Quy trình xử lý dữ liệu" />
+
+                    <div className="relative ml-4 space-y-12 mb-20">
+                        <WorkflowStep
+                            number="1"
+                            title="Nhập ảnh & Tiền xử lý"
+                            description="Người dùng tải ảnh lên (PNG/JPEG/BMP). Hệ thống xác thực tệp, tạo mã băm (SHA-256) và chuẩn hóa kích thước/định dạng ảnh cho việc phân tích."
+                        />
+                        <WorkflowStep
+                            number="2"
+                            title="Phân tích song song"
+                            description="Yêu cầu được gửi đến hai luồng song song: (1) Suy luận AI cho việc phát hiện xác suất và (2) Các mô-đun Forensics để trích xuất đặc trưng thủ công."
+                        />
+                        <WorkflowStep
+                            number="3"
+                            title="Tổng hợp kết quả & Phản hồi"
+                            description="Kết quả từ tất cả các công cụ được tổng hợp thành định dạng JSON thống nhất. Frontend nhận dữ liệu và hiển thị các trực quan hóa tương tác theo thời gian thực."
+                        />
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Quy trình phân tích</h2>
                     <div className="space-y-4">
                         <WorkflowStep
                             number={1}
-                            title="Image Upload"
-                            description="User uploads image via drag-and-drop hoặc file selector"
-                            technical="Frontend validates file type, size (<20MB), creates preview, stores in state"
+                            title="Tải ảnh lên"
+                            description="Người dùng tải ảnh lên qua kéo và thả hoặc chọn tệp"
+                            technical="Frontend xác thực loại tệp, kích thước (<20MB), tạo bản xem trước, lưu trữ trong trạng thái"
                         />
                         <WorkflowStep
                             number={2}
-                            title="Preprocessing"
-                            description="Image được chuẩn hóa và prepared cho analysis"
-                            technical="Resize to model input size (256x256), normalize pixel values (0-1), apply HPF if enabled"
+                            title="Tiền xử lý"
+                            description="Ảnh được chuẩn hóa và chuẩn bị cho phân tích"
+                            technical="Thay đổi kích thước thành kích thước đầu vào mô hình (256x256), chuẩn hóa giá trị pixel (0-1), áp dụng HPF nếu được bật"
                         />
                         <WorkflowStep
                             number={3}
-                            title="AI Detection"
-                            description="Deep learning models phân tích và predict stego vs clean"
-                            technical="Forward pass qua CNN layers, softmax activation, confidence score calculation"
+                            title="Phát hiện AI"
+                            description="Các mô hình học sâu phân tích và dự đoán stego so với sạch"
+                            technical="Chuyển tiếp qua các lớp CNN, kích hoạt softmax, tính toán điểm tin cậy"
                         />
                         <WorkflowStep
                             number={4}
-                            title="Forensics Analysis"
-                            description="Comprehensive examination với 4 modules song song hoặc tuần tự"
-                            technical="Metadata: piexif extraction | Strings: regex matching | Visual: numpy operations | LSB: bit manipulation"
+                            title="Phân tích Forensics"
+                            description="Kiểm tra toàn diện với 4 mô-đun song song hoặc tuần tự"
+                            technical="Metadata: trích xuất piexif | Chuỗi: khớp regex | Hình ảnh: các phép toán numpy | LSB: thao tác bit"
                         />
                         <WorkflowStep
                             number={5}
-                            title="Results Aggregation"
-                            description="Kết quả từ các modules được tổng hợp và formatted"
-                            technical="JSON response formatting, base64 encoding cho images, file download URLs generation"
+                            title="Tổng hợp kết quả"
+                            description="Kết quả từ các mô-đun được tổng hợp và định dạng"
+                            technical="Định dạng phản hồi JSON, mã hóa base64 cho hình ảnh, tạo URL tải xuống tệp"
                         />
                         <WorkflowStep
                             number={6}
-                            title="Presentation"
-                            description="UI displays results với interactive visualization"
-                            technical="React components render data, charts với histogram plotting, lightbox cho images"
+                            title="Trình bày"
+                            description="UI hiển thị kết quả với trực quan hóa tương tác"
+                            technical="Các thành phần React hiển thị dữ liệu, biểu đồ với biểu đồ tần suất, lightbox cho hình ảnh"
                         />
                     </div>
                 </div>
 
                 {/* AI Detection Pipeline */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">AI Detection Pipeline</h2>
+                    <SectionTitle icon={Code2} title="Quy trình Phát hiện AI" />
+
+                    <div className="bg-gray-900 rounded-xl p-8 text-blue-100 font-mono text-sm leading-relaxed overflow-x-auto shadow-2xl mb-12">
+                        <div className="flex mb-4 text-xs text-gray-500 border-b border-gray-800 pb-2">
+                            <span className="mr-8">PIPELINE CONFIG</span>
+                            <span>MODEL: ResNet50_Custom</span>
+                        </div>
+                        <p><span className="text-purple-400">def</span> <span className="text-yellow-300">detect_steganography</span>(image_tensor):</p>
+                        <p className="pl-4 text-gray-400"># Giai đoạn 1: Tiền xử lý HPF</p>
+                        <p className="pl-4">residuals = <span className="text-blue-400">HighPassFilter</span>(image_tensor)</p>
+                        <p className="pl-4 mb-2">features = <span className="text-blue-400">Normalize</span>(residuals)</p>
+
+                        <p className="pl-4 text-gray-400"># Giai đoạn 2: Trích xuất đặc trưng sâu</p>
+                        <p className="pl-4">deep_features = <span className="text-green-400">ResNet50_Backbone</span>(features)</p>
+                        <p className="pl-4 mb-2">global_pool = <span className="text-green-400">GlobalAveragePooling2D</span>(deep_features)</p>
+
+                        <p className="pl-4 text-gray-400"># Giai đoạn 3: Phân loại</p>
+                        <p className="pl-4">probability = <span className="text-red-400">Sigmoid</span>(<span className="text-blue-400">Dense</span>(global_pool))</p>
+                        <p className="pl-4 mt-2"><span className="text-purple-400">return</span> {"{"} <span className="text-green-300">"is_stego"</span>: probability &gt; 0.5, <span className="text-green-300">"confidence"</span>: probability {"}"}</p>
+                    </div>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Quy trình phát hiện AI</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-600 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            <h3 className="font-bold text-gray-900 mb-4">Without HPF</h3>
+                            <h3 className="font-bold text-gray-900 mb-4">Không có HPF</h3>
                             <ol className="space-y-2 text-sm text-gray-700">
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">1.</span>
-                                    Load image from bytes
+                                    Tải ảnh từ bytes
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">2.</span>
-                                    Resize to 256×256 pixels
+                                    Thay đổi kích thước thành 256×256 pixel
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">3.</span>
-                                    Normalize pixel values (0-1)
+                                    Chuẩn hóa giá trị pixel (0-1)
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">4.</span>
-                                    Add batch dimension
+                                    Thêm chiều batch
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">5.</span>
-                                    Forward pass qua model
+                                    Chuyển tiếp qua mô hình
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">6.</span>
-                                    Softmax → Confidence scores
+                                    Softmax → Điểm tin cậy
                                 </li>
                             </ol>
                         </div>
 
                         <div className="bg-cyan-50 rounded-lg p-6 border-l-4 border-cyan-600 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            <h3 className="font-bold text-gray-900 mb-4">With HPF Preprocessing</h3>
+                            <h3 className="font-bold text-gray-900 mb-4">Với Tiền xử lý HPF</h3>
                             <ol className="space-y-2 text-sm text-gray-700">
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">1.</span>
-                                    Load image from bytes
+                                    Tải ảnh từ bytes
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">2.</span>
-                                    Resize to 256×256 pixels
+                                    Thay đổi kích thước thành 256×256 pixel
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">3.</span>
-                                    <strong>Apply HPF layer (extract high-freq components)</strong>
+                                    <strong>Áp dụng lớp HPF (trích xuất thành phần tần số cao)</strong>
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">4.</span>
-                                    Normalize pixel values
+                                    Chuẩn hóa giá trị pixel
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">5.</span>
-                                    Add batch dimension
+                                    Thêm chiều batch
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">6.</span>
-                                    Forward pass qua model
+                                    Chuyển tiếp qua mô hình
                                 </li>
                                 <li className="flex items-start">
                                     <span className="font-semibold mr-2">7.</span>
-                                    Softmax → Confidence scores
+                                    Softmax → Điểm tin cậy
                                 </li>
                             </ol>
                         </div>
@@ -197,58 +314,58 @@ export default function ArchitecturePage() {
 
                 {/* Forensics Modules */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Forensics Modules Architecture</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Kiến trúc Mô-đun Forensics</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <ModuleCard
-                            title="Metadata Extractor"
-                            description="Extracts và analyzes image metadata"
+                            title="Trình trích xuất Metadata"
+                            description="Trích xuất và phân tích siêu dữ liệu ảnh"
                             steps={[
-                                "Load image with PIL/piexif",
-                                "Extract EXIF tags (camera, datetime, settings)",
-                                "Parse GPS coordinates if available",
-                                "Read image comments",
-                                "Detect suspicious patterns (long strings, CTF flags)",
-                                "Calculate metadata hash for integrity",
-                                "Return structured JSON"
+                                "Tải ảnh với PIL/piexif",
+                                "Trích xuất thẻ EXIF (máy ảnh, thời gian, cài đặt)",
+                                "Phân tích tọa độ GPS nếu có",
+                                "Đọc bình luận ảnh",
+                                "Phát hiện mẫu đáng ngờ (chuỗi dài, cờ CTF)",
+                                "Tính toán mã băm metadata để kiểm tra tính toàn vẹn",
+                                "Trả về JSON có cấu trúc"
                             ]}
                         />
                         <ModuleCard
-                            title="String Extractor"
-                            description="Finds hidden strings and patterns"
+                            title="Trình trích xuất Chuỗi"
+                            description="Tìm kiếm chuỗi và mẫu ẩn"
                             steps={[
-                                "Read image as raw bytes",
-                                "Extract strings (ASCII, UTF-8, UTF-16)",
-                                "Apply regex patterns (URL, email, IP, hex)",
-                                "Detect và validate base64 strings",
-                                "Identify CTF flags, JWTs, API keys",
-                                "Security analysis (keyword detection)",
-                                "Return categorized findings"
+                                "Đọc ảnh dưới dạng byte thô",
+                                "Trích xuất chuỗi (ASCII, UTF-8, UTF-16)",
+                                "Áp dụng mẫu regex (URL, email, IP, hex)",
+                                "Phát hiện và xác thực chuỗi base64",
+                                "Nhận dạng cờ CTF, JWT, khóa API",
+                                "Phân tích bảo mật (phát hiện từ khóa)",
+                                "Trả về kết quả đã phân loại"
                             ]}
                         />
                         <ModuleCard
-                            title="Visual Analyzer"
-                            description="Image analysis với computer vision"
+                            title="Trình phân tích Trực quan"
+                            description="Phân tích ảnh với thị giác máy tính"
                             steps={[
-                                "Load image as NumPy array",
-                                "Channel decomposition (R, G, B, Alpha)",
-                                "Extract 8 bit planes per channel",
-                                "Perform channel operations (XOR, ADD, SUB)",
-                                "Calculate histograms for each channel",
-                                "Anomaly detection (entropy, correlation)",
-                                "Convert results to base64 PNGs"
+                                "Tải ảnh dưới dạng mảng NumPy",
+                                "Phân tách kênh (R, G, B, Alpha)",
+                                "Trích xuất 8 bit plane mỗi kênh",
+                                "Thực hiện các phép toán kênh (XOR, CỘNG, TRỪ)",
+                                "Tính toán biểu đồ tần suất cho mỗi kênh",
+                                "Phát hiện bất thường (entropy, tương quan)",
+                                "Chuyển đổi kết quả sang PNG base64"
                             ]}
                         />
                         <ModuleCard
-                            title="LSB Analyzer"
-                            description="Least Significant Bit extraction"
+                            title="Trình phân tích LSB"
+                            description="Trích xuất Bit có trọng số thấp nhất"
                             steps={[
-                                "Parse configuration (channels, bits, order)",
-                                "Extract LSB/MSB bits từ pixels",
-                                "Convert bits to bytes",
-                                "File signature detection (ZIP, PNG, PDF...)",
-                                "Attempt text decoding (multi-encoding)",
-                                "Entropy analysis for randomness",
-                                "Save extracted file với unique ID"
+                                "Phân tích cấu hình (kênh, bit, thứ tự)",
+                                "Trích xuất bit LSB/MSB từ pixel",
+                                "Chuyển đổi bit thành byte",
+                                "Phát hiện chữ ký tệp (ZIP, PNG, PDF...)",
+                                "Thử giải mã văn bản (đa bảng mã)",
+                                "Phân tích entropy cho độ ngẫu nhiên",
+                                "Lưu tệp đã trích xuất với ID duy nhất"
                             ]}
                         />
                     </div>
@@ -256,36 +373,36 @@ export default function ArchitecturePage() {
 
                 {/* Technology Details */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Technology Deep Dive</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Chi tiết Công nghệ</h2>
                     <div className="space-y-6">
                         <TechSection
                             title="Deep Learning Stack"
                             items={[
-                                { name: "TensorFlow 2.16.1", desc: "Core ML framework với Keras API", icon: Cpu },
-                                { name: "NumPy 1.26.3", desc: "Numerical operations và array manipulation", icon: Code },
-                                { name: "Model Architectures", desc: "CNN, MobileNetV2, ResNet50, VGG16 với transfer learning", icon: Layers },
-                                { name: "Custom Layers", desc: "HPF preprocessing layer sử dụng Conv2D với fixed kernels", icon: Box },
-                                { name: "Training", desc: "Adam optimizer, categorical crossentropy, batch size 32", icon: Activity }
+                                { name: "TensorFlow 2.16.1", desc: "Framework ML cốt lõi với Keras API", icon: Cpu },
+                                { name: "NumPy 1.26.3", desc: "Các phép toán số và thao tác mảng", icon: Code },
+                                { name: "Kiến trúc Mô hình", desc: "CNN, MobileNetV2, ResNet50, VGG16 với transfer learning", icon: Layers },
+                                { name: "Lớp Tùy chỉnh", desc: "Lớp tiền xử lý HPF sử dụng Conv2D với hạt nhân cố định", icon: Box },
+                                { name: "Huấn luyện", desc: "Adam optimizer, categorical crossentropy, batch size 32", icon: Activity }
                             ]}
                         />
                         <TechSection
-                            title="Image Processing"
+                            title="Xử lý Hình ảnh"
                             items={[
-                                { name: "Pillow 10.2.0", desc: "Image loading, format conversion, EXIF extraction", icon: Image },
-                                { name: "OpenCV 4.11", desc: "Advanced image operations, color space conversion", icon: Aperture },
-                                { name: "piexif", desc: "Detailed EXIF metadata parsing", icon: FileText },
-                                { name: "NumPy", desc: "Fast array operations cho bit manipulation", icon: Code },
-                                { name: "scipy", desc: "Statistical analysis, entropy calculation", icon: Activity }
+                                { name: "Pillow 10.2.0", desc: "Tải ảnh, chuyển đổi định dạng, trích xuất EXIF", icon: Image },
+                                { name: "OpenCV 4.11", desc: "Các phép toán ảnh nâng cao, chuyển đổi không gian màu", icon: Aperture },
+                                { name: "piexif", desc: "Phân tích metadata EXIF chi tiết", icon: FileText },
+                                { name: "NumPy", desc: "Thao tác mảng nhanh cho thao tác bit", icon: Code },
+                                { name: "scipy", desc: "Phân tích thống kê, tính toán entropy", icon: Activity }
                             ]}
                         />
                         <TechSection
                             title="Web Framework"
                             items={[
-                                { name: "FastAPI", desc: "Async REST API với automatic OpenAPI documentation", icon: Zap },
-                                { name: "Uvicorn", desc: "ASGI server với hot-reload support", icon: Server },
-                                { name: "Pydantic", desc: "Data validation và serialization", icon: CheckCircle },
-                                { name: "python-multipart", desc: "File upload handling", icon: FileUp },
-                                { name: "CORS Middleware", desc: "Cross-origin requests từ React frontend", icon: Globe }
+                                { name: "FastAPI", desc: "API REST Async với tài liệu OpenAPI tự động", icon: Zap },
+                                { name: "Uvicorn", desc: "Máy chủ ASGI với hỗ trợ tải lại nóng", icon: Server },
+                                { name: "Pydantic", desc: "Xác thực và tuần tự hóa dữ liệu", icon: CheckCircle },
+                                { name: "python-multipart", desc: "Xử lý tải lên tệp", icon: FileUp },
+                                { name: "CORS Middleware", desc: "Yêu cầu chéo nguồn từ frontend React", icon: Globe }
                             ]}
                         />
                     </div>
@@ -293,52 +410,52 @@ export default function ArchitecturePage() {
 
                 {/* Security Considerations */}
                 <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Security & Best Practices</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Bảo mật & Thực tiễn tốt nhất</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-green-50 rounded-lg p-6 border-l-4 border-green-600 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            <h3 className="font-bold text-green-900 mb-3">Implemented</h3>
+                            <h3 className="font-bold text-green-900 mb-3">Đã triển khai</h3>
                             <ul className="space-y-2 text-sm text-gray-700">
                                 <li className="flex items-start">
                                     <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
-                                    File size limits (20MB frontend, configurable backend)
+                                    Giới hạn kích thước tệp (frontend 20MB, backend có thể cấu hình)
                                 </li>
                                 <li className="flex items-start">
                                     <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
-                                    EXIF tag whitelisting để prevent metadata injection
+                                    Danh sách cho phép thẻ EXIF để ngăn chặn injection metadata
                                 </li>
                                 <li className="flex items-start">
                                     <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
-                                    Path traversal prevention trong file operations
+                                    Ngăn chặn path traversal trong các thao tác tệp
                                 </li>
                                 <li className="flex items-start">
                                     <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
-                                    Input validation với comprehensive error handling
+                                    Xác thực đầu vào với xử lý lỗi toàn diện
                                 </li>
                                 <li className="flex items-start">
                                     <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
-                                    Temporary file cleanup after downloads
+                                    Dọn dẹp tệp tạm thời sau khi tải xuống
                                 </li>
                                 <li className="flex items-start">
                                     <CheckCircle className="w-4 h-4 text-green-600 mr-2 mt-1 flex-shrink-0" />
-                                    Logging for audit trails
+                                    Ghi nhật ký cho các vết kiểm toán
                                 </li>
                             </ul>
                         </div>
                         <div className="bg-yellow-50 rounded-lg p-6 border-l-4 border-yellow-600 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            <h3 className="font-bold text-yellow-900 mb-3">Future Enhancements</h3>
+                            <h3 className="font-bold text-yellow-900 mb-3">Cải tiến trong tương lai</h3>
                             <ul className="space-y-2 text-sm text-gray-700">
-                                <li>• Authentication & authorization system</li>
-                                <li>• Rate limiting API endpoints</li>
-                                <li>• Encrypted storage cho uploaded files</li>
-                                <li>• API key management</li>
-                                <li>• Advanced logging với ELK stack</li>
-                                <li>• Container security với Docker</li>
+                                <li>• Hệ thống xác thực & ủy quyền</li>
+                                <li>• Giới hạn tốc độ các endpoint API</li>
+                                <li>• Lưu trữ mã hóa cho tệp đã tải lên</li>
+                                <li>• Quản lý khóa API</li>
+                                <li>• Ghi nhật ký nâng cao với ELK stack</li>
+                                <li>• Bảo mật container với Docker</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 
@@ -384,9 +501,11 @@ function WorkflowStep({ number, title, description, technical }) {
             <div className="ml-4 flex-1">
                 <h3 className="text-lg font-bold text-gray-900">{title}</h3>
                 <p className="text-gray-700 mb-2">{description}</p>
-                <p className="text-sm text-gray-600 bg-gray-50 rounded p-3 font-mono hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    {technical}
-                </p>
+                {technical && (
+                    <p className="text-sm text-gray-600 bg-gray-50 rounded p-3 font-mono hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                        {technical}
+                    </p>
+                )}
             </div>
         </div>
     );
@@ -427,6 +546,31 @@ function TechSection({ title, items }) {
                     );
                 })}
             </div>
+        </div>
+    );
+}
+
+function SectionTitle({ icon: Icon, title }) {
+    return (
+        <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
+            <Icon className="w-8 h-8 mr-3 text-blue-600" />
+            {title}
+        </h2>
+    );
+}
+
+function TechCard({ title, items, color }) {
+    return (
+        <div className={`${color} rounded-xl p-6 border border-blue-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}>
+            <h3 className="font-bold text-gray-900 mb-4">{title}</h3>
+            <ul className="space-y-2">
+                {items.map((item, idx) => (
+                    <li key={idx} className="flex items-center text-sm text-gray-700">
+                        <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-2"></div>
+                        {item}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

@@ -38,62 +38,62 @@ export default function Footer() {
                             <h3 className="text-lg font-bold">Steganalysis Pro</h3>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Advanced AI-powered steganography detection and comprehensive forensics analysis platform.
+                            Nền tảng phát hiện steganography bằng AI tiên tiến và phân tích forensics toàn diện.
                         </p>
                     </div>
 
                     {/* Features */}
                     <div>
-                        <h3 className="text-lg font-bold mb-4">Features</h3>
+                        <h3 className="text-lg font-bold mb-4">Tính năng</h3>
                         <ul className="space-y-2">
                             <FooterLink href="/#ai-detection">
-                                <Zap className="w-4 h-4 inline mr-2" /> AI Detection
+                                <Zap className="w-4 h-4 inline mr-2" /> Phát hiện AI
                             </FooterLink>
                             <FooterLink href="/#forensics">
-                                <Shield className="w-4 h-4 inline mr-2" /> Forensics Analysis
+                                <Shield className="w-4 h-4 inline mr-2" /> Phân tích Forensics
                             </FooterLink>
                             <FooterLink href="/#metadata">
-                                <Database className="w-4 h-4 inline mr-2" /> Metadata Extraction
+                                <Database className="w-4 h-4 inline mr-2" /> Trích xuất Metadata
                             </FooterLink>
                             <FooterLink href="/#strings">
-                                <Search className="w-4 h-4 inline mr-2" /> String Analysis
+                                <Search className="w-4 h-4 inline mr-2" /> Phân tích Chuỗi
                             </FooterLink>
                             <FooterLink href="/#visual">
-                                <Eye className="w-4 h-4 inline mr-2" /> Visual Forensics
+                                <Eye className="w-4 h-4 inline mr-2" /> Forensics Trực quan
                             </FooterLink>
                             <FooterLink href="/#superimposed">
-                                <Layers className="w-4 h-4 inline mr-2" /> Superimposed Layers
+                                <Layers className="w-4 h-4 inline mr-2" /> Phân tích Chồng lớp
                             </FooterLink>
                             <FooterLink href="/#lsb">
-                                <FileText className="w-4 h-4 inline mr-2" /> LSB Extraction
+                                <FileText className="w-4 h-4 inline mr-2" /> Trích xuất LSB
                             </FooterLink>
                         </ul>
                     </div>
 
                     {/* Resources */}
                     <div>
-                        <h3 className="text-lg font-bold mb-4">Resources</h3>
+                        <h3 className="text-lg font-bold mb-4">Tài nguyên</h3>
                         <ul className="space-y-2">
                             <FooterLink href="/guide">
-                                <Book className="w-4 h-4 inline mr-2" /> Documentation
+                                <Book className="w-4 h-4 inline mr-2" /> Tài liệu
                             </FooterLink>
                             <FooterLink href="https://github.com" target="_blank">
                                 <Github className="w-4 h-4 inline mr-2" /> GitHub
                             </FooterLink>
                             <FooterLink href="http://localhost:8000/docs" target="_blank">
-                                <Code className="w-4 h-4 inline mr-2" /> API Reference
+                                <Code className="w-4 h-4 inline mr-2" /> Tài liệu API
                             </FooterLink>
                             <FooterLink href="/architecture">
-                                <Server className="w-4 h-4 inline mr-2" /> Architecture
+                                <Server className="w-4 h-4 inline mr-2" /> Kiến trúc
                             </FooterLink>
                         </ul>
                     </div>
 
                     {/* Support - Newsletter */}
                     <div>
-                        <h3 className="text-lg font-bold mb-4">Support</h3>
+                        <h3 className="text-lg font-bold mb-4">Hỗ trợ</h3>
                         <p className="text-gray-400 text-sm mb-3">
-                            Subscribe for updates and news
+                            Đăng ký để nhận cập nhật mới nhất
                         </p>
                         <form onSubmit={handleSubscribe} className="space-y-2">
                             <div className="relative">
@@ -101,7 +101,7 @@ export default function Footer() {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Enter your email"
+                                    placeholder="Nhập email của bạn"
                                     className={clsx(
                                         "w-full px-4 py-2 pr-10 bg-gray-800 border rounded-lg text-white placeholder-gray-500 transition-all",
                                         subscribed
@@ -126,12 +126,12 @@ export default function Footer() {
                                 {subscribed ? (
                                     <>
                                         <CheckCircle className="w-5 h-5 mr-2" />
-                                        Subscribed!
+                                        Đã đăng ký!
                                     </>
                                 ) : (
                                     <>
                                         <Send className="w-5 h-5 mr-2" />
-                                        Subscribe
+                                        Đăng ký
                                     </>
                                 )}
                             </button>
@@ -149,7 +149,7 @@ export default function Footer() {
                             <TechBadge>Python</TechBadge>
                         </div>
                         <div className="text-sm text-gray-400">
-                            © {currentYear} Steganalysis Pro. All rights reserved.
+                            © {currentYear} Steganalysis Pro. Đã đăng ký bản quyền.
                         </div>
                     </div>
                 </div>

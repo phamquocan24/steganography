@@ -9,31 +9,34 @@ class ImagePreprocessor:
     def preprocess(image_bytes: bytes) -> np.ndarray:
         """
         Preprocess image for model inference.
-        CRITICAL: Use PIL to ensure compatibility with standard Training Pipelines.
+        MATCHES TRAINING PIPELINE EXACTLY.
         
-        Steps:
-        1. Read Image with PIL (Handles EXIF rotation automatically).
-        2. Convert to RGB.
-        3. Resize using BILINEAR (Matches Notebook training params).
-        4. Convert to float32 [0, 255].
+        Training notebook _parse_image_function (Step 6):
+        1. tf.io.decode_image(channels=3)
+        2. tf.cast(tf.float32)           -> Keep [0, 255]
+        3. image.set_shape([None,None,3])
+        4. tf.image.resize(image, (224, 224))  <- BILINEAR RESIZE, NOT crop_or_pad!
+        5. tf.ensure_shape(image, (224, 224, 3))
+        
+        KEY: TFRecord stores RAW image bytes (no pre-resize).
+        resize() is applied at training load time - must match here.
         """
-        if isinstance(image_bytes, bytes):
-            image = Image.open(io.BytesIO(image_bytes))
-        else:
-            image = image_bytes
-            
-        # Ensure RGB (removes Alpha channel if PNG)
-        if image.mode != "RGB":
-            image = image.convert("RGB")
-            
-        # Resize using BILINEAR (Standard for most training pipelines)
-        target_size = settings.MODEL_INPUT_SHAPE[:2]
-        image = image.resize(target_size, Image.BILINEAR)
+        # Decode (Auto-detects format: BMP, GIF, JPEG, PNG)
+        img = tf.io.decode_image(image_bytes, channels=3, expand_animations=False)
         
-        # Convert to numpy float32 [0, 255]
-        img_array = np.array(image, dtype=np.float32)
+        # Cast to float32 [0-255] - matches: tf.cast(image, tf.float32)
+        img = tf.cast(img, tf.float32)
+        
+        # EXACT MATCH with training: tf.image.resize(image, img_size)
+        # img_size = (224, 224), default method = bilinear
+        # DO NOT use resize_with_crop_or_pad - that was a mistake!
+        target_height, target_width = settings.MODEL_INPUT_SHAPE[:2]
+        img = tf.image.resize(img, [target_height, target_width])
+        
+        # ensure_shape equivalent: shape is now fixed (224, 224, 3)
+        img = tf.ensure_shape(img, (target_height, target_width, 3))
         
         # Add batch dimension -> (1, 224, 224, 3)
-        img_batch = np.expand_dims(img_array, axis=0)
+        img_batch = tf.expand_dims(img, axis=0)
         
-        return img_batch
+        return img_batch.numpy()

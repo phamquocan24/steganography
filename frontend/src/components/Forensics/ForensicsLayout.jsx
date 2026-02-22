@@ -29,10 +29,10 @@ export default function ForensicsLayout() {
     });
 
     const tabs = [
-        { id: 'metadata', label: 'Metadata', icon: FileSearch },
-        { id: 'strings', label: 'Strings', icon: FileSearch },
-        { id: 'visual', label: 'Visual Analysis', icon: Layers },
-        { id: 'lsb', label: 'LSB Extraction', icon: Binary }
+        { id: 'metadata', label: 'Siêu dữ liệu', icon: FileSearch },
+        { id: 'strings', label: 'Chuỗi ký tự', icon: FileSearch },
+        { id: 'visual', label: 'Phân tích trực quan', icon: Layers },
+        { id: 'lsb', label: 'Trích xuất LSB', icon: Binary }
     ];
 
     const handleFileChange = (e) => {
@@ -47,7 +47,7 @@ export default function ForensicsLayout() {
 
     const analyzeModule = async (module) => {
         if (!file) {
-            setError('Please upload an image first');
+            setError('Vui lòng tải ảnh lên trước');
             return;
         }
 
@@ -80,7 +80,7 @@ export default function ForensicsLayout() {
 
     const analyzeAll = async () => {
         if (!file) {
-            setError('Please upload an image first');
+            setError('Vui lòng tải ảnh lên trước');
             return;
         }
 
@@ -112,10 +112,10 @@ export default function ForensicsLayout() {
                             <Shield className="w-8 h-8 text-blue-600 mr-3" />
                             <div>
                                 <h1 className="text-3xl font-bold text-gray-900">
-                                    Forensics Analysis
+                                    Phân tích điều tra số
                                 </h1>
                                 <p className="text-gray-600 mt-1">
-                                    Comprehensive image forensics and steganography detection
+                                    Phân tích điều tra hình ảnh và phát hiện giấu tin toàn diện
                                 </p>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ export default function ForensicsLayout() {
                                 ) : (
                                     <Play className="w-5 h-5 mr-2" />
                                 )}
-                                Analyze All
+                                Phân tích tất cả
                             </button>
                         )}
                     </div>
@@ -149,10 +149,10 @@ export default function ForensicsLayout() {
                                 )}>
                                     <Upload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
                                     <p className="text-sm text-gray-600 mb-2">
-                                        {file ? file.name : 'Click to upload image'}
+                                        {file ? file.name : 'Nhấp để tải ảnh lên'}
                                     </p>
                                     <p className="text-xs text-gray-500">
-                                        PNG, JPEG, BMP, GIF (Max 20MB)
+                                        PNG, JPEG, BMP, GIF (Tối đa 20MB)
                                     </p>
                                     <input
                                         type="file"
@@ -182,7 +182,7 @@ export default function ForensicsLayout() {
 
                 {/* Error Alert */}
                 {error && (
-                    <Alert severity="error" title="Analysis Error">
+                    <Alert severity="error" title="Lỗi phân tích">
                         {error}
                     </Alert>
                 )}
@@ -231,7 +231,7 @@ export default function ForensicsLayout() {
                                             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-flex items-center"
                                         >
                                             <Play className="w-5 h-5 mr-2" />
-                                            Analyze {tabs.find(t => t.id === activeTab)?.label}
+                                            Phân tích {tabs.find(t => t.id === activeTab)?.label}
                                         </button>
                                     </div>
                                 )}
@@ -265,8 +265,8 @@ function LoadingState() {
     return (
         <div className="text-center py-16">
             <Loader2 className="w-12 h-12 mx-auto text-blue-600 animate-spin mb-4" />
-            <p className="text-gray-600 font-medium">Analyzing image...</p>
-            <p className="text-sm text-gray-500 mt-2">This may take a few moments</p>
+            <p className="text-gray-600 font-medium">Đang phân tích ảnh...</p>
+            <p className="text-sm text-gray-500 mt-2">Việc này có thể mất vài phút</p>
         </div>
     );
 }
@@ -276,10 +276,10 @@ function EmptyState() {
         <div className="text-center py-16 text-gray-500">
             <Shield className="w-16 h-16 mx-auto mb-4 text-gray-400" />
             <h3 className="text-lg font-semibold text-gray-700 mb-2">
-                No Image Uploaded
+                Chưa tải ảnh lên
             </h3>
             <p className="text-sm">
-                Upload an image to begin forensic analysis
+                Tải ảnh lên để bắt đầu phân tích điều tra số
             </p>
         </div>
     );

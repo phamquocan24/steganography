@@ -123,7 +123,7 @@ export default function StringsViewer({ data }) {
         <div className="space-y-4">
             {/* Suspicious Findings */}
             {data.suspicious_findings && data.suspicious_findings.length > 0 && (
-                <Alert severity="warning" title={`${data.suspicious_findings.length} Suspicious Finding(s)`}>
+                <Alert severity="warning" title={`${data.suspicious_findings.length} Phát hiện đáng ngờ`}>
                     <div className="space-y-2">
                         {data.suspicious_findings.map((finding, idx) => (
                             <SuspiciousFinding key={idx} finding={finding} />
@@ -136,22 +136,22 @@ export default function StringsViewer({ data }) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatBox
                     icon={FileText}
-                    label="Total Strings"
+                    label="Tổng số chuỗi"
                     value={data.statistics?.total_strings || 0}
                 />
                 <StatBox
                     icon={Link}
-                    label="URLs Found"
+                    label="URL tìm thấy"
                     value={data.patterns?.url?.length || 0}
                     color={data.patterns?.url?.length > 0 ? 'orange' : 'gray'}
                 />
                 <StatBox
                     icon={Key}
-                    label="Secrets"
+                    label="Bí mật"
                     value={(data.patterns?.ctf_flag?.length || 0) + (data.patterns?.base64?.length || 0)}
                     color={(data.patterns?.ctf_flag?.length || 0) > 0 ? 'red' : 'green'}
                 /><StatBox
-                    label="Avg Length"
+                    label="Độ dài TB"
                     value={data.statistics?.average_length || 0}
                 />
             </div>
@@ -168,7 +168,7 @@ export default function StringsViewer({ data }) {
                                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                         )}
                     >
-                        Patterns
+                        Mẫu
                     </button>
                     <button
                         onClick={() => setViewMode('raw')}
@@ -179,7 +179,7 @@ export default function StringsViewer({ data }) {
                                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                         )}
                     >
-                        Raw Strings
+                        Chuỗi thô
                     </button>
                 </div>
 
@@ -187,7 +187,7 @@ export default function StringsViewer({ data }) {
                     <button
                         onClick={() => exportStrings('json')}
                         className="flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium"
-                        title="Export as JSON"
+                        title="Xuất JSON"
                     >
                         <Download className="w-4 h-4 mr-1" />
                         JSON
@@ -195,7 +195,7 @@ export default function StringsViewer({ data }) {
                     <button
                         onClick={() => exportStrings('txt')}
                         className="flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium"
-                        title="Export as Text"
+                        title="Xuất TXT"
                     >
                         <Download className="w-4 h-4 mr-1" />
                         TXT
@@ -222,12 +222,12 @@ export default function StringsViewer({ data }) {
 function PatternsView({ patterns }) {
     const patternTypes = [
         { key: 'url', icon: Link, label: 'URLs', color: 'blue' },
-        { key: 'email', icon: Mail, label: 'Emails', color: 'green' },
-        { key: 'ipv4', icon: Shield, label: 'IP Addresses', color: 'purple' },
-        { key: 'base64', icon: Key, label: 'Base64 Strings', color: 'yellow' },
-        { key: 'hex', label: 'Hex Strings', color: 'gray' },
-        { key: 'ctf_flag', icon: AlertTriangle, label: 'CTF Flags', color: 'red' },
-        { key: 'jwt', icon: Key, label: 'JWT Tokens', color: 'orange' }
+        { key: 'email', icon: Mail, label: 'Email', color: 'green' },
+        { key: 'ipv4', icon: Shield, label: 'Địa chỉ IP', color: 'purple' },
+        { key: 'base64', icon: Key, label: 'Chuỗi Base64', color: 'yellow' },
+        { key: 'hex', label: 'Chuỗi Hex', color: 'gray' },
+        { key: 'ctf_flag', icon: AlertTriangle, label: 'Cờ CTF', color: 'red' },
+        { key: 'jwt', icon: Key, label: 'Token JWT', color: 'orange' }
     ];
 
     const availablePatterns = patternTypes.filter(p =>
@@ -237,7 +237,7 @@ function PatternsView({ patterns }) {
     if (availablePatterns.length === 0) {
         return (
             <Alert severity="info">
-                No special patterns detected. Try viewing raw strings instead.
+                Không phát hiện mẫu đặc biệt nào. Hãy thử xem chuỗi thô.
             </Alert>
         );
     }
@@ -304,7 +304,7 @@ function Base64List({ items }) {
                 <div key={idx} className="bg-white p-3 rounded border border-gray-200">
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-xs font-semibold text-gray-600">
-                            Encoded ({item.decoded_length} bytes)
+                            Mã hóa ({item.decoded_length} bytes)
                         </span>
                         <span className={clsx(
                             "px-2 py-0.5 text-xs font-medium rounded",
@@ -320,7 +320,7 @@ function Base64List({ items }) {
                     </div>
                     {!item.is_binary && (
                         <>
-                            <div className="text-xs font-semibold text-gray-600 mb-1">Decoded:</div>
+                            <div className="text-xs font-semibold text-gray-600 mb-1">Giải mã:</div>
                             <div className="font-mono text-xs bg-blue-50 p-2 rounded overflow-x-auto">
                                 {item.decoded}
                             </div>
@@ -341,7 +341,7 @@ function RawStringsView({ strings, searchTerm, setSearchTerm, filter, setFilter 
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input
                         type="text"
-                        placeholder="Search strings..."
+                        placeholder="Tìm kiếm chuỗi..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
@@ -352,9 +352,9 @@ function RawStringsView({ strings, searchTerm, setSearchTerm, filter, setFilter 
                     onChange={(e) => setFilter(e.target.value)}
                     className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                    <option value="all">All</option>
-                    <option value="ascii">ASCII Only</option>
-                    <option value="utf8">UTF-8 Only</option>
+                    <option value="all">Tất cả</option>
+                    <option value="ascii">Chỉ ASCII</option>
+                    <option value="utf8">Chỉ UTF-8</option>
                 </select>
             </div>
 
@@ -370,7 +370,7 @@ function RawStringsView({ strings, searchTerm, setSearchTerm, filter, setFilter 
                 ))}
                 {strings.length === 0 && (
                     <div className="text-center py-8 text-gray-500">
-                        No strings match your search
+                        Không có chuỗi nào khớp với tìm kiếm của bạn
                     </div>
                 )}
             </div>
@@ -433,7 +433,7 @@ function EmptyState() {
     return (
         <div className="text-center py-12 text-gray-500">
             <FileText className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-            <p>No strings data available</p>
+            <p>Không có dữ liệu chuỗi</p>
         </div>
     );
 }

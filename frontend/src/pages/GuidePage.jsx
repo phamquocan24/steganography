@@ -11,12 +11,12 @@ export default function GuidePage() {
 
     const sections = [
         { id: 'getting-started', label: 'Getting Started', icon: Play },
-        { id: 'ai-detection', label: 'AI Detection', icon: Zap },
-        { id: 'metadata', label: 'Metadata Analysis', icon: Database },
-        { id: 'strings', label: 'String Extraction', icon: Search },
-        { id: 'visual', label: 'Visual Analysis', icon: Image },
-        { id: 'superimposed', label: 'Superimposed Analysis', icon: Layers },
-        { id: 'lsb', label: 'LSB Extraction', icon: Binary },
+        { id: 'ai-detection', label: 'Phát hiện AI', icon: Zap },
+        { id: 'metadata', label: 'Phân tích Metadata', icon: Database },
+        { id: 'strings', label: 'Trích xuất chuỗi', icon: Search },
+        { id: 'visual', label: 'Phân tích trực quan', icon: Image },
+        { id: 'superimposed', label: 'Phân tích chồng lớp', icon: Layers },
+        { id: 'lsb', label: 'Trích xuất LSB', icon: Binary },
     ];
 
     return (
@@ -27,7 +27,7 @@ export default function GuidePage() {
                     <div className="flex items-center mb-4">
                         <Book className="w-12 h-12 mr-4" />
                         <div>
-                            <h1 className="text-5xl font-bold mb-2">User Guide & Documentation</h1>
+                            <h1 className="text-5xl font-bold mb-2">Hướng dẫn Người dùng & Tài liệu</h1>
                             <p className="text-xl text-blue-100">
                                 Hướng dẫn chi tiết sử dụng tất cả tính năng của Steganalysis Pro
                             </p>
@@ -39,7 +39,7 @@ export default function GuidePage() {
                     {/* Sidebar Navigation */}
                     <div className="md:col-span-1">
                         <div className="bg-white rounded-xl p-4 shadow-lg sticky top-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            <h3 className="font-bold text-gray-900 mb-4">Contents</h3>
+                            <h3 className="font-bold text-gray-900 mb-4">Mục lục</h3>
                             <nav className="space-y-2">
                                 {sections.map(section => (
                                     <button
@@ -80,51 +80,51 @@ export default function GuidePage() {
 function GettingStarted() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Getting Started</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Bắt đầu</h2>
 
             <div className="bg-blue-50 rounded-lg p-6 mb-6 border-l-4 border-blue-600 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Welcome!</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Chào mừng!</h3>
                 <p className="text-gray-700">
                     Steganalysis Pro là nền tảng phát hiện steganography và phân tích forensics toàn diện.
                     Hướng dẫn này sẽ giúp bạn sử dụng hiệu quả tất cả các tính năng.
                 </p>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Step-by-Step Guide</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Hướng dẫn từng bước</h3>
 
-            <Step number={1} title="Upload Your Image">
+            <Step number={1} title="Tải ảnh lên">
                 <ul className="list-disc list-inside space-y-2 text-gray-700 mt-3">
-                    <li>Click vào "Upload Image" area để chọn file</li>
-                    <li>Hoặc drag & drop image trực tiếp vào khung</li>
-                    <li>Supported formats: PNG, JPEG, BMP, GIF</li>
-                    <li>Maximum size: 20MB</li>
-                    <li>Preview sẽ hiện ngay sau khi upload</li>
+                    <li>Nhấp vào khu vực "Tải ảnh lên" để chọn tệp</li>
+                    <li>Hoặc kéo & thả ảnh trực tiếp vào khung</li>
+                    <li>Định dạng hỗ trợ: PNG, JPEG, BMP, GIF</li>
+                    <li>Kích thước tối đa: 20MB</li>
+                    <li>Bản xem trước sẽ hiện ngay sau khi tải lên</li>
                 </ul>
             </Step>
 
-            <Step number={2} title="Choose Analysis Type">
+            <Step number={2} title="Chọn loại phân tích">
                 <div className="mt-3 space-y-3">
                     <div className="bg-gray-50 rounded p-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <strong className="text-blue-600">AI Detection:</strong>
+                        <strong className="text-cyan-600">Phát hiện AI:</strong>
                         <p className="text-sm text-gray-700 mt-1">
-                            Sử dụng deep learning models để phát hiện steganography. Nhanh và chính xác cao.
+                            Sử dụng các mô hình học sâu để phát hiện steganography. Nhanh và chính xác cao.
                         </p>
                     </div>
                     <div className="bg-gray-50 rounded p-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                        <strong className="text-cyan-600">Forensics Analysis:</strong>
+                        <strong className="text-cyan-600">Phân tích điều tra số (Forensics):</strong>
                         <p className="text-sm text-gray-700 mt-1">
-                            Phân tích chi tiết với 4 modules: Metadata, Strings, Visual, LSB. Cung cấp thông tin sâu.
+                            Phân tích chi tiết với 4 mô-đun: Metadata, Chuỗi ký tự, Trực quan, LSB. Cung cấp thông tin chuyên sâu.
                         </p>
                     </div>
                 </div>
             </Step>
 
-            <Step number={3} title="Review Results">
+            <Step number={3} title="Xem kết quả">
                 <ul className="list-disc list-inside space-y-2 text-gray-700 mt-3">
-                    <li>AI Detection: Xem prediction (Stego/Clean) và confidence score</li>
-                    <li>Forensics: Navigate qua các tabs để xem từng loại analysis</li>
-                    <li>Download extracted files nếu có</li>
-                    <li>Check history để xem lại các analyses trước</li>
+                    <li>Phát hiện AI: Xem dự đoán (Có tin giấu/Ảnh sạch) và điểm tin cậy</li>
+                    <li>Điều tra số: Chuyển qua các tab để xem từng loại phân tích</li>
+                    <li>Tải xuống các tệp đã trích xuất nếu có</li>
+                    <li>Kiểm tra lịch sử để xem lại các lần phân tích trước</li>
                 </ul>
             </Step>
 
@@ -132,12 +132,12 @@ function GettingStarted() {
                 <div className="flex items-start">
                     <AlertCircle className="w-6 h-6 text-yellow-600 mr-3 mt-1 flex-shrink-0" />
                     <div>
-                        <h4 className="font-bold text-yellow-900 mb-2">Pro Tips</h4>
+                        <h4 className="font-bold text-yellow-900 mb-2">Mẹo chuyên nghiệp</h4>
                         <ul className="list-disc list-inside space-y-1 text-sm text-yellow-900">
-                            <li>Sử dụng "Analyze All" trong Forensics để chạy tất cả modules cùng lúc</li>
-                            <li>LSB extraction hoạt động tốt nhất với PNG images</li>
-                            <li>Check metadata trước khi extract strings để tìm hints</li>
-                            <li>Visual analysis rất hữu ích cho low-level steganography</li>
+                            <li>Sử dụng "Phân tích tất cả" trong phần Điều tra số để chạy tất cả các mô-đun cùng lúc</li>
+                            <li>Trích xuất LSB hoạt động tốt nhất với ảnh PNG</li>
+                            <li>Kiểm tra siêu dữ liệu trước khi trích xuất chuỗi để tìm manh mối</li>
+                            <li>Phân tích trực quan rất hữu ích cho các kỹ thuật steganography mức thấp</li>
                         </ul>
                     </div>
                 </div>
@@ -149,72 +149,67 @@ function GettingStarted() {
 function AIDetectionGuide() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">AI Detection Module</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Mô-đun Phát hiện AI</h2>
 
             <p className="text-gray-700 mb-6">
-                AI Detection sử dụng 5 deep learning models đã được huấn luyện để phát hiện steganography
-                trong images với độ chính xác cao (lên đến 95.8%).
+                Phát hiện AI sử dụng 5 mô hình học sâu đã được huấn luyện để phát hiện steganography
+                trong ảnh với độ chính xác cao.
             </p>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Available Models</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Các mô hình khả dụng</h3>
 
             <ModelCard
-                name="ResNet50 (HPF Enabled)"
-                accuracy="95.8%"
-                description="Model mạnh nhất với 50-layer residual network. Sử dụng HPF preprocessing để tăng độ chính xác. Recommended cho production use."
-                useCases={["CTF competitions", "High-stakes analysis", "Research purposes"]}
+                name="ResNet50 (Bật HPF)"
+                description="Mô hình mạnh nhất với mạng residual 50 lớp. Sử dụng tiền xử lý HPF để tăng độ chính xác. Khuyên dùng cho sử dụng thực tế."
+                useCases={["Cuộc thi CTF", "Phân tích quan trọng", "Dự án nghiên cứu"]}
             />
 
             <ModelCard
-                name="MobileNetV2 (HPF Enabled)"
-                accuracy="94.2%"
-                description="Lightweight model tối ưu cho speed. Vẫn giữ accuracy cao nhờ HPF. Tốt cho real-time analysis."
-                useCases={["Quick scans", "Batch processing", "Mobile deployment"]}
+                name="MobileNetV2 (Bật HPF)"
+                description="Mô hình nhẹ tối ưu tốc độ. Vẫn giữ độ chính xác cao nhờ HPF. Tốt cho phân tích thời gian thực."
+                useCases={["Quét nhanh", "Xử lý hàng loạt", "Triển khai di động"]}
             />
 
             <ModelCard
-                name="VGG16 (HPF Enabled)"
-                accuracy="93.5%"
-                description="Classic deep network, stable và reliable. Good balance giữa accuracy và stability."
-                useCases={["General purpose", "Stable predictions", "Educational use"]}
+                name="VGG16 (Bật HPF)"
+                description="Mạng sâu cổ điển, ổn định và đáng tin cậy. Cân bằng tốt giữa độ chính xác và sự ổn định."
+                useCases={["Mục đích chung", "Dự đoán ổn định", "Sử dụng giáo dục"]}
             />
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">How to Use</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Cách sử dụng</h3>
 
             <GuideSteps>
-                <li>Upload image (PNG, JPEG, BMP recommended)</li>
-                <li>Select model từ dropdown (mặc định: ResNet50)</li>
-                <li>Click "Analyze Image" button</li>
+                <li>Tải ảnh lên (khuyên dùng PNG, JPEG, BMP)</li>
+                <li>Chọn mô hình từ danh sách (mặc định: ResNet50)</li>
+                <li>Nhấp nút "Chạy phát hiện AI"</li>
                 <li>Chờ kết quả (thường 1-3 giây)</li>
-                <li>Review prediction và confidence score</li>
+                <li>Xem dự đoán và điểm tin cậy</li>
             </GuideSteps>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Understanding Results</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Hiểu kết quả</h3>
 
             <ResultBox
                 type="stego"
-                confidence={87.5}
-                interpretation="Model detected steganography với high confidence. Recommended: Run forensics analysis để extract hidden data."
+                interpretation="Mô hình phát hiện steganography với độ tin cậy cao. Khuyên nghị: Chạy phân tích điều tra số để trích xuất dữ liệu ẩn."
             />
 
             <ResultBox
                 type="clean"
-                confidence={92.3}
-                interpretation="Image is likely clean (no steganography). Nhưng vẫn có thể check forensics for manual verification."
+                interpretation="Ảnh có thể là ảnh sạch (không có steganography). Nhưng vẫn có thể kiểm tra forensics để xác minh thủ công."
             />
 
             <div className="bg-blue-50 rounded-lg p-6 mt-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <h4 className="font-bold text-blue-900 mb-3 flex items-center">
                     <Info className="w-5 h-5 mr-2" />
-                    What is HPF?
+                    HPF là gì?
                 </h4>
                 <p className="text-sm text-blue-900 mb-2">
-                    <strong>High-Pass Filter (HPF)</strong> là preprocessing technique loại bỏ low-frequency
-                    components (nội dung ảnh) và giữ lại high-frequency components (noise, textures).
+                    <strong>High-Pass Filter (HPF)</strong> là kỹ thuật tiền xử lý loại bỏ các thành phần tần số thấp
+                    (nội dung ảnh) và giữ lại các thành phần tần số cao (nhiễu, kết cấu).
                 </p>
                 <p className="text-sm text-blue-900">
-                    Steganography thường thay đổi LSBs, tạo ra high-frequency noise. HPF giúp model
-                    "nhìn thấy" những thay đổi này rõ hơn, tăng accuracy đáng kể (5-8%).
+                    Steganography thường thay đổi các LSB, tạo ra nhiễu tần số cao. HPF giúp mô hình
+                    "nhìn thấy" những thay đổi này rõ hơn, tăng độ chính xác đáng kể (5-8%).
                 </p>
             </div>
         </div>
@@ -224,56 +219,56 @@ function AIDetectionGuide() {
 function MetadataGuide() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Metadata Analysis</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Phân tích Metadata</h2>
 
             <p className="text-gray-700 mb-6">
-                Metadata là thông tin "ẩn" trong file image, bao gồm EXIF data, GPS coordinates, comments,
-                và software info. Attackers thường giấu data trong các field này.
+                Metadata là thông tin "ẩn" trong tệp hình ảnh, bao gồm dữ liệu EXIF, tọa độ GPS, bình luận,
+                và thông tin phần mềm. Kẻ tấn công thường giấu dữ liệu trong các trường này.
             </p>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">What Gets Extracted?</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Dữ liệu được trích xuất?</h3>
 
             <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <DataTypeCard
-                    title="Basic Information"
-                    items={["File format", "Dimensions (width × height)", "Color mode (RGB, grayscale)", "File size"]}
+                    title="Thông tin cơ bản"
+                    items={["Định dạng tệp", "Kích thước (rộng × cao)", "Chế độ màu (RGB, thang độ xám)", "Dung lượng tệp"]}
                 />
                 <DataTypeCard
-                    title="EXIF Data"
-                    items={["Camera make & model", "Capture datetime", "Exposure settings (ISO, shutter, aperture)", "Software used"]}
+                    title="Dữ liệu EXIF"
+                    items={["Hãng & mẫu máy ảnh", "Thời gian chụp", "Thiết lập phơi sáng (ISO, tốc độ, khẩu độ)", "Phần mềm sử dụng"]}
                 />
                 <DataTypeCard
-                    title="GPS Coordinates"
-                    items={["Latitude & longitude", "Altitude", "Timestamp", "Google Maps link"]}
+                    title="Tọa độ GPS"
+                    items={["Vĩ độ & kinh độ", "Độ cao", "Mốc thời gian", "Liên kết Google Maps"]}
                 />
                 <DataTypeCard
-                    title="Comments & Custom Fields"
-                    items={["User comments", "Artist info", "Copyright", "Custom metadata fields"]}
+                    title="Bình luận & Trường tùy chỉnh"
+                    items={["Bình luận người dùng", "Thông tin nghệ sĩ", "Bản quyền", "Trường metadata tùy chỉnh"]}
                 />
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Suspicious Pattern Detection</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Phát hiện mẫu đáng ngờ</h3>
 
             <p className="text-gray-700 mb-4">
-                System tự động detect các patterns đáng ngờ:
+                Hệ thống tự động phát hiện các mẫu đáng ngờ:
             </p>
 
             <SuspiciousPatternList>
-                <li><strong>Long Comments:</strong> Comments &gt; 200 characters (có thể chứa encoded data)</li>
-                <li><strong>CTF Flags:</strong> Patterns như CTF{"{"}, FLAG{"{"}, flag{"{"}</li>
-                <li><strong>URLs:</strong> Hidden links trong metadata</li>
-                <li><strong>Base64 Strings:</strong> Encoded data trong comments/descriptions</li>
-                <li><strong>Excessive Metadata:</strong> Quá nhiều custom fields (&gt;30)</li>
+                <li><strong>Bình luận dài:</strong> Bình luận &gt; 200 ký tự (có thể chứa dữ liệu mã hóa)</li>
+                <li><strong>Cờ CTF:</strong> Các mẫu như CTF{"{"}, FLAG{"{"}, flag{"{"}</li>
+                <li><strong>URLs:</strong> Liên kết ẩn trong metadata</li>
+                <li><strong>Chuỗi Base64:</strong> Dữ liệu mã hóa trong bình luận/mô tả</li>
+                <li><strong>Metadata quá nhiều:</strong> Quá nhiều trường tùy chỉnh (&gt;30)</li>
             </SuspiciousPatternList>
 
             <div className="bg-green-50 rounded-lg p-6 mt-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <h4 className="font-bold text-green-900 mb-3">✅ Best Practices</h4>
+                <h4 className="font-bold text-green-900 mb-3">✅ Thực tiễn tốt nhất</h4>
                 <ul className="list-disc list-inside space-y-2 text-sm text-green-900">
-                    <li>Always check GPS tab - attackers often hide coords</li>
-                    <li>Read all comments carefully</li>
-                    <li>Cross-reference camera info với image content</li>
-                    <li>Check for unusual software names</li>
-                    <li>Export metadata for documentation</li>
+                    <li>Luôn kiểm tra tab GPS - kẻ tấn công thường giấu tọa độ</li>
+                    <li>Đọc kỹ tất cả bình luận</li>
+                    <li>Đối chiếu thông tin máy ảnh với nội dung ảnh</li>
+                    <li>Kiểm tra tên phần mềm bất thường</li>
+                    <li>Xuất metadata để làm tài liệu</li>
                 </ul>
             </div>
         </div>
@@ -283,25 +278,25 @@ function MetadataGuide() {
 function StringsGuide() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">String Extraction</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Trích xuất chuỗi ký tự</h2>
 
             <p className="text-gray-700 mb-6">
-                String extraction reads image file as raw bytes và searches for readable text strings.
-                Rất hiệu quả cho plaintext steganography và embedded messages.
+                Trích xuất chuỗi đọc tệp hình ảnh dưới dạng byte thô và tìm kiếm các chuỗi văn bản có thể đọc được.
+                Rất hiệu quả cho steganography văn bản thuần túy và tin nhắn nhúng.
             </p>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Supported Encodings</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Bảng mã hỗ trợ</h3>
 
             <div className="grid md:grid-cols-3 gap-4 mb-6">
-                <EncodingCard name="ASCII" desc="Standard 7-bit characters (a-z, 0-9)" />
-                <EncodingCard name="UTF-8" desc="Universal encoding, supports emojis, tiếng Việt" />
-                <EncodingCard name="UTF-16" desc="16-bit encoding, often used by Windows" />
+                <EncodingCard name="ASCII" desc="Ký tự 7-bit chuẩn (a-z, 0-9)" />
+                <EncodingCard name="UTF-8" desc="Bảng mã phổ biến, hỗ trợ emoji, tiếng Việt" />
+                <EncodingCard name="UTF-16" desc="Bảng mã 16-bit, thường dùng bởi Windows" />
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Pattern Matching</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Khớp mẫu</h3>
 
             <p className="text-gray-700 mb-4">
-                System tự động detect 7 loại patterns:
+                Hệ thống tự động phát hiện 7 loại mẫu:
             </p>
 
             <PatternGrid>
@@ -314,10 +309,10 @@ function StringsGuide() {
                 <PatternItem icon="🔑" name="JWT Tokens" example="eyJhbGciOiJIUzI1..." />
             </PatternGrid>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Base64 Auto-Decoding</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Tự động giải mã Base64</h3>
 
             <p className="text-gray-700 mb-4">
-                Khi detect được base64 strings, system tự động attempt decode và hiển thị:
+                Khi phát hiện chuỗi base64, hệ thống tự động thử giải mã và hiển thị:
             </p>
 
             <div className="bg-gray-50 rounded-lg p-4 mb-4 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
@@ -330,14 +325,14 @@ function StringsGuide() {
                 <p className="text-xs text-gray-600 mt-2">Confidence: High | Is Binary: No</p>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Search & Filter</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Tìm kiếm & Lọc</h3>
 
             <GuideSteps>
-                <li>Use search box để find specific strings</li>
-                <li>Filter by encoding (ASCII, UTF-8, All)</li>
-                <li>Toggle between "Patterns View" và "Raw Strings"</li>
-                <li>Click on string để view context</li>
-                <li>Copy findings để document</li>
+                <li>Sử dụng hộp tìm kiếm để tìm chuỗi cụ thể</li>
+                <li>Lọc theo bảng mã (ASCII, UTF-8, Tất cả)</li>
+                <li>Chuyển đổi giữa "Xem theo mẫu" và "Chuỗi thô"</li>
+                <li>Nhấp vào chuỗi để xem ngữ cảnh</li>
+                <li>Sao chép kết quả để làm tài liệu</li>
             </GuideSteps>
         </div>
     );
@@ -346,73 +341,74 @@ function StringsGuide() {
 function VisualGuide() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Visual Analysis</h2>
+
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Phân tích trực quan</h2>
 
             <p className="text-gray-700 mb-6">
-                Visual Analysis sử dụng computer vision techniques để phân tích image ở level thấp,
-                revealing hidden patterns invisible to human eyes.
+                Phân tích trực quan sử dụng các kỹ thuật thị giác máy tính để phân tích hình ảnh ở mức thấp,
+                tiết lộ các mẫu ẩn mà mắt thường không thấy được.
             </p>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Channel Decomposition</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Phân tách kênh màu</h3>
 
             <p className="text-gray-700 mb-4">
-                Tách image thành các color channels riêng biệt:
+                Tách hình ảnh thành các kênh màu riêng biệt:
             </p>
 
             <div className="grid md:grid-cols-4 gap-4 mb-6">
-                <ChannelCard name="Red" color="bg-red-100 text-red-700" />
-                <ChannelCard name="Green" color="bg-green-100 text-green-700" />
-                <ChannelCard name="Blue" color="bg-blue-100 text-blue-700" />
+                <ChannelCard name="Đỏ (Red)" color="bg-red-100 text-red-700" />
+                <ChannelCard name="Lục (Green)" color="bg-green-100 text-green-700" />
+                <ChannelCard name="Lam (Blue)" color="bg-blue-100 text-blue-700" />
                 <ChannelCard name="Alpha" color="bg-gray-100 text-gray-700" />
             </div>
 
             <div className="bg-blue-50 rounded-lg p-6 mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <strong className="text-blue-900">Why This Matters:</strong>
+                <strong className="text-blue-900">Tại sao điều này quan trọng:</strong>
                 <p className="text-sm text-blue-900 mt-2">
-                    Steganography thường chỉ modify một channel cụ thể. Decomposition giúp identify
-                    channel nào có anomalies.
+                    Steganography thường chỉ chỉnh sửa một kênh cụ thể. Phân tách giúp xác định
+                    kênh nào có bất thường.
                 </p>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Bit Plane Extraction</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Trích xuất Bit Plane</h3>
 
             <p className="text-gray-700 mb-4">
-                Mỗi pixel có 8 bits (0-7). Bit plane extraction visualizes từng bit level:
+                Mỗi pixel có 8 bit (0-7). Trích xuất bit plane hiển thị trực quan từng mức bit:
             </p>
 
             <BitPlaneExplanation />
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Anomaly Detection</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Phát hiện bất thường</h3>
 
             <p className="text-gray-700 mb-4">
-                System tự động detect 3 loại anomalies:
+                Hệ thống tự động phát hiện 3 loại bất thường:
             </p>
 
             <AnomalyList>
                 <li>
-                    <strong>High LSB Entropy:</strong> LSB layers có randomness cao (entropy &gt; 0.95)
-                    → Possible steganography
+                    <strong>Entropy LSB cao:</strong> Các lớp LSB có độ ngẫu nhiên cao (entropy &gt; 0.95)
+                    → Khả năng có steganography
                 </li>
                 <li>
-                    <strong>Non-Random LSB Patterns:</strong> LSB không random nhưng có patterns
-                    → Structured hidden data
+                    <strong>Mẫu LSB không ngẫu nhiên:</strong> LSB không ngẫu nhiên nhưng có các mẫu
+                    → Dữ liệu ẩn có cấu trúc
                 </li>
                 <li>
-                    <strong>Low Channel Correlation:</strong> Channels không correlate normally
-                    → Manual modifications
+                    <strong>Tương quan kênh thấp:</strong> Các kênh không tương quan bình thường
+                    → Chỉnh sửa thủ công
                 </li>
             </AnomalyList>
 
             <div className="bg-yellow-50 rounded-lg p-6 mt-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <h4 className="font-bold text-yellow-900 mb-3 flex items-center">
                     <AlertCircle className="w-5 h-5 mr-2" />
-                    Interpretation Guide
+                    Hướng dẫn diễn giải
                 </h4>
                 <ul className="list-disc list-inside space-y-2 text-sm text-yellow-900">
-                    <li>Green alerts = Normal patterns, low risk</li>
-                    <li>Yellow alerts = Moderate anomalies, worth investigating</li>
-                    <li>Red alerts = Strong indicators, high confidence stego</li>
-                    <li>Check histogram spikes for LSB manipulation</li>
+                    <li>Cảnh báo xanh = Mẫu bình thường, rủi ro thấp</li>
+                    <li>Cảnh báo vàng = Bất thường trung bình, đáng để điều tra</li>
+                    <li>Cảnh báo đỏ = Dấu hiệu mạnh, độ tin cậy stego cao</li>
+                    <li>Kiểm tra các gai biểu đồ histogram để tìm sự thao túng LSB</li>
                 </ul>
             </div>
         </div>
@@ -422,106 +418,107 @@ function VisualGuide() {
 function SuperimposedGuide() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">Superimposed Analysis</h2>
+
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Phân tích chồng lớp</h2>
 
             <div className="bg-cyan-50 rounded-lg p-6 mb-6 border-l-4 border-cyan-600">
                 <h3 className="text-xl font-semibold text-gray-900 mb-3 flex items-center">
                     <Layers className="w-6 h-6 mr-2 text-cyan-600" />
-                    What is Superimposed Analysis?
+                    Phân tích chồng lớp là gì?
                 </h3>
                 <p className="text-gray-700">
-                    Superimposed analysis overlays (chồng) multiple color channels hoặc bit planes lại với nhau
-                    để phát hiện hidden patterns mà không thể thấy khi xem riêng lẻ từng thành phần.
+                    Phân tích chồng lớp phủ (chồng) nhiều kênh màu hoặc các bit plane lại với nhau
+                    để phát hiện các mẫu ẩn mà không thể thấy khi xem riêng lẻ từng thành phần.
                 </p>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">How It Works</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Cách hoạt động</h3>
 
             <div className="grid md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 hover-lift">
-                    <h4 className="font-bold text-blue-900 mb-2">Channel Superposition</h4>
+                    <h4 className="font-bold text-blue-900 mb-2">Chồng lớp kênh màu</h4>
                     <p className="text-sm text-gray-700">
-                        Kết hợp nhiều color channels (R, G, B) thành một ảnh duy nhất bằng các blend modes
-                        như average, max, hoặc XOR.
+                        Kết hợp nhiều kênh màu (R, G, B) thành một ảnh duy nhất bằng các chế độ hòa trộn
+                        như trung bình, tối đa, hoặc XOR.
                     </p>
                 </div>
                 <div className="bg-purple-50 p-4 rounded-lg border border-purple-200 hover-lift">
-                    <h4 className="font-bold text-purple-900 mb-2">Bit Plane Superposition</h4>
+                    <h4 className="font-bold text-purple-900 mb-2">Chồng lớp Bit Plane</h4>
                     <p className="text-sm text-gray-700">
-                        Overlay nhiều bit planes (0-7) để tạo combined image từ LSB hoặc MSB layers,
-                        revealing hidden data patterns.
+                        Phủ nhiều bit plane (0-7) để tạo ảnh kết hợp từ các lớp LSB hoặc MSB,
+                        tiết lộ các mẫu dữ liệu ẩn.
                     </p>
                 </div>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Configuration</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Cấu hình</h3>
 
             <ConfigOption
-                name="Analysis Mode"
-                description="Choose what to analyze"
-                options={['Channels Only', 'Bit Planes Only', 'Both (Recommended)']}
+                name="Chế độ phân tích"
+                description="Chọn nội dung để phân tích"
+                options={['Chỉ kênh màu', 'Chỉ Bit Planes', 'Cả hai (Khuyên dùng)']}
             />
 
             <ConfigOption
-                name="Channels to Superimpose"
-                description="Select color channels"
-                options={['R (Red)', 'G (Green)', 'B (Blue)', 'All RGB']}
+                name="Kênh cần chồng lớp"
+                description="Chọn các kênh màu"
+                options={['R (Đỏ)', 'G (Lục)', 'B (Lam)', 'Tất cả RGB']}
             />
 
             <ConfigOption
                 name="Bit Planes"
-                description="Select which bit positions (0=LSB, 7=MSB)"
-                options={['0-2 (LSB recommended)', '3-5 (Mid planes)', '6-7 (MSB)']}
+                description="Chọn vị trí bit (0=LSB, 7=MSB)"
+                options={['0-2 (LSB - khuyên dùng)', '3-5 (Mid planes)', '6-7 (MSB)']}
             />
 
             <ConfigOption
-                name="Blend Mode"
-                description="How to combine layers"
+                name="Chế độ hòa trộn (Blend Mode)"
+                description="Cách kết hợp các lớp"
                 options={[
-                    'Average - Mean of all selected',
-                    'Max - Maximum value',
-                    'XOR - Bitwise XOR (detects differences)'
+                    'Trung bình - Trung bình cộng của tất cả',
+                    'Tối đa - Giá trị lớn nhất',
+                    'XOR - Bitwise XOR (phát hiện sự khác biệt)'
                 ]}
             />
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Understanding Results</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Hiểu kết quả</h3>
 
             <ResultsGuide>
                 <ResultItem
-                    title="Channel Superposition Images"
-                    description="Xem combined images từ R+G+B hoặc các combinations khác. Tìm visible patterns, text, hoặc watermarks."
+                    title="Ảnh chồng lớp kênh màu"
+                    description="Xem ảnh kết hợp từ R+G+B hoặc các tổ hợp khác. Tìm các mẫu hiển thị, văn bản, hoặc hình mờ."
                 />
                 <ResultItem
-                    title="Bit Plane Overlays"
-                    description="Images kết hợp từ nhiều bit planes. LSB combinations thường reveal hidden data."
+                    title="Lớp phủ Bit Plane"
+                    description="Ảnh kết hợp từ nhiều bit plane. Các tổ hợp LSB thường tiết lộ dữ liệu ẩn."
                 />
                 <ResultItem
-                    title="Combined Analysis"
-                    description="Khi chọn 'Both', xem tổng hợp từ tất cả RGB LSB planes để phát hiện multi-layer hiding."
+                    title="Phân tích kết hợp"
+                    description="Khi chọn 'Cả hai', xem tổng hợp từ tất cả các lớp RGB LSB để phát hiện giấu tin đa lớp."
                 />
             </ResultsGuide>
 
             <div className="bg-yellow-50 rounded-lg p-6 mt-6 border-l-4 border-yellow-600">
                 <h4 className="font-bold text-yellow-900 mb-2 flex items-center">
                     <Info className="w-5 h-5 mr-2" />
-                    Pro Tips
+                    Mẹo chuyên nghiệp
                 </h4>
                 <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                    <li>Start with "Both" mode và LSB planes (0-2) cho general detection</li>
-                    <li>Use XOR blend mode để highlight differences between channels</li>
-                    <li>Tìm QR codes, text, hoặc geometric patterns trong combined images</li>
-                    <li>Compare với Visual Analysis results để understand layer structure</li>
-                    <li>Multi-channel hiding techniques sẽ reveal patterns khi superimposed</li>
+                    <li>Bắt đầu với chế độ "Cả hai" và các lớp LSB (0-2) để phát hiện tổng quát</li>
+                    <li>Sử dụng chế độ hòa trộn XOR để làm nổi bật sự khác biệt giữa các kênh</li>
+                    <li>Tìm mã QR, văn bản, hoặc các mẫu hình học trong ảnh kết hợp</li>
+                    <li>So sánh với kết quả Phân tích trực quan để hiểu cấu trúc lớp</li>
+                    <li>Các kỹ thuật giấu tin đa kênh sẽ lộ ra các mẫu khi chồng lớp</li>
                 </ul>
             </div>
 
             <div className="bg-green-50 rounded-lg p-6 mt-6 border-l-4 border-green-600">
-                <h4 className="font-bold text-green-900 mb-2">Use Cases</h4>
+                <h4 className="font-bold text-green-900 mb-2">Trường hợp sử dụng</h4>
                 <ul className="list-disc list-inside space-y-2 text-gray-700 text-sm">
-                    <li><strong>Watermark Detection:</strong> Hidden watermarks across multiple channels</li>
-                    <li><strong>CTF Challenges:</strong> Flags embedded using multi-layer techniques</li>
-                    <li><strong>Forensics:</strong> Detect sophisticated steganography methods</li>
-                    <li><strong>Research:</strong> Analyze advanced hiding algorithms</li>
+                    <li><strong>Phát hiện hình mờ:</strong> Hình mờ ẩn trên nhiều kênh</li>
+                    <li><strong>Thử thách CTF:</strong> Cờ được nhúng bằng kỹ thuật đa lớp</li>
+                    <li><strong>Điều tra số:</strong> Phát hiện các phương pháp steganography tinh vi</li>
+                    <li><strong>Nghiên cứu:</strong> Phân tích các thuật toán giấu tin tiên tiến</li>
                 </ul>
             </div>
         </div>
@@ -531,79 +528,80 @@ function SuperimposedGuide() {
 function LSBGuide() {
     return (
         <div className="prose max-w-none">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">LSB Extraction</h2>
+
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">Trích xuất LSB</h2>
 
             <p className="text-gray-700 mb-6">
-                LSB (Least Significant Bit) extraction reads the lowest bits of pixel values để extract
-                hidden data. Most common steganography technique.
+                Trích xuất LSB (Least Significant Bit) đọc các bit thấp nhất của giá trị pixel để trích xuất
+                dữ liệu ẩn. Kỹ thuật steganography phổ biến nhất.
             </p>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Configuration Options</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Tùy chọn cấu hình</h3>
 
             <ConfigOption
-                name="Channels"
-                description="Which color channels to extract from"
-                options={["RGB (All channels)", "R (Red only)", "G (Green only)", "B (Blue only)", "RG, RB, GB (Combinations)"]}
+                name="Kênh"
+                description="Trích xuất từ kênh màu nào"
+                options={["RGB (Tất cả kênh)", "R (Chỉ Đỏ)", "G (Chỉ Lục)", "B (Chỉ Lam)", "RG, RB, GB (Kết hợp)"]}
             />
 
             <ConfigOption
-                name="Bit Order"
-                description="Extract from least or most significant bits"
-                options={["LSB (Least Significant Bit) - Most common", "MSB (Most Significant Bit) - Less common"]}
+                name="Thứ tự Bit"
+                description="Trích xuất từ bit thấp nhất hay cao nhất"
+                options={["LSB (Bit trọng số thấp nhất) - Phổ biến nhất", "MSB (Bit trọng số cao nhất) - Ít phổ biến"]}
             />
 
             <ConfigOption
-                name="Bits per Channel"
-                description="How many bits to extract per channel (1-8)"
-                options={["1 bit: Subtle, less data", "2-3 bits: Balanced", "4+ bits: Visible distortion, more data"]}
+                name="Số Bit trên mỗi kênh"
+                description="Số bit trích xuất trên mỗi kênh (1-8)"
+                options={["1 bit: Tinh vi, ít dữ liệu", "2-3 bits: Cân bằng", "4+ bits: Biến dạng rõ, nhiều dữ liệu"]}
             />
 
             <ConfigOption
-                name="Max Bytes"
-                description="Maximum data to extract (safety limit)"
-                options={["256 KB - Quick test", "1 MB - Standard", "5+ MB - Deep extraction"]}
+                name="Dung lượng tối đa"
+                description="Dữ liệu tối đa để trích xuất (giới hạn an toàn)"
+                options={["256 KB - Kiểm tra nhanh", "1 MB - Tiêu chuẩn", "5+ MB - Trích xuất sâu"]}
             />
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Understanding Results</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Hiểu kết quả</h3>
 
             <ResultsGuide>
                 <ResultItem
-                    title="Confidence Score"
-                    description="0-100 score based on file signatures, text detection, entropy. >60 = Likely contains data."
+                    title="Điểm tin cậy"
+                    description="Điểm 0-100 dựa trên chữ ký tệp, phát hiện văn bản, entropy. >60 = Có khả năng chứa dữ liệu."
                 />
                 <ResultItem
-                    title="File Type Detection"
-                    description="System checks magic bytes để identify file type (ZIP, PNG, PDF, etc.)"
+                    title="Phát hiện loại tệp"
+                    description="Hệ thống kiểm tra magic bytes để xác định loại tệp (ZIP, PNG, PDF, v.v.)"
                 />
                 <ResultItem
-                    title="Text Decoding"
-                    description="Attempts decode as text in multiple encodings (UTF-8, ASCII, Latin-1)"
+                    title="Giải mã văn bản"
+                    description="Thử giải mã dưới dạng văn bản trong nhiều bảng mã (UTF-8, ASCII, Latin-1)"
                 />
                 <ResultItem
-                    title="Entropy Analysis"
-                    description="Measures randomness. High entropy = encrypted/compressed data."
+                    title="Phân tích Entropy"
+                    description="Đo độ ngẫu nhiên. Entropy cao = dữ liệu mã hóa/nén."
                 />
             </ResultsGuide>
 
-            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Best Practices</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-8">Thực tiễn tốt nhất</h3>
 
             <div className="bg-green-50 rounded-lg p-6 mb-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <h4 className="font-bold text-green-900 mb-3">✅ Recommended Workflow</h4>
+                <h4 className="font-bold text-green-900 mb-3">✅ Quy trình đề xuất</h4>
                 <ol className="list-decimal list-inside space-y-2 text-sm text-green-900">
-                    <li>Start với RGB channels, LSB, 1 bit per channel</li>
-                    <li>Nếu không detect anything, try individual channels (R, G, B)</li>
-                    <li>Increase bits per channel nếu cần more data</li>
-                    <li>Try MSB nếu LSB fails</li>
-                    <li>Always download extracted file để verify</li>
-                    <li>Check entropy - high entropy = likely meaningful data</li>
+                    <li>Bắt đầu với kênh RGB, LSB, 1 bit mỗi kênh</li>
+                    <li>Nếu không phát hiện gì, thử từng kênh riêng lẻ (R, G, B)</li>
+                    <li>Tăng số bit mỗi kênh nếu cần thêm dữ liệu</li>
+                    <li>Thử MSB nếu LSB thất bại</li>
+                    <li>Luôn tải xuống tệp đã trích xuất để xác minh</li>
+                    <li>Kiểm tra entropy - entropy cao = có khả năng là dữ liệu có ý nghĩa</li>
                 </ol>
             </div>
 
             <div className="bg-blue-50 rounded-lg p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <strong className="text-blue-900">💡 Pro Tip:</strong>
+                <strong className="text-blue-900">💡 Mẹo chuyên nghiệp:</strong>
                 <p className="text-sm text-blue-900 mt-2">
-                    Visual analysis trước để identify suspicious channels, sau đó target LSB extraction
-                    vào channel đó. Saves time và increases success rate.
+                    Phân tích trực quan trước để xác định các kênh đáng ngờ, sau đó nhắm mục tiêu trích xuất LSB
+                    vào kênh đó. Tiết kiệm thời gian và tăng tỷ lệ thành công.
                 </p>
             </div>
         </div>
@@ -625,14 +623,11 @@ function Step({ number, title, children }) {
     );
 }
 
-function ModelCard({ name, accuracy, description, useCases }) {
+function ModelCard({ name, description, useCases }) {
     return (
         <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 mb-4 border border-blue-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div className="flex justify-between items-start mb-3">
                 <h4 className="font-bold text-gray-900 text-lg">{name}</h4>
-                <span className="px-3 py-1 bg-green-600 text-white text-sm font-bold rounded-full">
-                    {accuracy}
-                </span>
             </div>
             <p className="text-sm text-gray-700 mb-3">{description}</p>
             <div>
@@ -653,16 +648,13 @@ function GuideSteps({ children }) {
     return <ol className="list-decimal list-inside space-y-2 text-gray-700 mb-6">{children}</ol>;
 }
 
-function ResultBox({ type, confidence, interpretation }) {
+function ResultBox({ type, interpretation }) {
     const isStego = type === 'stego';
     return (
         <div className={`rounded-lg p-6 mb-4 border-2 ${isStego ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}`}>
             <div className="flex justify-between items-center mb-3">
                 <span className={`font-bold text-lg ${isStego ? 'text-red-700' : 'text-green-700'}`}>
-                    Prediction: {isStego ? 'STEGO DETECTED' : 'CLEAN IMAGE'}
-                </span>
-                <span className="px-4 py-2 bg-gray-900 text-white rounded-full font-bold">
-                    {confidence}%
+                    Dự đoán: {isStego ? 'PHÁT HIỆN GIẤU TIN' : 'ẢNH SẠCH'}
                 </span>
             </div>
             <p className="text-sm text-gray-700">{interpretation}</p>

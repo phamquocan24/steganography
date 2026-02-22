@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Upload, Shield, Search, Play, Loader2, CheckCircle, AlertTriangle, Layers, Calendar, FileType, HardDrive, Maximize, Hash, Clock, Smartphone, Globe, Box, Lock, Code, ArrowLeft } from 'lucide-react';
+import { Upload, Shield, Search, Play, Loader2, CheckCircle, AlertTriangle, Layers, Calendar, FileType, HardDrive, Maximize, Hash, Clock, Smartphone, Globe, Box, Lock, Code, ArrowLeft, Database, Image as ImageIcon, Eye } from 'lucide-react';
 import { getModels, predictImage } from '../api';
 import { forensicsAPI } from '../services/forensics';
 import MetadataViewer from '../components/Forensics/MetadataViewer';
@@ -207,7 +207,7 @@ export default function HomePage({ addToast, onUpdateHistory }) {
             <div className="max-w-7xl mx-auto">
                 {/* Upload Section */}
                 <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Upload Image for Analysis</h2>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Tải ảnh lên để phân tích</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         {/* Left: Upload + Preview */}
                         <div className="space-y-4">
@@ -217,10 +217,10 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                     <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 hover:bg-blue-50 transition-all">
                                         <Upload className="w-12 h-12 mx-auto mb-3 text-gray-400" />
                                         <p className="text-sm text-gray-600 mb-2">
-                                            Click to upload image
+                                            Click để tải ảnh lên
                                         </p>
                                         <p className="text-xs text-gray-500">
-                                            PNG, JPEG, BMP, GIF (Max 20MB)
+                                            PNG, JPEG, BMP, GIF (Tối đa 20MB)
                                         </p>
                                         <input
                                             type="file"
@@ -249,12 +249,12 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                             setForensicsResults({ metadata: null, strings: null, visual: null, lsb: null, superimposed: null });
                                         }}
                                         className="absolute -top-2 -right-2 w-8 h-8 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center shadow-lg transition-colors"
-                                        title="Remove image"
+                                        title="Xóa ảnh"
                                     >
                                         <span className="text-lg font-bold">×</span>
                                     </button>
                                     <p className="text-xs text-gray-600 text-center mt-3">
-                                        Click the red button to change image
+                                        Nhấp vào nút đỏ để đổi ảnh
                                     </p>
                                 </div>
                             )}
@@ -266,51 +266,51 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                 <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 border-2 border-blue-200">
                                     <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
                                         <Shield className="w-5 h-5 mr-2 text-blue-600" />
-                                        Image Details
+                                        Chi tiết ảnh
                                     </h3>
                                     <div className="space-y-4">
                                         <div className="grid grid-cols-2 gap-4">
                                             <DetailRow
                                                 icon={<FileType className="w-5 h-5 text-purple-600" />}
-                                                label="Format"
+                                                label="Định dạng"
                                                 value={imageInfo.type.split('/')[1].toUpperCase()}
                                             />
                                             <DetailRow
                                                 icon={<HardDrive className="w-5 h-5 text-blue-600" />}
-                                                label="File Size"
+                                                label="Kích thước tệp"
                                                 value={`${(imageInfo.size / 1024).toFixed(2)} KB`}
                                             />
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <DetailRow
                                                 icon={<Maximize className="w-5 h-5 text-green-600" />}
-                                                label="Dimensions"
+                                                label="Kích thước"
                                                 value={`${imageInfo.width} × ${imageInfo.height}`}
                                             />
                                             <DetailRow
                                                 icon={<Hash className="w-5 h-5 text-orange-600" />}
-                                                label="Aspect Ratio"
+                                                label="Tỷ lệ khung hình"
                                                 value={`${(imageInfo.width / imageInfo.height).toFixed(2)}:1`}
                                             />
                                         </div>
                                         <DetailRow
                                             icon={<Clock className="w-5 h-5 text-pink-600" />}
-                                            label="Last Modified"
+                                            label="Sửa đổi lần cuối"
                                             value={new Date(imageInfo.lastModified || Date.now()).toLocaleString()}
                                             fullWidth
                                         />
                                         <DetailRow
                                             icon={<Shield className="w-5 h-5 text-cyan-600" />}
-                                            label="Security Check"
-                                            value="Ready for Scan"
+                                            label="Kiểm tra bảo mật"
+                                            value="Sẵn sàng quét"
                                             fullWidth
                                         />
                                         <div className="pt-3 mt-3 border-t border-blue-200">
                                             <div className="flex items-center justify-between text-sm">
-                                                <span className="text-gray-700 font-medium">Status:</span>
+                                                <span className="text-gray-700 font-medium">Trạng thái:</span>
                                                 <span className="px-3 py-1 bg-green-600 text-white rounded-full text-xs font-bold flex items-center">
                                                     <CheckCircle className="w-3 h-3 mr-1" />
-                                                    Ready for Analysis
+                                                    Sẵn sàng phân tích
                                                 </span>
                                             </div>
                                         </div>
@@ -321,13 +321,13 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                     <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center mb-4">
                                         <Box className="w-10 h-10 text-gray-400" />
                                     </div>
-                                    <h4 className="font-semibold text-gray-600 mb-1">Image Preview</h4>
-                                    <p className="text-sm text-gray-400 text-center max-w-[200px]">
-                                        Selected image details will appear here
+                                    <h4 className="font-semibold text-gray-600 mb-1">Xem trước ảnh</h4>
+                                    <p className="text-sm text-gray-400 text-center max-w-[220px]">
+                                        Chi tiết ảnh đã chọn sẽ hiện ở đây
                                     </p>
                                     <div className="mt-4 px-3 py-2 bg-blue-50 rounded-lg flex items-center text-xs text-blue-600">
                                         <ArrowLeft className="w-4 h-4 mr-2 animate-bounce-x" />
-                                        <span className="font-medium">Use the upload area on the left</span>
+                                        <span className="font-medium">Sử dụng khu vực tải lên bên trái</span>
                                     </div>
                                 </div>
                             )}
@@ -336,7 +336,7 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                 </div>
 
                 {error && (
-                    <Alert severity="error" title="Error">
+                    <Alert severity="error" title="Lỗi">
                         {error}
                     </Alert>
                 )}
@@ -348,14 +348,14 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                         <div className="flex items-center justify-between mb-4">
                             <h2 className="text-2xl font-bold text-gray-900 flex items-center">
                                 <Shield className="w-6 h-6 mr-2 text-blue-600" />
-                                AI Steganography Detection
+                                Phát hiện ẩn mã AI
                             </h2>
                         </div>
 
                         <div className="grid md:grid-cols-2 gap-6 mb-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Select Model
+                                    Chọn mô hình
                                 </label>
                                 <select
                                     value={selectedModel}
@@ -380,12 +380,12 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                     {aiLoading ? (
                                         <>
                                             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                                            Analyzing...
+                                            Đang phân tích...
                                         </>
                                     ) : (
                                         <>
                                             <Play className="w-5 h-5 mr-2" />
-                                            Run AI Detection
+                                            Chạy phát hiện AI
                                         </>
                                     )}
                                 </button>
@@ -413,7 +413,7 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                             <div className="flex items-center justify-between">
                                 <h2 className="text-2xl font-bold text-gray-900 flex items-center">
                                     <Search className="w-6 h-6 mr-2 text-blue-600" />
-                                    Forensics Analysis
+                                    Phân tích điều tra số
                                 </h2>
                                 <button
                                     onClick={handleAnalyzeAll}
@@ -421,73 +421,97 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                                     className="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:shadow-lg transition-all disabled:opacity-50 font-medium flex items-center"
                                 >
                                     {forensicsLoading ? (
-                                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                                        <>
+                                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                                            Đang phân tích...
+                                        </>
                                     ) : (
-                                        <Play className="w-5 h-5 mr-2" />
+                                        <>
+                                            <Play className="w-5 h-5 mr-2" />
+                                            Phân tích tất cả
+                                        </>
                                     )}
-                                    Analyze All
                                 </button>
                             </div>
                         </div>
 
                         {/* Forensics Tabs */}
                         <div className="border-b border-gray-200 bg-gray-50">
-                            <nav className="flex">
-                                {forensicsTabs.map(tab => (
-                                    <button
-                                        key={tab.id}
-                                        onClick={() => setActiveForensicsTab(tab.id)}
-                                        className={clsx(
-                                            "flex-1 flex items-center justify-center px-6 py-4 font-medium text-sm transition-all border-b-2",
-                                            activeForensicsTab === tab.id
-                                                ? "border-blue-600 text-blue-600 bg-white"
-                                                : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100"
-                                        )}
-                                    >
-                                        <tab.icon className="w-5 h-5 mr-2" />
-                                        {tab.label}
-                                        {forensicsResults[tab.id] && (
-                                            <span className="ml-2 px-2 py-0.5 bg-green-100 text-green-700 text-xs rounded-full">
-                                                ✓
-                                            </span>
-                                        )}
-                                    </button>
-                                ))}
-                            </nav>
+                            <div className="flex overflow-x-auto scrollbar-hide">
+                                <TabButton
+                                    active={activeForensicsTab === 'metadata'}
+                                    onClick={() => setActiveForensicsTab('metadata')}
+                                    icon={Database}
+                                    label="Siêu dữ liệu"
+                                />
+                                <TabButton
+                                    active={activeForensicsTab === 'strings'}
+                                    onClick={() => setActiveForensicsTab('strings')}
+                                    icon={Hash}
+                                    label="Chuỗi ký tự"
+                                />
+                                <TabButton
+                                    active={activeForensicsTab === 'visual'}
+                                    onClick={() => setActiveForensicsTab('visual')}
+                                    icon={Eye}
+                                    label="Phân tích trực quan"
+                                />
+                                <TabButton
+                                    active={activeForensicsTab === 'lsb'}
+                                    onClick={() => setActiveForensicsTab('lsb')}
+                                    icon={Code}
+                                    label="Trích xuất LSB"
+                                />
+                                <TabButton
+                                    active={activeForensicsTab === 'superimposed'}
+                                    onClick={() => setActiveForensicsTab('superimposed')}
+                                    icon={Layers}
+                                    label="Chồng lớp"
+                                />
+                            </div>
                         </div>
 
                         {/* Forensics Content */}
                         <div className="p-6">
-                            {!forensicsResults[activeForensicsTab] &&
-                                activeForensicsTab !== 'lsb' &&
-                                activeForensicsTab !== 'superimposed' && (
-                                    <div className="text-center py-12">
-                                        <button
-                                            onClick={() => handleForensicsAnalysis(activeForensicsTab)}
-                                            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium inline-flex items-center"
-                                            disabled={forensicsLoading}
-                                        >
-                                            <Play className="w-5 h-5 mr-2" />
-                                            Analyze {forensicsTabs.find(t => t.id === activeForensicsTab)?.label}
-                                        </button>
+                            {forensicsLoading ? (
+                                <div className="flex flex-col items-center justify-center h-64 text-gray-500">
+                                    <Loader2 className="w-10 h-10 animate-spin mb-4 text-blue-500" />
+                                    <p>Đang xử lý dữ liệu forensics...</p>
+                                </div>
+                            ) : !forensicsResults.metadata ? (
+                                <div className="flex flex-col items-center justify-center h-64 text-gray-400 border-2 border-dashed border-gray-100 rounded-xl">
+                                    <div className="bg-gray-50 p-6 rounded-full mb-4">
+                                        <Shield className="w-12 h-12 text-gray-300" />
                                     </div>
-                                )}
-
-                            {activeForensicsTab === 'metadata' && <MetadataViewer data={forensicsResults.metadata} />}
-                            {activeForensicsTab === 'strings' && <StringsViewer data={forensicsResults.strings} />}
-                            {activeForensicsTab === 'visual' && <VisualAnalysis data={forensicsResults.visual} />}
-                            {activeForensicsTab === 'superimposed' && (
-                                <SuperimposedAnalysis
-                                    file={file}
-                                    addToast={addToast}
-                                />
-                            )}
-                            {activeForensicsTab === 'lsb' && (
-                                <LSBExtractor
-                                    file={file}
-                                    onExtract={(data) => setForensicsResults(prev => ({ ...prev, lsb: data }))}
-                                    addToast={addToast}
-                                />
+                                    <p className="text-lg font-medium text-gray-600">Chưa có dữ liệu phân tích</p>
+                                    <p className="text-sm">Vui lòng tải ảnh lên và chạy phân tích</p>
+                                </div>
+                            ) : (
+                                <div className="animate-fade-in">
+                                    {activeForensicsTab === 'metadata' && (
+                                        <MetadataViewer data={forensicsResults.metadata} />
+                                    )}
+                                    {activeForensicsTab === 'strings' && (
+                                        <StringsViewer data={forensicsResults.strings} />
+                                    )}
+                                    {activeForensicsTab === 'visual' && (
+                                        <VisualAnalysis data={forensicsResults.visual} />
+                                    )}
+                                    {activeForensicsTab === 'lsb' && (
+                                        <LSBExtractor
+                                            data={forensicsResults.lsb}
+                                            file={file}
+                                            addToast={addToast}
+                                        />
+                                    )}
+                                    {activeForensicsTab === 'superimposed' && (
+                                        <SuperimposedAnalysis
+                                            data={forensicsResults.superimposed}
+                                            file={file}
+                                            addToast={addToast}
+                                        />
+                                    )}
+                                </div>
                             )}
                         </div>
                     </div>
@@ -497,8 +521,8 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                 {!file && (
                     <div className="bg-white rounded-xl shadow-lg p-12 text-center">
                         <Shield className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                        <h3 className="text-xl font-semibold text-gray-700 mb-2">No Image Uploaded</h3>
-                        <p className="text-gray-500">Upload an image to start AI detection and forensics analysis</p>
+                        <h3 className="text-xl font-semibold text-gray-700 mb-2">Chưa tải ảnh lên</h3>
+                        <p className="text-gray-500">Tải ảnh lên để bắt đầu phát hiện AI và phân tích điều tra số</p>
                     </div>
                 )}
 
@@ -510,6 +534,24 @@ export default function HomePage({ addToast, onUpdateHistory }) {
                 <div id="lsb" className="invisible h-0"></div>
             </div>
         </div>
+    );
+}
+
+// Helper Component for Tabs
+function TabButton({ active, onClick, icon: Icon, label }) {
+    return (
+        <button
+            onClick={onClick}
+            className={clsx(
+                "flex items-center px-4 py-3 text-sm font-medium transition-colors border-b-2 whitespace-nowrap",
+                active
+                    ? "border-blue-600 text-blue-600 bg-blue-50"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+            )}
+        >
+            <Icon className="w-4 h-4 mr-2" />
+            {label}
+        </button>
     );
 }
 

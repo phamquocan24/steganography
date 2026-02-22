@@ -93,6 +93,12 @@ class ModelManager:
         except Exception as e:
             return {"error": f"Inference failed: {str(e)}"}
             
+        # NOTE: Baseline_CNN has inconsistent predictions and is not recommended for use.
+        # - Predicts clean images as stego (raw_score ~0.90)
+        # - Also predicts stego images incorrectly
+        # - No simple fix available without retraining
+        # - Recommend using MobileNetV2_HPF_Disabled or other models instead
+            
         # Interpret result
         # prediction is probability of Stego (Class 1)
         # prediction >= 0.5 -> Stego

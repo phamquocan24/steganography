@@ -153,7 +153,7 @@ steganography_system/
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/steganography_system.git
+git clone https://github.com/phamquocan24/steganography.git
 cd steganography_system
 ```
 
@@ -353,9 +353,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 👨‍💻 Author
 
-**[Tên sinh viên]**
-- Email: your.email@example.com
-- GitHub: [@your-username](https://github.com/your-username)
+- Email: anpham25052004@gmail.com
+- GitHub: [@phamquocan24](https://github.com/phamquocan24)
 
 ---
 

@@ -18,7 +18,7 @@ export default function AboutPage() {
                         </div>
                         <div>
                             <h1 className="text-5xl font-bold mb-2">Steganalysis Pro</h1>
-                            <p className="text-xl text-blue-100">Advanced AI-Powered Steganography Detection & Forensics Platform</p>
+                            <p className="text-xl text-blue-100">Nền tảng phát hiện Giấu tin & Điều tra số hỗ trợ bởi AI tiên tiến</p>
                         </div>
                     </div>
                     <p className="text-lg text-blue-50 leading-relaxed">
@@ -32,7 +32,7 @@ export default function AboutPage() {
                     <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <div className="flex items-center mb-4">
                             <Target className="w-8 h-8 text-blue-600 mr-3" />
-                            <h2 className="text-2xl font-bold text-gray-900">Mission</h2>
+                            <h2 className="text-2xl font-bold text-gray-900">Sứ mệnh</h2>
                         </div>
                         <p className="text-gray-700 leading-relaxed">
                             Cung cấp giải pháp phát hiện steganography chính xác và đáng tin cậy nhất
@@ -45,7 +45,7 @@ export default function AboutPage() {
                     <div className="bg-white rounded-xl p-8 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <div className="flex items-center mb-4">
                             <Award className="w-8 h-8 text-cyan-600 mr-3" />
-                            <h2 className="text-2xl font-bold text-gray-900">Vision</h2>
+                            <h2 className="text-2xl font-bold text-gray-900">Tầm nhìn</h2>
                         </div>
                         <p className="text-gray-700 leading-relaxed">
                             Trở thành nền tảng phân tích steganography hàng đầu toàn cầu, được tin dùng
@@ -57,81 +57,81 @@ export default function AboutPage() {
 
                 {/* Key Features */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Features</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Tính năng chính</h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <FeatureCard
                             icon={Zap}
-                            title="AI Detection"
-                            description="5 mô hình Deep Learning tiên tiến (CNN, MobileNetV2, ResNet50, VGG16) với HPF preprocessing"
-                            badge="AI Powered"
+                            title="Phát hiện bằng AI"
+                            description="5 mô hình Deep Learning tiên tiến (CNN, MobileNetV2, ResNet50, VGG16) với tiền xử lý HPF"
+                            badge="Hỗ trợ AI"
                         />
                         <FeatureCard
                             icon={Database}
-                            title="Metadata Analysis"
-                            description="Trích xuất toàn bộ EXIF, GPS, camera info, phát hiện patterns đáng ngờ trong metadata"
-                            badge="50+ EXIF tags"
+                            title="Phân tích Metadata"
+                            description="Trích xuất toàn bộ EXIF, GPS, thông tin camera, phát hiện mẫu đáng ngờ trong metadata"
+                            badge="50+ thẻ EXIF"
                         />
                         <FeatureCard
                             icon={Cpu}
-                            title="String Extraction"
-                            description="Phát hiện URL, email, base64, hex, CTF flags với multi-encoding support"
-                            badge="7 pattern types"
+                            title="Trích xuất chuỗi ký tự"
+                            description="Phát hiện URL, email, base64, hex, cờ CTF với hỗ trợ đa mã hóa"
+                            badge="7 loại mẫu"
                         />
                         <FeatureCard
                             icon={Shield}
-                            title="Visual Analysis"
-                            description="Channel decomposition, 8-level bit plane extraction, anomaly detection"
-                            badge="Entropy analysis"
+                            title="Phân tích trực quan"
+                            description="Phân tách kênh màu, trích xuất 8 bit-plane, phát hiện bất thường"
+                            badge="Phân tích Entropy"
                         />
                         <FeatureCard
                             icon={Layers}
-                            title="LSB Extraction"
-                            description="Configurable LSB/MSB extraction, file type detection, text decoding"
-                            badge="1-8 bits/channel"
+                            title="Trích xuất LSB"
+                            description="Trích xuất LSB/MSB có cấu hình, phát hiện loại tệp, giải mã văn bản"
+                            badge="1-8 bit/kênh"
                         />
                         <FeatureCard
                             icon={Users}
-                            title="User-Friendly"
-                            description="Giao diện trực quan, responsive design, real-time analysis, toast notifications"
-                            badge="Professional UI/UX"
+                            title="Thân thiện người dùng"
+                            description="Giao diện trực quan, thiết kế responsive, phân tích thời gian thực, thông báo toast"
+                            badge="UI/UX Chuyên nghiệp"
                         />
                     </div>
                 </div>
 
                 {/* AI Models */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">AI Models & Technology</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Mô hình AI & Công nghệ</h2>
                     <div className="space-y-4">
                         <ModelRow
                             name="ResNet50 (HPF Enabled)"
-                            description="Residual Network với 50 layers, sử dụng HPF preprocessing"
+                            description="Mạng Residual với 50 lớp, sử dụng tiền xử lý HPF"
                         />
                         <ModelRow
                             name="MobileNetV2 (HPF Enabled)"
-                            description="Lightweight model tối ưu cho real-time detection"
+                            description="Mô hình nhẹ tối ưu cho phát hiện thời gian thực"
                         />
                         <ModelRow
                             name="VGG16 (HPF Enabled)"
-                            description="Deep network với 16 layers, stable và reliable"
+                            description="Mạng sâu với 16 lớp, ổn định và đáng tin cậy"
                         />
                         <ModelRow
                             name="MobileNetV2 (HPF Disabled)"
-                            description="Baseline model không sử dụng preprocessing"
+                            description="Mô hình cơ sở không sử dụng tiền xử lý"
                         />
                         <ModelRow
                             name="Baseline CNN"
-                            description="Custom CNN architecture cho training từ scratch"
+                            description="Kiến trúc CNN tùy chỉnh để huấn luyện từ đầu"
                         />
                     </div>
                     <p className="text-sm text-gray-600 mt-6">
-                        * HPF (High-Pass Filter) là kỹ thuật preprocessing giúp model tập trung vào
-                        high-frequency components của ảnh, nơi thường chứa dấu hiệu steganography.
+                        * HPF (High-Pass Filter) là kỹ thuật tiền xử lý giúp mô hình tập trung vào
+                        các thành phần tần số cao của ảnh, nơi thường chứa dấu hiệu giấu tin.
                     </p>
                 </div>
 
                 {/* Technology Stack */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Technology Stack</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Ngăn xếp Công nghệ</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div>
                             <h3 className="text-xl font-semibold text-gray-800 mb-4">Frontend</h3>
@@ -178,36 +178,36 @@ export default function AboutPage() {
 
                 {/* Use Cases */}
                 <div className="bg-white rounded-xl p-8 shadow-lg mb-8">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Use Cases</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Trường hợp sử dụng</h2>
                     <div className="grid md:grid-cols-3 gap-6">
                         <UseCaseCard
-                            title="CTF Competitions"
-                            description="Phát hiện hidden flags, extract embedded files, phân tích stego challenges"
+                            title="Cuộc thi CTF"
+                            description="Phát hiện cờ ẩn, trích xuất tệp nhúng, phân tích thử thách stego"
                             icon="🏆"
                         />
                         <UseCaseCard
-                            title="Digital Forensics"
-                            description="Điều tra hình ảnh, timeline reconstruction, evidence extraction"
+                            title="Điều tra số (Digital Forensics)"
+                            description="Điều tra hình ảnh, tái dựng dòng thời gian, trích xuất bằng chứng"
                             icon="🔍"
                         />
                         <UseCaseCard
-                            title="Security Research"
-                            description="Phân tích malware payloads, detect C2 communication, research stego techniques"
+                            title="Nghiên cứu bảo mật"
+                            description="Phân tích tải trọng mã độc, phát hiện giao tiếp C2, nghiên cứu kỹ thuật giấu tin"
                             icon="🛡️"
                         />
                         <UseCaseCard
-                            title="Academic Research"
-                            description="Nghiên cứu steganography algorithms, dataset creation, model training"
+                            title="Nghiên cứu học thuật"
+                            description="Nghiên cứu thuật toán giấu tin, tạo tập dữ liệu, huấn luyện mô hình"
                             icon="📚"
                         />
                         <UseCaseCard
-                            title="Corporate Security"
-                            description="Data leak prevention, insider threat detection, compliance monitoring"
+                            title="Bảo mật doanh nghiệp"
+                            description="Ngăn chặn rò rỉ dữ liệu, phát hiện mối đe dọa nội bộ, giám sát tuân thủ"
                             icon="🏢"
                         />
                         <UseCaseCard
-                            title="Education & Training"
-                            description="Cybersecurity education, hands-on labs, student projects"
+                            title="Giáo dục & Đào tạo"
+                            description="Giáo dục an ninh mạng, phòng thí nghiệm thực hành, dự án sinh viên"
                             icon="🎓"
                         />
                     </div>
@@ -215,31 +215,31 @@ export default function AboutPage() {
 
                 {/* Team & Credits */}
                 <div className="bg-white rounded-xl p-8 shadow-lg">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Development & Credits</h2>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-6">Phát triển & Ghi nhận</h2>
                     <div className="prose max-w-none text-gray-700">
                         <p className="mb-4">
-                            <strong>Developed by:</strong> ... - Student at University of Information Technology (UIT)
+                            <strong>Phát triển bởi:</strong> ... - Sinh viên Đại học Công nghệ Thông tin (UIT)
                         </p>
                         <p className="mb-4">
-                            <strong>Supervisor:</strong> [Tên giảng viên hướng dẫn]
+                            <strong>Giảng viên hướng dẫn:</strong> [Tên giảng viên hướng dẫn]
                         </p>
                         <p className="mb-4">
-                            <strong>Project Type:</strong> Graduation Thesis (Đồ án tốt nghiệp)
+                            <strong>Loại dự án:</strong> Đồ án tốt nghiệp
                         </p>
                         <p className="mb-4">
-                            <strong>Duration:</strong> [Thời gian thực hiện]
+                            <strong>Thời gian thực hiện:</strong> [Thời gian thực hiện]
                         </p>
                         <p className="mb-6">
-                            <strong>Version:</strong> 1.0.0 | <strong>Last Updated:</strong> December 2025
+                            <strong>Phiên bản:</strong> 1.0.0 | <strong>Cập nhật lần cuối:</strong> Tháng 3/2026
                         </p>
 
                         <div className="bg-blue-50 rounded-lg p-6 border-l-4 border-blue-600 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                            <h3 className="text-xl font-semibold text-gray-900 mb-3">Acknowledgments</h3>
+                            <h3 className="text-xl font-semibold text-gray-900 mb-3">Lời cảm ơn</h3>
                             <ul className="list-disc list-inside space-y-2">
-                                <li>University of Information Technology (UIT) - VNU-HCM</li>
-                                <li>Faculty of Information Security</li>
-                                <li>Open-source community (TensorFlow, React, FastAPI)</li>
-                                <li>CTF community for testing and feedback</li>
+                                <li>Trường Đại Học An Ninh Nhân Dân - Bắc Ninh</li>
+                                <li>Khoa An toàn thông tin</li>
+                                <li>Cộng đồng mã nguồn mở (TensorFlow, React, FastAPI)</li>
+                                <li>Cộng đồng CTF đã hỗ trợ thử nghiệm và phản hồi</li>
                             </ul>
                         </div>
                     </div>

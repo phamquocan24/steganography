@@ -200,37 +200,81 @@ def build_baseline_cnn_model():
 
 def load_model_with_reconstruction(model_path: str):
     """
-    Robust model loading with exact Notebook matching.
-    Attempts to load directly first, then reconstructs if needed.
+    Robust model loading with comprehensive custom object support.
+    Handles Lambda layers (preprocess_input) and custom layers (SRM/TLU).
+    Prioritizes Direct Load, falls back to Reconstruction only if strictly necessary.
+    Uses ASCII logging safe for Windows consoles.
     """
-    # Enable unsafe deserialization for Lambda layers
+    import logging
+    from tensorflow.keras.applications import mobilenet_v2, vgg16, resnet50
+    
+    logger = logging.getLogger(__name__)
+
+    # Wrappers for preprocess_input to provide output_shape check
+    # This prevents the "Could not automatically infer the shape" error during Direct Load
+    def mobilenet_v2_preprocess_wrapper(x):
+        return mobilenet_v2.preprocess_input(x)
+        
+    def vgg16_preprocess_wrapper(x):
+        return vgg16.preprocess_input(x)
+        
+    def resnet50_preprocess_wrapper(x):
+        return resnet50.preprocess_input(x)
+
+    # 1. Enable unsafe deserialization (Required for Lambda functions in saved models)
     try:
         tf.keras.config.enable_unsafe_deserialization()
     except AttributeError:
         pass
-    
-    # Define custom objects with string names to match saved model config
+
+    # 2. Define COMPLETE custom objects mapping
     custom_objects = {
         'SRMFilterInitializer': SRMFilterInitializer,
         'rgb_to_grayscale': rgb_to_grayscale,
-        'TLU': TLU
-    }
-    
-    print(f"Loading model from {model_path}...")
-    
-    # 1. Try Direct Load (Best for weights & config)
-    try:
-        # First try without PatchedLambda - if functions are registered, it might work
-        model = tf.keras.models.load_model(model_path, custom_objects=custom_objects)
-        print("✅ Successfully loaded model directly!")
-        return model
-    except Exception as e:
-        print(f"Direct load failed: {str(e)[:200]}...") # Truncate error
+        'TLU': TLU,
         
-    # 2. Reconstruct & Load Weights (Fallback)
-    print("Attempting reconstruction matching Notebook architecture...")
-    
-    # Helper to build model based on name patterns
+        # Preprocessing Functions (Wrapped to ensure shape inference)
+        'preprocess_input': mobilenet_v2_preprocess_wrapper, 
+        'mobilenet_v2_preprocess_input': mobilenet_v2_preprocess_wrapper,
+        'vgg16_preprocess_input': vgg16_preprocess_wrapper,
+        'resnet50_preprocess_input': resnet50_preprocess_wrapper,
+        
+        'tf': tf,
+    }
+
+    print(f"[INFO] Loading model from {model_path}...")
+
+    # 3. Attempt Direct Load (Primary Strategy)
+    # Direct load is safest as it preserves the exact saved architecture (e.g. Rescaling layers)
+    try:
+        model = tf.keras.models.load_model(
+            model_path, 
+            custom_objects=custom_objects,
+            compile=False # Skip compilation first to avoid optimizer deserialization errors
+        )
+        print("[INFO] [DIRECT LOAD] Success!")
+        
+        # Re-compile with a standard optimizer to ensure model is usable
+        # This fixes issues where saved optimizer config is incompatible
+        model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+        
+        # Quick sanity check for Baseline CNN
+        if 'Baseline_CNN' in model_path:
+             # Verify architecture has Rescaling to avoid False Positives
+             has_rescaling = any('Rescaling' in l.__class__.__name__ for l in model.layers)
+             if has_rescaling:
+                 print("   -> Integrity Check: Rescaling layer FOUND. input=[0-255].")
+             else:
+                 print("   -> WARNING: Rescaling layer MISSING. Predictions may be incorrect.")
+
+        return model
+        
+    except Exception as e:
+        print(f"[WARN] Direct load failed. Error: {str(e)[:200]}")
+        print("   -> Falling back to Architecture Reconstruction...")
+
+    # 4. Fallback: Reconstruction (Secondary Strategy)
+    # Only use if Direct Load fails (e.g. strict serialization issues)
     try:
         if 'MobileNetV2_HPF_Enabled' in model_path:
             new_model = build_mobilenetv2_hpf_model()
@@ -244,20 +288,30 @@ def load_model_with_reconstruction(model_path: str):
             new_model = build_baseline_cnn_model()
         else:
             raise ValueError(f"Unknown model type for {model_path}")
-            
-        # Load weights - prioritize by_name=True to avoid mismatches
-        # But for Functional models, topology loading is usually safer if structure matches
+
+        # 5. STRICT Weights Loading
+        # CRITICAL: Do NOT use by_name=True blindly. It hides architecture mismatches.
+        # We use skip_mismatch=False to fail FAST if weights don't match.
         try:
-            new_model.load_weights(model_path)
-            print("✅ Successfully loaded weights into reconstructed model!")
-            return new_model
-        except Exception as w_e:
-            print(f"⚠️ Standard load_weights failed: {w_e}")
-            print("Retrying with by_name=True...")
-            new_model.load_weights(model_path, by_name=True)
-            print("✅ Loaded weights (by name)!")
+            print("[INFO] Loading weights with strict matching...")
+            new_model.load_weights(model_path, skip_mismatch=False)
+            print("[INFO] [RECONSTRUCTION] Success! Weights loaded strictly.")
+            
+            # Compile new model
+            new_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
             return new_model
             
+        except Exception as w_e:
+            print(f"[ERROR] [CRITICAL] Weights Mismatch: {w_e}")
+            print("   -> Retrying with by_name=True (Last Resort)...")
+            # Only as absolute last resort, but warn user heavily
+            new_model.load_weights(model_path, by_name=True)
+            print("[WARN] [WARNING] Loaded with by_name=True. Validate predictions carefully!")
+            
+            # Compile new model
+            new_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+            return new_model
+
     except Exception as build_e:
-        print(f"❌ CRITICAL: Failed to reconstruct/load model: {build_e}")
+        print(f"[FATAL] Failed to reconstruct model: {build_e}")
         raise build_e

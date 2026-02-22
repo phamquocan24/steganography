@@ -22,8 +22,8 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
 
     const handleExtract = async () => {
         if (!file) {
-            setError('Please upload an image first');
-            addToast?.('Please upload an image first', 'error');
+            setError('Vui lòng tải ảnh lên trước');
+            addToast?.('Vui lòng tải ảnh lên trước', 'error');
             return;
         }
 
@@ -38,13 +38,13 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
             // Success toast
             const assessment = result.assessment;
             if (assessment.contains_hidden_data) {
-                addToast?.(`LSB extraction succeeded! Confidence: ${assessment.confidence_score}`, 'success');
+                addToast?.(`Trích xuất LSB thành công! Độ tin cậy: ${assessment.confidence_score}`, 'success');
             } else {
-                addToast?.('LSB extraction completed (low confidence)', 'info');
+                addToast?.('Trích xuất LSB hoàn tất (độ tin cậy thấp)', 'info');
             }
         } catch (err) {
             setError(err.message);
-            addToast?.(`LSB extraction failed: ${err.message}`, 'error');
+            addToast?.(`Trích xuất LSB thất bại: ${err.message}`, 'error');
         } finally {
             setLoading(false);
         }
@@ -56,49 +56,49 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
             <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                     <Settings className="w-5 h-5 mr-2 text-blue-600" />
-                    Extraction Configuration
+                    Cấu hình trích xuất
                 </h3>
 
                 <div className="grid grid-cols-2 gap-4">
                     {/* Channels */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Channels
+                            Kênh
                         </label>
                         <select
                             value={config.channels}
                             onChange={(e) => setConfig({ ...config, channels: e.target.value })}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         >
-                            <option value="RGB">RGB (All channels)</option>
-                            <option value="R">Red only</option>
-                            <option value="G">Green only</option>
-                            <option value="B">Blue only</option>
-                            <option value="RG">Red + Green</option>
-                            <option value="RB">Red + Blue</option>
-                            <option value="GB">Green + Blue</option>
+                            <option value="RGB">RGB (Tất cả kênh)</option>
+                            <option value="R">Chỉ Đỏ (Red)</option>
+                            <option value="G">Chỉ Xanh lá (Green)</option>
+                            <option value="B">Chỉ Xanh dương (Blue)</option>
+                            <option value="RG">Đỏ + Xanh lá</option>
+                            <option value="RB">Đỏ + Xanh dương</option>
+                            <option value="GB">Xanh lá + Xanh dương</option>
                         </select>
                     </div>
 
                     {/* Bit Order */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Bit Order
+                            Thứ tự Bit
                         </label>
                         <select
                             value={config.bitOrder}
                             onChange={(e) => setConfig({ ...config, bitOrder: e.target.value })}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         >
-                            <option value="LSB">LSB (Least Significant Bit)</option>
-                            <option value="MSB">MSB (Most Significant Bit)</option>
+                            <option value="LSB">LSB (Bit ít quan trọng nhất)</option>
+                            <option value="MSB">MSB (Bit quan trọng nhất)</option>
                         </select>
                     </div>
 
                     {/* Bits per Channel */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Bits per Channel: {config.bitsPerChannel}
+                            Số bit mỗi kênh: {config.bitsPerChannel}
                         </label>
                         <input
                             type="range"
@@ -118,7 +118,7 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
                     {/* Max Bytes */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Max Bytes to Extract
+                            Số byte tối đa trích xuất
                         </label>
                         <select
                             value={config.maxBytes}
@@ -148,12 +148,12 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
                     {loading ? (
                         <>
                             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                            Extracting...
+                            Đang trích xuất...
                         </>
                     ) : (
                         <>
                             <Zap className="w-5 h-5 mr-2" />
-                            Extract LSB Data
+                            Trích xuất dữ liệu LSB
                         </>
                     )}
                 </button>
@@ -161,7 +161,7 @@ export default function LSBExtractor({ file, onExtract, addToast }) {
 
             {/* Error */}
             {error && (
-                <Alert severity="error" title="Extraction Failed">
+                <Alert severity="error" title="Trích xuất thất bại">
                     {error}
                 </Alert>
             )}
@@ -207,12 +207,12 @@ function ExtractionResults({ result }) {
                 </div>
 
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    {assessment.contains_hidden_data ? 'Hidden Data Detected!' : 'Low Confidence'}
+                    {assessment.contains_hidden_data ? 'Phát hiện dữ liệu ẩn!' : 'Độ tin cậy thấp'}
                 </h3>
 
                 <div className="mb-4">
                     <div className="flex justify-between text-sm mb-1">
-                        <span className="font-medium">Confidence Score</span>
+                        <span className="font-medium">Điểm tin cậy</span>
                         <span className="font-bold">{assessment.confidence_score}/100</span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-3">
@@ -228,7 +228,7 @@ function ExtractionResults({ result }) {
 
                 {assessment.indicators.length > 0 && (
                     <div>
-                        <h4 className="font-semibold text-gray-800 mb-2">Indicators:</h4>
+                        <h4 className="font-semibold text-gray-800 mb-2">Chỉ báo:</h4>
                         <ul className="space-y-1">
                             {assessment.indicators.map((indicator, idx) => (
                                 <li key={idx} className="flex items-start text-sm text-gray-700">
@@ -245,7 +245,7 @@ function ExtractionResults({ result }) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard
                     icon={FileText}
-                    label="Extracted Size"
+                    label="Kích thước trích xuất"
                     value={(dataInfo.size_kb || 0) + ' KB'}
                 />
                 <StatCard
@@ -254,14 +254,14 @@ function ExtractionResults({ result }) {
                     color={entropyAnalysis.is_high_entropy ? 'red' : 'green'}
                 />
                 <StatCard
-                    label="Randomness"
+                    label="Độ ngẫu nhiên"
                     value={entropyAnalysis.assessment?.split(' ')[0] || 'Unknown'}
                 />
                 <StatCard
                     label="Chi-Square"
                     value={entropyAnalysis.chi_square?.toFixed(1) || 'N/A'}
                     color={entropyAnalysis.is_random ? 'blue' : 'orange'}
-                    subtitle={entropyAnalysis.is_random ? 'Random' : 'Patterned'}
+                    subtitle={entropyAnalysis.is_random ? 'Ngẫu nhiên' : 'Có mẫu'}
                 />
             </div>
 
@@ -274,7 +274,7 @@ function ExtractionResults({ result }) {
                             <div>
                                 <h4 className="font-semibold text-gray-800 flex items-center">
                                     <Download className="w-5 h-5 mr-2 text-blue-600" />
-                                    Extracted Data
+                                    Dữ liệu trích xuất
                                 </h4>
                                 <p className="text-sm text-gray-600 mt-1">
                                     {(result.file_download?.size_bytes / 1024).toFixed(2)} KB • {dataInfo.md5_hash?.slice(0, 8) || 'N/A'}...
@@ -288,7 +288,7 @@ function ExtractionResults({ result }) {
                                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center"
                             >
                                 <Download className="w-4 h-4 mr-2" />
-                                Download
+                                Tải xuống
                             </button>
                         </div>
                     </div>
@@ -300,10 +300,10 @@ function ExtractionResults({ result }) {
                         <div>
                             <h4 className="font-semibold text-gray-800 flex items-center">
                                 <Activity className="w-5 h-5 mr-2 text-purple-600" />
-                                Serial Correlation
+                                Tương quan chuỗi
                             </h4>
                             <p className="text-sm text-gray-600 mt-1">
-                                Pattern detection score
+                                Điểm phát hiện mẫu
                             </p>
                         </div>
                         <div className="text-right">
@@ -317,8 +317,8 @@ function ExtractionResults({ result }) {
                                     : "text-orange-600"
                             )}>
                                 {Math.abs(entropyAnalysis.serial_correlation || 0) < 0.1
-                                    ? '✓ No pattern detected'
-                                    : '⚠ Pattern detected'}
+                                    ? '✓ Không phát hiện mẫu'
+                                    : '⚠ Phát hiện mẫu'}
                             </p>
                         </div>
                     </div>
@@ -330,13 +330,13 @@ function ExtractionResults({ result }) {
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                     <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                         <FileText className="w-5 h-5 mr-2 text-blue-600" />
-                        File Detection
+                        Phát hiện tệp
                     </h3>
                     <div className="grid grid-cols-2 gap-4">
-                        <InfoRow label="Type" value={fileDetection.type} />
+                        <InfoRow label="Loại" value={fileDetection.type} />
                         <InfoRow label="MIME" value={fileDetection.mime} />
-                        <InfoRow label="Extension" value={fileDetection.ext} />
-                        <InfoRow label="Confidence" value={fileDetection.confidence} />
+                        <InfoRow label="Đuôi tệp" value={fileDetection.ext} />
+                        <InfoRow label="Độ tin cậy" value={fileDetection.confidence} />
                     </div>
                 </div>
             )}
@@ -344,21 +344,21 @@ function ExtractionResults({ result }) {
             {/* Text Analysis */}
             {textAnalysis.is_text && (
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
-                    <h3 className="font-semibold text-gray-900 mb-4">Decoded Text</h3>
+                    <h3 className="font-semibold text-gray-900 mb-4">Văn bản giải mã</h3>
                     <div className="bg-gray-50 rounded p-4 font-mono text-sm whitespace-pre-wrap max-h-96 overflow-y-auto">
                         {textAnalysis.best_encoding.full_text}
                     </div>
                     <p className="text-xs text-gray-500 mt-2">
-                        Encoding: {textAnalysis.best_encoding.encoding} •
-                        Length: {textAnalysis.best_encoding.length} characters •
-                        Confidence: {textAnalysis.best_encoding.confidence}
+                        Mã hóa: {textAnalysis.best_encoding.encoding} •
+                        Độ dài: {textAnalysis.best_encoding.length} ký tự •
+                        Độ tin cậy: {textAnalysis.best_encoding.confidence}
                     </p>
                 </div>
             )}
 
             {/* Recommendations */}
             {assessment.recommendations && assessment.recommendations.length > 0 && (
-                <Alert severity="info" title="Recommendations">
+                <Alert severity="info" title="Đề xuất">
                     <ul className="list-disc list-inside space-y-1">
                         {assessment.recommendations.map((rec, idx) => (
                             <li key={idx}>{rec}</li>
@@ -370,7 +370,7 @@ function ExtractionResults({ result }) {
             {/* Raw Data Preview */}
             <details className="bg-white rounded-lg border border-gray-200 p-6">
                 <summary className="font-semibold text-gray-900 cursor-pointer hover:text-blue-600">
-                    View Raw Data Preview
+                    Xem trước dữ liệu thô
                 </summary>
                 <div className="mt-4 bg-gray-50 rounded p-4 font-mono text-xs overflow-x-auto">
                     {dataInfo.first_32_bytes_hex || 'N/A'}

@@ -30,7 +30,7 @@ export default function Header({ stats, showHistory, setShowHistory, historyCoun
                             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
                                 Steganalysis Pro
                             </h1>
-                            <p className="text-xs text-gray-500">Deep Learning Detection</p>
+                            <p className="text-xs text-gray-500">Phát hiện bằng Deep Learning</p>
                         </div>
                     </Link>
 
@@ -38,17 +38,17 @@ export default function Header({ stats, showHistory, setShowHistory, historyCoun
                     <nav className="hidden md:flex items-center space-x-2">
                         <NavLink to="/" active={isActive('/')}>
                             <Shield className="w-4 h-4 mr-2" />
-                            Analysis
+                            Phân tích
                         </NavLink>
                         <NavLink to="/guide" active={isActive('/guide')}>
                             <Book className="w-4 h-4 mr-2" />
-                            Guide
+                            Hướng dẫn
                         </NavLink>
                         <NavLink to="/about" active={isActive('/about')}>
-                            About
+                            Giới thiệu
                         </NavLink>
                         <NavLink to="/architecture" active={isActive('/architecture')}>
-                            Architecture
+                            Kiến trúc
                         </NavLink>
                     </nav>
 
@@ -56,9 +56,9 @@ export default function Header({ stats, showHistory, setShowHistory, historyCoun
                     <div className="flex items-center space-x-4">
                         {/* Stats (Hidden on mobile) */}
                         <div className="hidden lg:flex items-center space-x-3">
-                            <StatBadge label="Total" value={stats.total} color="gray" />
+                            <StatBadge label="Tổng" value={stats.total} color="gray" />
                             <StatBadge label="Stego" value={stats.stego} color="red" />
-                            <StatBadge label="Clean" value={stats.clean} color="green" />
+                            <StatBadge label="Sạch" value={stats.clean} color="green" />
                         </div>
 
                         {/* History Button */}
@@ -67,7 +67,7 @@ export default function Header({ stats, showHistory, setShowHistory, historyCoun
                             className="flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:shadow-lg transition-all font-medium"
                         >
                             <History className="w-4 h-4 mr-2" />
-                            <span className="hidden sm:inline">History</span>
+                            <span className="hidden sm:inline">Lịch sử</span>
                             <span className="ml-1">({historyCount})</span>
                         </button>
 
@@ -86,23 +86,23 @@ export default function Header({ stats, showHistory, setShowHistory, historyCoun
                     <div className="md:hidden py-4 border-t border-gray-200 animate-fade-in">
                         <nav className="space-y-2">
                             <MobileNavLink to="/" active={isActive('/')} onClick={() => setMobileMenuOpen(false)}>
-                                Analysis
+                                Phân tích
                             </MobileNavLink>
                             <MobileNavLink to="/guide" active={isActive('/guide')} onClick={() => setMobileMenuOpen(false)}>
-                                Guide
+                                Hướng dẫn
                             </MobileNavLink>
                             <MobileNavLink to="/about" active={isActive('/about')} onClick={() => setMobileMenuOpen(false)}>
-                                About
+                                Giới thiệu
                             </MobileNavLink>
                             <MobileNavLink to="/architecture" active={isActive('/architecture')} onClick={() => setMobileMenuOpen(false)}>
-                                Architecture
+                                Kiến trúc
                             </MobileNavLink>
                         </nav>
                         {/* Mobile Stats */}
                         <div className="flex items-center justify-around mt-4 pt-4 border-t border-gray-200">
-                            <StatBadge label="Total" value={stats.total} color="gray" />
+                            <StatBadge label="Tổng" value={stats.total} color="gray" />
                             <StatBadge label="Stego" value={stats.stego} color="red" />
-                            <StatBadge label="Clean" value={stats.clean} color="green" />
+                            <StatBadge label="Sạch" value={stats.clean} color="green" />
                         </div>
                     </div>
                 )}

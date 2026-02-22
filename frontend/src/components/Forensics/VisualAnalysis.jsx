@@ -19,17 +19,17 @@ export default function VisualAnalysis({ data }) {
     }
 
     const views = [
-        { id: 'channels', label: 'Channels', icon: Layers },
-        { id: 'bitplanes', label: 'Bit Planes', icon: GitCompare },
-        { id: 'operations', label: 'Operations', icon: GitCompare },
-        { id: 'histograms', label: 'Histograms', icon: BarChart3 }
+        { id: 'channels', label: 'Kênh', icon: Layers },
+        { id: 'bitplanes', label: 'Mặt phẳng bit', icon: GitCompare },
+        { id: 'operations', label: 'Phép toán', icon: GitCompare },
+        { id: 'histograms', label: 'Biểu đồ tần suất', icon: BarChart3 }
     ];
 
     return (
         <div className="space-y-4">
             {/* Anomaly Warnings */}
             {data.anomaly_analysis?.findings?.length > 0 && (
-                <Alert severity="warning" title={`${data.anomaly_analysis.findings.length} Anomal(ies) Detected`}>
+                <Alert severity="warning" title={`${data.anomaly_analysis.findings.length} Bất thường được phát hiện`}>
                     <div className="space-y-2">
                         {data.anomaly_analysis.findings.map((finding, idx) => (
                             <AnomalyFinding key={idx} finding={finding} />
@@ -41,10 +41,10 @@ export default function VisualAnalysis({ data }) {
             {/* Image Info */}
             <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <div className="grid grid-cols-4 gap-4 text-center">
-                    <InfoStat label="Mode" value={data.image_info?.mode || 'N/A'} />
-                    <InfoStat label="Size" value={data.image_info?.size ? `${data.image_info.size.width}×${data.image_info.size.height}` : 'N/A'} />
-                    <InfoStat label="Channels" value={data.image_info?.channels || 'N/A'} />
-                    <InfoStat label="Data Type" value={data.image_info?.dtype || 'N/A'} />
+                    <InfoStat label="Chế độ" value={data.image_info?.mode || 'N/A'} />
+                    <InfoStat label="Kích thước" value={data.image_info?.size ? `${data.image_info.size.width}×${data.image_info.size.height}` : 'N/A'} />
+                    <InfoStat label="Kênh màu" value={data.image_info?.channels || 'N/A'} />
+                    <InfoStat label="Kiểu dữ liệu" value={data.image_info?.dtype || 'N/A'} />
                 </div>
             </div>
 
@@ -136,7 +136,7 @@ function BitPlanesView({ bitPlanes, selectedBit, setSelectedBit, selectedChannel
 
     const bitImages = Object.entries(channelData).map(([bit, src]) => ({
         src,
-        label: `Bit ${bit.replace('bit_', '')} - ${bit === 'bit_0' ? 'LSB' : bit === 'bit_7' ? 'MSB' : 'Mid'}`,
+        label: `Bit ${bit.replace('bit_', '')} - ${bit === 'bit_0' ? 'LSB' : bit === 'bit_7' ? 'MSB' : 'Giữa'}`,
         bitLevel: parseInt(bit.replace('bit_', ''))
     }));
 
@@ -144,7 +144,7 @@ function BitPlanesView({ bitPlanes, selectedBit, setSelectedBit, selectedChannel
         <div className="space-y-4">
             {/* Channel Selector */}
             <div className="flex items-center space-x-3">
-                <label className="text-sm font-medium text-gray-700">Channel:</label>
+                <label className="text-sm font-medium text-gray-700">Kênh:</label>
                 <div className="flex space-x-2">
                     {channels.map(ch => (
                         <button
@@ -167,9 +167,9 @@ function BitPlanesView({ bitPlanes, selectedBit, setSelectedBit, selectedChannel
             <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <div className="flex items-center justify-between mb-2">
                     <label className="text-sm font-medium text-gray-700">
-                        Bit Level: {selectedBit} {selectedBit === 0 ? '(LSB)' : selectedBit === 7 ? '(MSB)' : ''}
+                        Mức bit: {selectedBit} {selectedBit === 0 ? '(LSB)' : selectedBit === 7 ? '(MSB)' : ''}
                     </label>
-                    <span className="text-xs text-gray-500">Slide to view different bit planes</span>
+                    <span className="text-xs text-gray-500">Trượt để xem các mặt phẳng bit khác nhau</span>
                 </div>
                 <input
                     type="range"
@@ -194,7 +194,7 @@ function BitPlanesView({ bitPlanes, selectedBit, setSelectedBit, selectedChannel
             {/* Selected Bit Plane Display */}
             <div className="bg-white rounded-lg border border-gray-200 p-4">
                 <h3 className="font-semibold text-gray-800 mb-3">
-                    {selectedChannel.charAt(0).toUpperCase() + selectedChannel.slice(1)} Channel - Bit {selectedBit}
+                    Kênh {selectedChannel.charAt(0).toUpperCase() + selectedChannel.slice(1)} - Bit {selectedBit}
                 </h3>
                 <div
                     className="aspect-square bg-gray-100 rounded overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
@@ -210,7 +210,7 @@ function BitPlanesView({ bitPlanes, selectedBit, setSelectedBit, selectedChannel
 
             {/* All Bit Planes Grid */}
             <div>
-                <h3 className="font-semibold text-gray-800 mb-3">All Bit Planes</h3>
+                <h3 className="font-semibold text-gray-800 mb-3">Tất cả mặt phẳng bit</h3>
                 <ImageGrid
                     images={bitImages}
                     columns={4}
@@ -225,15 +225,15 @@ function OperationsView({ operations, onImageClick }) {
     if (!operations) return <EmptyState />;
 
     const operationsList = [
-        { key: 'xor_rg', label: 'R ⊕ G (XOR)', description: 'Highlights differences between red and green' },
-        { key: 'xor_rb', label: 'R ⊕ B (XOR)', description: 'Highlights differences between red and blue' },
-        { key: 'xor_gb', label: 'G ⊕ B (XOR)', description: 'Highlights differences between green and blue' },
-        { key: 'xor_rgb', label: 'R ⊕ G ⊕ B (XOR)', description: 'Combined XOR of all channels' },
-        { key: 'add_rg', label: 'R + G', description: 'Addition of red and green channels' },
-        { key: 'sub_rg', label: '|R - G|', description: 'Absolute difference between red and green' },
-        { key: 'sub_rb', label: '|R - B|', description: 'Absolute difference between red and blue' },
-        { key: 'and_rg', label: 'R & G (AND)', description: 'Bitwise AND of red and green' },
-        { key: 'or_rg', label: 'R | G (OR)', description: 'Bitwise OR of red and green' }
+        { key: 'xor_rg', label: 'R ⊕ G (XOR)', description: 'Làm nổi bật sự khác biệt giữa đỏ và xanh lá' },
+        { key: 'xor_rb', label: 'R ⊕ B (XOR)', description: 'Làm nổi bật sự khác biệt giữa đỏ và xanh dương' },
+        { key: 'xor_gb', label: 'G ⊕ B (XOR)', description: 'Làm nổi bật sự khác biệt giữa xanh lá và xanh dương' },
+        { key: 'xor_rgb', label: 'R ⊕ G ⊕ B (XOR)', description: 'XOR tổng hợp của tất cả các kênh' },
+        { key: 'add_rg', label: 'R + G', description: 'Tổng của kênh đỏ và xanh lá' },
+        { key: 'sub_rg', label: '|R - G|', description: 'Khác biệt tuyệt đối giữa đỏ và xanh lá' },
+        { key: 'sub_rb', label: '|R - B|', description: 'Khác biệt tuyệt đối giữa đỏ và xanh dương' },
+        { key: 'and_rg', label: 'R & G (AND)', description: 'Bitwise AND của đỏ và xanh lá' },
+        { key: 'or_rg', label: 'R | G (OR)', description: 'Bitwise OR của đỏ và xanh lá' }
     ];
 
     const availableOps = operationsList.filter(op => operations[op.key]);
@@ -247,7 +247,7 @@ function OperationsView({ operations, onImageClick }) {
     return (
         <div className="space-y-4">
             <Alert severity="info">
-                Channel operations can reveal hidden patterns and anomalies. XOR operations are particularly useful for steganography detection.
+                Các phép toán trên kênh có thể tiết lộ các mẫu ẩn và bất thường. Phép toán XOR đặc biệt hữu ích để phát hiện giấu tin.
             </Alert>
             <ImageGrid
                 images={images}
@@ -266,13 +266,13 @@ function HistogramsView({ histograms }) {
     return (
         <div className="space-y-6">
             <Alert severity="info">
-                Histograms show the distribution of pixel values. Unusual patterns may indicate hidden data.
+                Biểu đồ tần suất hiển thị phân bố giá trị pixel. Các mẫu bất thường có thể chỉ ra dữ liệu ẩn.
             </Alert>
 
             {channels.map(([channel, data]) => (
                 <div key={channel} className="bg-white rounded-lg border border-gray-200 p-4">
                     <h3 className="font-semibold text-gray-800 mb-3 capitalize">
-                        {channel} Channel Histogram
+                        Biểu đồ tần suất kênh {channel}
                     </h3>
                     <HistogramChart data={data} color={getChannelColor(channel)} />
                 </div>
@@ -280,7 +280,7 @@ function HistogramsView({ histograms }) {
 
             {histograms.combined && (
                 <div className="bg-white rounded-lg border border-gray-200 p-4">
-                    <h3 className="font-semibold text-gray-800 mb-3">Combined Histogram</h3>
+                    <h3 className="font-semibold text-gray-800 mb-3">Biểu đồ tần suất tổng hợp</h3>
                     <HistogramChart data={histograms.combined} color="#6366f1" />
                 </div>
             )}
@@ -371,7 +371,7 @@ function EmptyState() {
     return (
         <div className="text-center py-12 text-gray-500">
             <ImageIcon className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-            <p>No visual analysis data available</p>
+            <p>Không có dữ liệu phân tích trực quan</p>
         </div>
     );
 }

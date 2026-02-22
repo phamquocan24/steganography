@@ -15,31 +15,31 @@ export default function MetadataViewer({ data }) {
         return (
             <div className="text-center py-12 text-gray-500">
                 <Info className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p>No metadata available</p>
+                <p>Không có metadata</p>
             </div>
         );
     }
 
     const tabs = [
-        { id: 'basic', label: 'Basic Info', icon: Info },
-        { id: 'exif', label: 'EXIF Data', icon: Camera },
-        { id: 'gps', label: 'GPS Location', icon: MapPin },
-        { id: 'comments', label: 'Comments', icon: Settings }
+        { id: 'basic', label: 'Thông tin cơ bản', icon: Info },
+        { id: 'exif', label: 'Dữ liệu EXIF', icon: Camera },
+        { id: 'gps', label: 'Vị trí GPS', icon: MapPin },
+        { id: 'comments', label: 'Bình luận', icon: Settings }
     ];
 
     return (
         <div className="space-y-4">
             {/* Suspicious Findings Alert */}
             {data.suspicious_findings && data.suspicious_findings.length > 0 && (
-                <Alert severity="warning" title="Suspicious Metadata Detected">
+                <Alert severity="warning" title="Phát hiện Metadata đáng ngờ">
                     <ul className="list-disc list-inside space-y-1">
                         {data.suspicious_findings.map((finding, idx) => (
                             <li key={idx}>
                                 <strong>{finding.type}:</strong> {finding.message}
                                 {finding.matches && (
                                     <div className="ml-6 mt-1 text-xs">
-                                        Found: {finding.matches.slice(0, 3).join(', ')}
-                                        {finding.matches.length > 3 && ` (+${finding.matches.length - 3} more)`}
+                                        Tìm thấy: {finding.matches.slice(0, 3).join(', ')}
+                                        {finding.matches.length > 3 && ` (+${finding.matches.length - 3} nữa)`}
                                     </div>
                                 )}
                             </li>
@@ -81,13 +81,13 @@ export default function MetadataViewer({ data }) {
 }
 
 function BasicInfo({ data }) {
-    if (!data) return <div className="p-4 text-gray-500">Loading basic info...</div>;
+    if (!data) return <div className="p-4 text-gray-500">Đang tải thông tin cơ bản...</div>;
 
     const stats = [
-        { label: 'Format', value: data.format || 'Unknown', icon: Info },
-        { label: 'Dimensions', value: data.size?.dimensions || 'N/A', icon: Settings },
-        { label: 'File Size', value: data.file_size?.mb ? `${data.file_size.mb} MB` : 'N/A', icon: Info },
-        { label: 'Color Mode', value: data.color_info?.mode || 'N/A', icon: Settings }
+        { label: 'Định dạng', value: data.format || 'Không rõ', icon: Info },
+        { label: 'Kích thước', value: data.size?.dimensions || 'N/A', icon: Settings },
+        { label: 'Dung lượng', value: data.file_size?.mb ? `${data.file_size.mb} MB` : 'N/A', icon: Info },
+        { label: 'Chế độ màu', value: data.color_info?.mode || 'N/A', icon: Settings }
     ];
 
     return (
@@ -100,17 +100,17 @@ function BasicInfo({ data }) {
 
             {/* Detailed Info */}
             <div className="grid grid-cols-2 gap-4 mt-6">
-                <InfoCard title="Image Properties">
-                    <InfoRow label="Width" value={`${data.size?.width || 0}px`} />
-                    <InfoRow label="Height" value={`${data.size?.height || 0}px`} />
-                    <InfoRow label="Megapixels" value={data.size?.megapixels || 0} />
+                <InfoCard title="Thuộc tính hình ảnh">
+                    <InfoRow label="Chiều rộng" value={`${data.size?.width || 0}px`} />
+                    <InfoRow label="Chiều cao" value={`${data.size?.height || 0}px`} />
+                    <InfoRow label="Megapixel" value={data.size?.megapixels || 0} />
                     <InfoRow label="DPI" value={data.dpi ? `${data.dpi[0]} x ${data.dpi[1]}` : 'N/A'} />
                 </InfoCard>
 
-                <InfoCard title="Color Information">
-                    <InfoRow label="Mode" value={data.color_info?.mode || 'N/A'} />
-                    <InfoRow label="Bands" value={data.color_info?.bands || 0} />
-                    <InfoRow label="Has Alpha" value={data.color_info?.has_alpha ? 'Yes' : 'No'} />
+                <InfoCard title="Thông tin màu sắc">
+                    <InfoRow label="Chế độ" value={data.color_info?.mode || 'N/A'} />
+                    <InfoRow label="Dải màu (Bands)" value={data.color_info?.bands || 0} />
+                    <InfoRow label="Có Alpha" value={data.color_info?.has_alpha ? 'Có' : 'Không'} />
                 </InfoCard>
             </div>
         </div>
@@ -122,7 +122,7 @@ function ExifData({ data }) {
         return (
             <div className="text-center py-8 text-gray-500">
                 <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p>No EXIF data available</p>
+                <p>Không có dữ liệu EXIF</p>
             </div>
         );
     }
@@ -131,7 +131,7 @@ function ExifData({ data }) {
         <div className="space-y-6">
             {/* Camera Info */}
             {data.camera && Object.keys(data.camera).length > 0 && (
-                <InfoCard title="Camera Information" icon={Camera}>
+                <InfoCard title="Thông tin máy ảnh" icon={Camera}>
                     {Object.entries(data.camera).map(([key, value]) => (
                         <InfoRow key={key} label={formatKey(key)} value={value || 'N/A'} />
                     ))}
@@ -140,7 +140,7 @@ function ExifData({ data }) {
 
             {/* DateTime Info */}
             {data.datetime && Object.keys(data.datetime).length > 0 && (
-                <InfoCard title="Date & Time" icon={Calendar}>
+                <InfoCard title="Ngày & Giờ" icon={Calendar}>
                     {Object.entries(data.datetime).map(([key, value]) => (
                         <InfoRow key={key} label={formatKey(key)} value={value || 'N/A'} />
                     ))}
@@ -149,7 +149,7 @@ function ExifData({ data }) {
 
             {/* Capture Settings */}
             {data.capture_settings && Object.keys(data.capture_settings).length > 0 && (
-                <InfoCard title="Capture Settings" icon={Settings}>
+                <InfoCard title="Cài đặt chụp" icon={Settings}>
                     {Object.entries(data.capture_settings).map(([key, value]) => (
                         <InfoRow key={key} label={formatKey(key)} value={String(value) || 'N/A'} />
                     ))}
@@ -158,7 +158,7 @@ function ExifData({ data }) {
 
             {/* Other EXIF Data */}
             {data.other && Object.keys(data.other).length > 0 && (
-                <InfoCard title="Additional Information">
+                <InfoCard title="Thông tin bổ sung">
                     {Object.entries(data.other).map(([key, value]) => (
                         <InfoRow key={key} label={formatKey(key)} value={String(value) || 'N/A'} />
                     ))}
@@ -166,7 +166,7 @@ function ExifData({ data }) {
             )}
 
             <div className="text-sm text-gray-500 text-center pt-4">
-                Total {data.tag_count || 0} EXIF tags found
+                Tìm thấy tổng cộng {data.tag_count || 0} thẻ EXIF
             </div>
         </div>
     );
@@ -177,22 +177,22 @@ function GPSInfo({ data }) {
         return (
             <div className="text-center py-8 text-gray-500">
                 <MapPin className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p>No GPS data available</p>
+                <p>Không có dữ liệu GPS</p>
             </div>
         );
     }
 
     return (
         <div className="space-y-4">
-            <Alert severity="info" title="GPS Coordinates Found">
-                This image contains embedded location data
+            <Alert severity="info" title="Tìm thấy tọa độ GPS">
+                Ảnh này chứa dữ liệu địa điểm nhúng
             </Alert>
 
-            <InfoCard title="Location Details" icon={MapPin}>
-                <InfoRow label="Latitude" value={data.latitude || 'N/A'} />
-                <InfoRow label="Longitude" value={data.longitude || 'N/A'} />
-                <InfoRow label="Altitude" value={data.altitude || 'N/A'} />
-                <InfoRow label="Timestamp" value={data.timestamp || 'N/A'} />
+            <InfoCard title="Chi tiết vị trí" icon={MapPin}>
+                <InfoRow label="Vĩ độ" value={data.latitude || 'N/A'} />
+                <InfoRow label="Kinh độ" value={data.longitude || 'N/A'} />
+                <InfoRow label="Độ cao" value={data.altitude || 'N/A'} />
+                <InfoRow label="Dấu thời gian" value={data.timestamp || 'N/A'} />
             </InfoCard>
 
             {/* Google Maps Link */}
@@ -204,7 +204,7 @@ function GPSInfo({ data }) {
                     className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
                 >
                     <MapPin className="w-5 h-5 inline-block mr-2" />
-                    View on Google Maps
+                    Xem trên Google Maps
                 </a>
             )}
         </div>
@@ -216,7 +216,7 @@ function Comments({ data }) {
         return (
             <div className="text-center py-8 text-gray-500">
                 <Info className="w-12 h-12 mx-auto mb-3 text-gray-400" />
-                <p>No comments or descriptions found</p>
+                <p>Không tìm thấy bình luận hoặc mô tả nào</p>
             </div>
         );
     }
@@ -224,7 +224,7 @@ function Comments({ data }) {
     return (
         <div className="space-y-4">
             <Alert severity="info">
-                Found {Object.keys(data.data || {}).length} comment field(s) with total length of {data.total_length || 0} characters
+                Tìm thấy {Object.keys(data.data || {}).length} trường bình luận với tổng độ dài {data.total_length || 0} ký tự
             </Alert>
 
             {Object.entries(data.data || {}).map(([key, value]) => (

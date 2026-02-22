@@ -34,23 +34,23 @@ import {
 
 // Confidence Level Definitions
 const getConfidenceLevel = (confidence) => {
-    if (confidence >= 0.95) return { level: 'Very High', color: 'emerald', description: 'Extremely confident prediction' };
-    if (confidence >= 0.85) return { level: 'High', color: 'green', description: 'Highly reliable prediction' };
-    if (confidence >= 0.70) return { level: 'Moderate', color: 'yellow', description: 'Reasonably confident prediction' };
-    if (confidence >= 0.55) return { level: 'Low', color: 'orange', description: 'Prediction with some uncertainty' };
-    return { level: 'Very Low', color: 'red', description: 'Low confidence, consider re-analysis' };
+    if (confidence >= 0.95) return { level: 'Rất cao', color: 'emerald', description: 'Dự đoán cực kỳ tin cậy' };
+    if (confidence >= 0.85) return { level: 'Cao', color: 'green', description: 'Dự đoán có độ tin cậy cao' };
+    if (confidence >= 0.70) return { level: 'Trung bình', color: 'yellow', description: 'Dự đoán khá tin cậy' };
+    if (confidence >= 0.55) return { level: 'Thấp', color: 'orange', description: 'Dự đoán có chút không chắc chắn' };
+    return { level: 'Rất thấp', color: 'red', description: 'Độ tin cậy thấp, cân nhắc phân tích lại' };
 };
 
 // Risk Assessment
 const getRiskAssessment = (prediction, confidence) => {
     if (prediction === 'stego') {
-        if (confidence >= 0.90) return { level: 'Critical', color: 'red', icon: ShieldAlert, message: 'High probability of hidden data detected' };
-        if (confidence >= 0.70) return { level: 'High', color: 'orange', icon: AlertTriangle, message: 'Likely contains hidden information' };
-        return { level: 'Medium', color: 'yellow', icon: FileWarning, message: 'Possible steganographic content' };
+        if (confidence >= 0.90) return { level: 'Nguy hiểm', color: 'red', icon: ShieldAlert, message: 'Phát hiện xác suất cao có dữ liệu ẩn' };
+        if (confidence >= 0.70) return { level: 'Cao', color: 'orange', icon: AlertTriangle, message: 'Nhiều khả năng chứa thông tin ẩn' };
+        return { level: 'Trung bình', color: 'yellow', icon: FileWarning, message: 'Có thể có nội dung steganography' };
     } else {
-        if (confidence >= 0.90) return { level: 'Safe', color: 'green', icon: ShieldCheck, message: 'Image appears clean and unmodified' };
-        if (confidence >= 0.70) return { level: 'Likely Safe', color: 'emerald', icon: ThumbsUp, message: 'No obvious signs of hidden data' };
-        return { level: 'Uncertain', color: 'yellow', icon: Eye, message: 'Manual inspection recommended' };
+        if (confidence >= 0.90) return { level: 'An toàn', color: 'green', icon: ShieldCheck, message: 'Ảnh có vẻ sạch và chưa bị chỉnh sửa' };
+        if (confidence >= 0.70) return { level: 'Có thể an toàn', color: 'emerald', icon: ThumbsUp, message: 'Không có dấu hiệu rõ ràng của dữ liệu ẩn' };
+        return { level: 'Không chắc chắn', color: 'yellow', icon: Eye, message: 'Khuyến nghị kiểm tra thủ công' };
     }
 };
 
@@ -72,7 +72,7 @@ function ConfidenceMeter({ confidence, prediction }) {
             <div className="flex items-center justify-between mb-3">
                 <h4 className="font-semibold text-gray-800 flex items-center">
                     <Target className="w-4 h-4 mr-2 text-blue-600" />
-                    Confidence Score
+                    Điểm tin cậy
                 </h4>
                 <span className={clsx(
                     "px-3 py-1 rounded-full text-xs font-bold",
@@ -111,7 +111,7 @@ function ProbabilityBreakdown({ stegoProb, cleanProb }) {
         <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <h4 className="font-semibold text-gray-800 flex items-center mb-4">
                 <Activity className="w-4 h-4 mr-2 text-purple-600" />
-                Probability Distribution
+                Phân bố xác suất
             </h4>
 
             <div className="space-y-4">
@@ -120,7 +120,7 @@ function ProbabilityBreakdown({ stegoProb, cleanProb }) {
                     <div className="flex justify-between items-center mb-1">
                         <span className="text-sm font-medium text-red-700 flex items-center">
                             <ShieldAlert className="w-3 h-3 mr-1" />
-                            Steganography
+                            Giấu tin (Steganography)
                         </span>
                         <span className="text-sm font-bold text-red-700">{(stegoProb * 100).toFixed(2)}%</span>
                     </div>
@@ -137,7 +137,7 @@ function ProbabilityBreakdown({ stegoProb, cleanProb }) {
                     <div className="flex justify-between items-center mb-1">
                         <span className="text-sm font-medium text-green-700 flex items-center">
                             <ShieldCheck className="w-3 h-3 mr-1" />
-                            Clean Image
+                            Ảnh sạch
                         </span>
                         <span className="text-sm font-bold text-green-700">{(cleanProb * 100).toFixed(2)}%</span>
                     </div>
@@ -153,7 +153,7 @@ function ProbabilityBreakdown({ stegoProb, cleanProb }) {
             <div className="mt-4 pt-3 border-t border-gray-100">
                 <div className="flex items-center text-xs text-gray-500">
                     <Info className="w-3 h-3 mr-1" />
-                    Difference: {Math.abs((stegoProb - cleanProb) * 100).toFixed(2)}%
+                    Chênh lệch: {Math.abs((stegoProb - cleanProb) * 100).toFixed(2)}%
                 </div>
             </div>
         </div>
@@ -188,7 +188,7 @@ function RiskAssessmentCard({ prediction, confidence }) {
                     <RiskIcon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
-                    <h4 className="font-bold text-gray-800 text-lg">Risk Level: {risk.level}</h4>
+                    <h4 className="font-bold text-gray-800 text-lg">Mức độ rủi ro: {risk.level}</h4>
                     <p className="text-gray-600 text-sm mt-1">{risk.message}</p>
                 </div>
             </div>
@@ -199,20 +199,20 @@ function RiskAssessmentCard({ prediction, confidence }) {
 // Technical Details Component
 function TechnicalDetails({ modelName, duration, timestamp, imageInfo }) {
     const details = [
-        { icon: Cpu, label: 'Model', value: modelName, color: 'blue' },
-        { icon: Zap, label: 'Processing Time', value: `${duration}ms`, color: 'purple' },
-        { icon: Clock, label: 'Analyzed At', value: timestamp, color: 'gray' }
+        { icon: Cpu, label: 'Mô hình', value: modelName, color: 'blue' },
+        { icon: Zap, label: 'Thời gian xử lý', value: `${duration}ms`, color: 'purple' },
+        { icon: Clock, label: 'Phân tích lúc', value: timestamp, color: 'gray' }
     ];
 
     if (imageInfo) {
-        details.push({ icon: Info, label: 'Image', value: imageInfo, color: 'cyan' });
+        details.push({ icon: Info, label: 'Thông tin ảnh', value: imageInfo, color: 'cyan' });
     }
 
     return (
         <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
             <h4 className="font-semibold text-gray-700 text-sm mb-3 flex items-center">
                 <TrendingUp className="w-4 h-4 mr-2" />
-                Technical Details
+                Chi tiết kỹ thuật
             </h4>
             <div className="grid grid-cols-2 gap-3">
                 {details.map((detail, idx) => (
@@ -230,18 +230,18 @@ function TechnicalDetails({ modelName, duration, timestamp, imageInfo }) {
 // Recommendations Component
 function Recommendations({ prediction, confidence }) {
     const recommendations = prediction === 'stego' ? [
-        { text: 'Run LSB Extraction to attempt data recovery', priority: 'high' },
-        { text: 'Analyze bit planes in Visual Analysis', priority: 'high' },
-        { text: 'Check for embedded strings or patterns', priority: 'medium' },
-        { text: 'Try different extraction parameters', priority: 'low' }
+        { text: 'Chạy trích xuất LSB để thử khôi phục dữ liệu', priority: 'high' },
+        { text: 'Phân tích các mặt phẳng bit trong Phân tích hình ảnh', priority: 'high' },
+        { text: 'Kiểm tra các chuỗi hoặc mẫu nhúng', priority: 'medium' },
+        { text: 'Thử các tham số trích xuất khác nhau', priority: 'low' }
     ] : [
-        { text: 'Image appears safe for use', priority: 'info' },
-        { text: 'Consider running forensics for verification', priority: 'low' },
-        { text: 'Check metadata for additional context', priority: 'low' }
+        { text: 'Ảnh có vẻ an toàn để sử dụng', priority: 'info' },
+        { text: 'Cân nhắc chạy phân tích pháp y để xác minh', priority: 'low' },
+        { text: 'Kiểm tra siêu dữ liệu để biết thêm ngữ cảnh', priority: 'low' }
     ];
 
     if (confidence < 0.70) {
-        recommendations.unshift({ text: 'Low confidence - consider re-analyzing with different model', priority: 'high' });
+        recommendations.unshift({ text: 'Độ tin cậy thấp - cân nhắc phân tích lại với mô hình khác', priority: 'high' });
     }
 
     const priorityStyles = {
@@ -255,7 +255,7 @@ function Recommendations({ prediction, confidence }) {
         <div className="bg-white rounded-xl p-5 border border-gray-200 shadow-sm">
             <h4 className="font-semibold text-gray-800 flex items-center mb-4">
                 <ChevronRight className="w-4 h-4 mr-2 text-indigo-600" />
-                Recommended Actions
+                Hành động đề xuất
             </h4>
             <ul className="space-y-2">
                 {recommendations.map((rec, idx) => (
@@ -309,10 +309,10 @@ export default function AIResultPanel({ result, modelName, onScrollToForensics }
                         </div>
                         <div>
                             <h3 className="text-2xl font-bold text-white">
-                                {isStego ? 'STEGANOGRAPHY DETECTED' : 'CLEAN IMAGE'}
+                                {isStego ? 'PHÁT HIỆN GIẤU TIN' : 'ẢNH SẠCH'}
                             </h3>
                             <p className="text-white/80 text-sm mt-1">
-                                {label || (isStego ? 'Có giấu tin' : 'Không giấu tin')} • AI-powered analysis
+                                {label || (isStego ? 'Có giấu tin' : 'Không giấu tin')} • Phân tích bởi AI
                             </p>
                         </div>
                     </div>
@@ -320,7 +320,7 @@ export default function AIResultPanel({ result, modelName, onScrollToForensics }
                         <div className="text-4xl font-black text-white">
                             {(confidence * 100).toFixed(1)}%
                         </div>
-                        <div className="text-white/70 text-sm">Confidence</div>
+                        <div className="text-white/70 text-sm">Độ tin cậy</div>
                     </div>
                 </div>
             </div>
@@ -353,7 +353,7 @@ export default function AIResultPanel({ result, modelName, onScrollToForensics }
                         className="w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center"
                     >
                         <Shield className="w-5 h-5 mr-2" />
-                        Continue to Forensics Analysis
+                        Tiếp tục phân tích điều tra số
                     </button>
                 )}
             </div>

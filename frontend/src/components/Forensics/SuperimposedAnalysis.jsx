@@ -23,8 +23,8 @@ export default function SuperimposedAnalysis({ file, addToast }) {
 
     const handleAnalyze = async () => {
         if (!file) {
-            setError('Please upload an image first');
-            addToast?.('Please upload an image first', 'error');
+            setError('Vui lòng tải ảnh lên trước');
+            addToast?.('Vui lòng tải ảnh lên trước', 'error');
             return;
         }
 
@@ -34,10 +34,10 @@ export default function SuperimposedAnalysis({ file, addToast }) {
         try {
             const result = await forensicsAPI.analyzeSuperimposed(file, config);
             setResult(result);
-            addToast?.('Superimposed analysis completed successfully!', 'success');
+            addToast?.('Phân tích chồng lớp hoàn tất thành công!', 'success');
         } catch (err) {
             setError(err.message);
-            addToast?.(`Superimposed analysis failed: ${err.message}`, 'error');
+            addToast?.(`Phân tích chồng lớp thất bại: ${err.message}`, 'error');
         } finally {
             setLoading(false);
         }
@@ -64,11 +64,11 @@ export default function SuperimposedAnalysis({ file, addToast }) {
     return (
         <div className="space-y-6">
             {/* Info Banner */}
-            <Alert severity="info" title="What is Superimposed Analysis?">
+            <Alert severity="info" title="Phân tích chồng lớp là gì?">
                 <p className="text-sm">
-                    Superimposed analysis overlays different color channels and bit planes to reveal hidden
-                    patterns that are invisible when viewed separately. Perfect for detecting watermarks,
-                    hidden messages, and steganography across multiple layers.
+                    Phân tích chồng lớp phủ các kênh màu và mặt phẳng bit khác nhau để lộ ra các mẫu ẩn
+                    không nhìn thấy được khi xem riêng lẻ. Hoàn hảo để phát hiện hình mờ,
+                    tin nhắn ẩn và giấu tin trên nhiều lớp.
                 </p>
             </Alert>
 
@@ -76,20 +76,20 @@ export default function SuperimposedAnalysis({ file, addToast }) {
             <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                     <Layers className="w-5 h-5 mr-2 text-blue-600" />
-                    Analysis Configuration
+                    Cấu hình phân tích
                 </h3>
 
                 <div className="space-y-6">
                     {/* Mode Selection */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Analysis Mode
+                            Chế độ phân tích
                         </label>
                         <div className="grid grid-cols-3 gap-2">
                             {[
-                                { value: 'channels', label: 'Channels Only' },
-                                { value: 'bitplanes', label: 'Bit Planes Only' },
-                                { value: 'both', label: 'Both (Recommended)' }
+                                { value: 'channels', label: 'Chỉ kênh màu' },
+                                { value: 'bitplanes', label: 'Chỉ mặt phẳng bit' },
+                                { value: 'both', label: 'Cả hai (Khuyên dùng)' }
                             ].map(mode => (
                                 <button
                                     key={mode.value}
@@ -111,7 +111,7 @@ export default function SuperimposedAnalysis({ file, addToast }) {
                     {(config.mode === 'channels' || config.mode === 'both') && (
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Color Channels to Superimpose
+                                Các kênh màu để chồng lớp
                             </label>
                             <div className="flex space-x-2">
                                 {['R', 'G', 'B'].map(channel => (
@@ -138,7 +138,7 @@ export default function SuperimposedAnalysis({ file, addToast }) {
                     {(config.mode === 'bitplanes' || config.mode === 'both') && (
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Bit Planes (0 = LSB, 7 = MSB)
+                                Mặt phẳng bit (0 = LSB, 7 = MSB)
                             </label>
                             <div className="grid grid-cols-8 gap-1">
                                 {[0, 1, 2, 3, 4, 5, 6, 7].map(bit => (
@@ -158,7 +158,7 @@ export default function SuperimposedAnalysis({ file, addToast }) {
                                 ))}
                             </div>
                             <p className="text-xs text-gray-500 mt-1">
-                                Recommended: 0-2 (LSB) for hidden data detection
+                                Khuyên dùng: 0-2 (LSB) để phát hiện dữ liệu ẩn
                             </p>
                         </div>
                     )}
@@ -166,21 +166,21 @@ export default function SuperimposedAnalysis({ file, addToast }) {
                     {/* Blend Mode */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Blend Mode
+                            Chế độ hòa trộn
                         </label>
                         <select
                             value={config.blendMode}
                             onChange={(e) => setConfig({ ...config, blendMode: e.target.value })}
                             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         >
-                            <option value="average">Average (Recommended)</option>
-                            <option value="max">Maximum</option>
-                            <option value="xor">XOR (Advanced)</option>
+                            <option value="average">Trung bình (Khuyên dùng)</option>
+                            <option value="max">Tối đa</option>
+                            <option value="xor">XOR (Nâng cao)</option>
                         </select>
                         <p className="text-xs text-gray-500 mt-1">
-                            {config.blendMode === 'average' && 'Averages pixel values - best for general use'}
-                            {config.blendMode === 'max' && 'Takes maximum value - enhances bright patterns'}
-                            {config.blendMode === 'xor' && 'Bitwise XOR - reveals differences'}
+                            {config.blendMode === 'average' && 'Trung bình giá trị pixel - tốt nhất cho sử dụng chung'}
+                            {config.blendMode === 'max' && 'Lấy giá trị tối đa - tăng cường các mẫu sáng'}
+                            {config.blendMode === 'xor' && 'Bitwise XOR - lộ ra sự khác biệt'}
                         </p>
                     </div>
 
@@ -198,12 +198,12 @@ export default function SuperimposedAnalysis({ file, addToast }) {
                         {loading ? (
                             <>
                                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                                Analyzing...
+                                Đang phân tích...
                             </>
                         ) : (
                             <>
                                 <Zap className="w-5 h-5 mr-2" />
-                                Analyze Superimposed
+                                Phân tích chồng lớp
                             </>
                         )}
                     </button>
@@ -212,7 +212,7 @@ export default function SuperimposedAnalysis({ file, addToast }) {
 
             {/* Error */}
             {error && (
-                <Alert severity="error" title="Analysis Failed">
+                <Alert severity="error" title="Phân tích thất bại">
                     {error}
                 </Alert>
             )}
@@ -235,7 +235,7 @@ function SuperimposedResults({ result, onSelectImage }) {
     if (imageKeys.length === 0) {
         return (
             <Alert severity="info">
-                No superimposed images generated. Try adjusting your configuration.
+                Không có ảnh chồng lớp nào được tạo. Hãy thử điều chỉnh cấu hình.
             </Alert>
         );
     }
@@ -247,11 +247,11 @@ function SuperimposedResults({ result, onSelectImage }) {
                 <div className="flex items-start">
                     <Info className="w-6 h-6 text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
                     <div>
-                        <h3 className="font-bold text-blue-900 mb-2">Analysis Complete</h3>
+                        <h3 className="font-bold text-blue-900 mb-2">Phân tích hoàn tất</h3>
                         <p className="text-sm text-blue-800 mb-2">
-                            Mode: <strong>{result.mode}</strong> •
-                            Dimensions: <strong>{result.original_dimensions}</strong> •
-                            Images Generated: <strong>{imageKeys.length}</strong>
+                            Chế độ: <strong>{result.mode}</strong> •
+                            Kích thước: <strong>{result.original_dimensions}</strong> •
+                            Ảnh đã tạo: <strong>{imageKeys.length}</strong>
                         </p>
                         {result.channel_analysis && (
                             <p className="text-sm text-blue-800">
@@ -276,7 +276,7 @@ function SuperimposedResults({ result, onSelectImage }) {
             <div className="bg-white rounded-lg border border-gray-200 p-6">
                 <h3 className="font-semibold text-gray-900 mb-4 flex items-center">
                     <ImageIcon className="w-5 h-5 mr-2 text-blue-600" />
-                    Superimposed Images ({imageKeys.length})
+                    Ảnh chồng lớp ({imageKeys.length})
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                     {imageKeys.map(key => (
@@ -316,7 +316,7 @@ function ImageModal({ image, onClose }) {
                         onClick={onClose}
                         className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
                     >
-                        Close
+                        Đóng
                     </button>
                 </div>
                 <div className="p-4 bg-gray-50">

@@ -52,7 +52,7 @@ function App() {
         setHistory(newHistory);
         updateStats(newHistory);
         localStorage.setItem('stego_history', JSON.stringify(newHistory));
-        addToast('Saved to history', 'success');
+        addToast('Đã lưu vào lịch sử', 'success');
     };
 
     const deleteHistoryItem = (index) => {
@@ -60,7 +60,7 @@ function App() {
         setHistory(updatedHistory);
         updateStats(updatedHistory);
         localStorage.setItem('stego_history', JSON.stringify(updatedHistory));
-        addToast('Deleted from history', 'info');
+        addToast('Đã xóa khỏi lịch sử', 'info');
     };
 
     const clearAllHistory = () => {
@@ -68,7 +68,7 @@ function App() {
             setHistory([]);
             setStats({ total: 0, stego: 0, clean: 0 });
             localStorage.removeItem('stego_history');
-            addToast('History cleared', 'success');
+            addToast('Đã xóa lịch sử', 'success');
         }
     };
 
@@ -137,9 +137,9 @@ function HistorySidebar({ history, onClose, onDelete, onClearAll, onViewDetail }
                 {/* Header */}
                 <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-cyan-600 text-white p-6 flex justify-between items-center z-10">
                     <div>
-                        <h2 className="text-2xl font-bold">Analysis History</h2>
+                        <h2 className="text-2xl font-bold">Lịch sử phân tích</h2>
                         <p className="text-blue-100 text-sm">
-                            {history.length} {history.length === 1 ? 'analysis' : 'analyses'} (Max 200)
+                            {history.length} lần phân tích (Max 200)
                         </p>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -149,7 +149,7 @@ function HistorySidebar({ history, onClose, onDelete, onClearAll, onViewDetail }
                                 className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors flex items-center"
                             >
                                 <Trash2 className="w-4 h-4 mr-2" />
-                                Clear All
+                                Xóa tất cả
                             </button>
                         )}
                         <button
@@ -166,8 +166,8 @@ function HistorySidebar({ history, onClose, onDelete, onClearAll, onViewDetail }
                     {history.length === 0 ? (
                         <div className="text-center py-12 text-gray-500">
                             <Clock className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                            <p className="text-lg font-semibold">No History Yet</p>
-                            <p className="text-sm">Your analysis history will appear here</p>
+                            <p className="text-lg font-semibold">Chưa có lịch sử</p>
+                            <p className="text-sm">Lịch sử phân tích của bạn sẽ hiện ra ở đây</p>
                         </div>
                     ) : (
                         <div className="space-y-4">
@@ -206,7 +206,7 @@ function HistoryItem({ item, onDelete, onViewDetail }) {
                         "font-bold",
                         item.prediction === 'stego' ? "text-red-700" : "text-green-700"
                     )}>
-                        {item.prediction === 'stego' ? 'STEGO DETECTED' : 'CLEAN IMAGE'}
+                        {item.prediction === 'stego' ? 'PHÁT HIỆN GIẤU TIN' : 'ẢNH SẠCH'}
                     </span>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -216,7 +216,7 @@ function HistoryItem({ item, onDelete, onViewDetail }) {
                             onViewDetail();
                         }}
                         className="p-1.5 hover:bg-blue-100 rounded transition-colors"
-                        title="View Details"
+                        title="Xem chi tiết"
                     >
                         <Eye className="w-4 h-4 text-blue-600" />
                     </button>
@@ -226,7 +226,7 @@ function HistoryItem({ item, onDelete, onViewDetail }) {
                             onDelete();
                         }}
                         className="p-1.5 hover:bg-red-100 rounded transition-colors"
-                        title="Delete"
+                        title="Xóa"
                     >
                         <X className="w-4 h-4 text-gray-600" />
                     </button>
@@ -235,19 +235,19 @@ function HistoryItem({ item, onDelete, onViewDetail }) {
 
             <div className="grid grid-cols-2 gap-3 text-sm" onClick={onViewDetail}>
                 <div>
-                    <span className="text-gray-600">File:</span>
+                    <span className="text-gray-600">Tệp:</span>
                     <span className="ml-2 font-medium truncate block">{item.filename}</span>
                 </div>
                 <div>
-                    <span className="text-gray-600">Confidence:</span>
+                    <span className="text-gray-600">Độ tin cậy:</span>
                     <span className="ml-2 font-bold">{(item.confidence * 100).toFixed(2)}%</span>
                 </div>
                 <div>
-                    <span className="text-gray-600">Time:</span>
+                    <span className="text-gray-600">Thời gian:</span>
                     <span className="ml-2 font-medium text-xs">{item.timestamp}</span>
                 </div>
                 <div>
-                    <span className="text-gray-600">Duration:</span>
+                    <span className="text-gray-600">Thời lượng:</span>
                     <span className="ml-2 font-medium">{item.duration}ms</span>
                 </div>
             </div>
@@ -273,9 +273,9 @@ function HistoryDetailModal({ item, onClose }) {
                     <div className="flex justify-between items-start">
                         <div>
                             <h2 className="text-3xl font-bold mb-2">
-                                {item.prediction === 'stego' ? 'STEGO DETECTED' : 'CLEAN IMAGE'}
+                                {item.prediction === 'stego' ? 'PHÁT HIỆN GIẤU TIN' : 'ẢNH SẠCH'}
                             </h2>
-                            <p className="text-white/80">Analysis Details</p>
+                            <p className="text-white/80">Chi tiết phân tích</p>
                         </div>
                         <button
                             onClick={onClose}
@@ -290,34 +290,34 @@ function HistoryDetailModal({ item, onClose }) {
                 <div className="p-6 space-y-6">
                     {/* File Info */}
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-3">File Information</h3>
+                        <h3 className="text-lg font-bold text-gray-900 mb-3">Thông tin tệp</h3>
                         <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-                            <DetailRow label="Filename" value={item.filename} />
-                            <DetailRow label="Dimensions" value={item.imageDimensions || 'N/A'} />
-                            <DetailRow label="Size" value={item.imageSize ? `${(item.imageSize / 1024).toFixed(2)} KB` : 'N/A'} />
+                            <DetailRow label="Tên tệp" value={item.filename} />
+                            <DetailRow label="Kích thước ảnh" value={item.imageDimensions || 'N/A'} />
+                            <DetailRow label="Dung lượng" value={item.imageSize ? `${(item.imageSize / 1024).toFixed(2)} KB` : 'N/A'} />
                         </div>
                     </div>
 
                     {/* Analysis Results */}
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-3">Analysis Results</h3>
+                        <h3 className="text-lg font-bold text-gray-900 mb-3">Kết quả phân tích</h3>
                         <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-                            <DetailRow label="Prediction" value={item.prediction.toUpperCase()} />
-                            <DetailRow label="Confidence" value={`${(item.confidence * 100).toFixed(2)}%`} bold />
-                            <DetailRow label="Model Used" value={item.model || 'N/A'} />
-                            <DetailRow label="Duration" value={`${item.duration}ms`} />
-                            <DetailRow label="Timestamp" value={item.timestamp} />
+                            <DetailRow label="Dự đoán" value={item.prediction.toUpperCase()} />
+                            <DetailRow label="Độ tin cậy" value={`${(item.confidence * 100).toFixed(2)}%`} bold />
+                            <DetailRow label="Mô hình" value={item.model || 'N/A'} />
+                            <DetailRow label="Thời lượng" value={`${item.duration}ms`} />
+                            <DetailRow label="Dấu thời gian" value={item.timestamp} />
                         </div>
                     </div>
 
                     {/* Probabilities */}
                     {item.probabilities && (
                         <div>
-                            <h3 className="text-lg font-bold text-gray-900 mb-3">Model Probabilities</h3>
+                            <h3 className="text-lg font-bold text-gray-900 mb-3">Xác suất mô hình</h3>
                             <div className="bg-gray-50 rounded-lg p-4">
                                 <div className="space-y-3">
                                     <ProbabilityBar label="Stego" value={item.probabilities.stego || 0} color="red" />
-                                    <ProbabilityBar label="Clean" value={item.probabilities.clean || 0} color="green" />
+                                    <ProbabilityBar label="Sạch" value={item.probabilities.clean || 0} color="green" />
                                 </div>
                             </div>
                         </div>
